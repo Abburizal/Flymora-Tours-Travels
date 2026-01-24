@@ -15,6 +15,7 @@ class Tour extends Model
         'image',
         'category_id',
         'max_participants',
+        'booked_participants',
         'start_date',
         'end_date',
     ];
@@ -33,5 +34,13 @@ class Tour extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    /**
+     * Get available seats count
+     */
+    public function getAvailableSeatsAttribute()
+    {
+        return $this->max_participants - $this->booked_participants;
     }
 }
