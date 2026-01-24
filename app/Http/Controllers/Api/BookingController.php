@@ -35,7 +35,7 @@ class BookingController extends Controller
 
             // Use authenticated user ID instead of user input (SECURITY FIX)
             $userId = auth()->id();
-            $expiryMinutes = config('booking.expiry_minutes', 30);
+            $expiryMinutes = (int) config('booking.expiry_minutes', 30);
 
             // CONCURRENCY FIX: Use database transaction with row locking
             $booking = \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $userId, $expiryMinutes) {
