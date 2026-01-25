@@ -161,31 +161,6 @@ export default function TourDetail() {
                         </div>
                     )}
                     
-                    {/* Call to Action Section with Download Button */}
-                    <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 mb-6">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                            <div className="text-center md:text-left">
-                                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                                    Want to see the complete itinerary?
-                                </h3>
-                                <p className="text-gray-600">
-                                    Download our detailed PDF with day-by-day schedule, inclusions, and everything you need to know
-                                </p>
-                            </div>
-                            <a
-                                href={`/api/tours/${tour.id}/itinerary/download`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Download Itinerary PDF
-                            </a>
-                        </div>
-                    </div>
-                    
                     <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div className="text-center sm:text-left">
                             <span className="text-gray-600 block mb-1">Price per person</span>
