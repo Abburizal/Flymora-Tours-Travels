@@ -70,6 +70,17 @@ class TourResource extends Resource
                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
                     ->helperText('JPG or PNG - Max 1MB')
                     ->columnSpanFull(),
+                Forms\Components\SpatieMediaLibraryFileUpload::make('tour_images')
+                    ->label('Tour Gallery')
+                    ->collection('images')
+                    ->multiple()
+                    ->reorderable()
+                    ->maxFiles(10)
+                    ->image()
+                    ->imageEditor()
+                    ->maxSize(5120) // 5MB
+                    ->helperText('Upload up to 10 images for gallery. Drag to reorder. Max 5MB per image.')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('max_participants')
                     ->label('Max Participants')
                     ->required()

@@ -65,12 +65,28 @@ class TourController extends Controller
         }
 
         $tours = $query->get()->map(function($tour) {
-            // Add full image URL
+            // Add full image URL (old field)
             if ($tour->image) {
                 $tour->image_url = asset('storage/' . $tour->image);
             } else {
                 $tour->image_url = null;
             }
+            
+            // Add media library gallery images
+            $tour->gallery_images = $tour->getMedia('images')->map(function($media) {
+                return [
+                    'id' => $media->id,
+                    'url' => $media->getUrl(),
+                    'thumb' => $media->getUrl('thumb'),
+                    'name' => $media->file_name,
+                ];
+            });
+            
+            // Use first gallery image as thumbnail if no old image
+            if (!$tour->image_url && $tour->gallery_images->count() > 0) {
+                $tour->image_url = $tour->gallery_images->first()['url'];
+            }
+            
             // Add rating data
             $tour->average_rating = round($tour->average_rating, 1);
             $tour->review_count = $tour->review_count;
@@ -84,11 +100,26 @@ class TourController extends Controller
     {
         $tour = Tour::with('category')->findOrFail($id);
         
-        // Add full image URL
+        // Add full image URL (old field)
         if ($tour->image) {
             $tour->image_url = asset('storage/' . $tour->image);
         } else {
             $tour->image_url = null;
+        }
+        
+        // Add media library gallery images
+        $tour->gallery_images = $tour->getMedia('images')->map(function($media) {
+            return [
+                'id' => $media->id,
+                'url' => $media->getUrl(),
+                'thumb' => $media->getUrl('thumb'),
+                'name' => $media->file_name,
+            ];
+        });
+        
+        // Use first gallery image as thumbnail if no old image
+        if (!$tour->image_url && $tour->gallery_images->count() > 0) {
+            $tour->image_url = $tour->gallery_images->first()['url'];
         }
         
         // Add rating data
