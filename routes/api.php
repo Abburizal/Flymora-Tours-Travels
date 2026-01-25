@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\MidtransCallbackController;
 use App\Http\Controllers\Api\PaymentSimulatorController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\ContactController;
 
 // Public routes
 Route::get('/tours', [TourController::class, 'index']);
@@ -17,6 +18,9 @@ Route::get('/categories', [CategoryController::class, 'index']);
 
 // Public reviews (no auth required to view)
 Route::get('/tours/{tour}/reviews', [ReviewController::class, 'index']);
+
+// Contact form submission
+Route::post('/contact', [ContactController::class, 'submit']);
 
 // Authentication routes (Public)
 Route::post('/auth/register', [AuthController::class, 'register']);

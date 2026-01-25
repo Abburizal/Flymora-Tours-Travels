@@ -12,6 +12,10 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Booking from './pages/Booking';
 import PaymentSimulator from './pages/PaymentSimulator';
+import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
+import TermsOfService from './pages/TermsOfService';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -35,6 +39,10 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="tours" element={<Tours />} />
                 <Route path="tours/:id" element={<TourDetail />} />
+                <Route path="faq" element={<FAQ />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="terms-of-service" element={<TermsOfService />} />
+                <Route path="privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 
