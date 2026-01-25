@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class TourResource extends Resource
 {
@@ -70,7 +71,7 @@ class TourResource extends Resource
                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
                     ->helperText('JPG or PNG - Max 1MB')
                     ->columnSpanFull(),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('tour_images')
+                SpatieMediaLibraryFileUpload::make('tour_images')
                     ->label('Tour Gallery')
                     ->collection('images')
                     ->multiple()
