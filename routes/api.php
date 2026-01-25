@@ -10,10 +10,12 @@ use App\Http\Controllers\Api\MidtransCallbackController;
 use App\Http\Controllers\Api\PaymentSimulatorController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\ItineraryController;
 
 // Public routes
 Route::get('/tours', [TourController::class, 'index']);
 Route::get('/tours/{id}', [TourController::class, 'show']);
+Route::get('/tours/{id}/itinerary/download', [ItineraryController::class, 'download']);
 Route::get('/categories', [CategoryController::class, 'index']);
 
 // Public reviews (no auth required to view)

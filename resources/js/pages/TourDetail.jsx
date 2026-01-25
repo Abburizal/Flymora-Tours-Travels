@@ -90,22 +90,44 @@ export default function TourDetail() {
                 </div>
                 
                 <div className="p-8">
-                    <h1 className="text-4xl font-bold mb-4">{tour.name}</h1>
-                    
-                    {/* Rating Section */}
-                    {reviewStats && reviewStats.total_reviews > 0 && (
-                        <div className="flex items-center gap-4 mb-4 pb-4 border-b">
-                            <StarRating rating={reviewStats.average_rating} />
-                            <span className="text-2xl font-bold text-gray-800">
-                                {reviewStats.average_rating.toFixed(1)}
-                            </span>
-                            <span className="text-gray-600">
-                                ({reviewStats.total_reviews} {reviewStats.total_reviews === 1 ? 'review' : 'reviews'})
-                            </span>
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
+                        <div className="flex-1">
+                            <h1 className="text-4xl font-bold mb-4">{tour.name}</h1>
+                            
+                            {/* Rating Section */}
+                            {reviewStats && reviewStats.total_reviews > 0 && (
+                                <div className="flex items-center gap-4 mb-4">
+                                    <StarRating rating={reviewStats.average_rating} />
+                                    <span className="text-2xl font-bold text-gray-800">
+                                        {reviewStats.average_rating.toFixed(1)}
+                                    </span>
+                                    <span className="text-gray-600">
+                                        ({reviewStats.total_reviews} {reviewStats.total_reviews === 1 ? 'review' : 'reviews'})
+                                    </span>
+                                </div>
+                            )}
                         </div>
-                    )}
+                        
+                        {/* Download Itinerary Button - Prominent Position */}
+                        <div className="mt-4 lg:mt-0 lg:ml-6">
+                            <a
+                                href={`/api/tours/${tour.id}/itinerary/download`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <div className="text-left">
+                                    <div className="text-sm font-normal opacity-90">Download</div>
+                                    <div className="text-base font-bold">Full Itinerary PDF</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     
-                    <div className="flex flex-wrap gap-4 mb-6 text-gray-600">
+                    <div className="flex flex-wrap gap-4 mb-6 text-gray-600 pb-6 border-b">
                         <div className="flex items-center">
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -139,9 +161,34 @@ export default function TourDetail() {
                         </div>
                     )}
                     
-                    <div className="border-t pt-6 flex items-center justify-between">
-                        <div>
-                            <span className="text-gray-600">Price per person</span>
+                    {/* Call to Action Section with Download Button */}
+                    <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 mb-6">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div className="text-center md:text-left">
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                    Want to see the complete itinerary?
+                                </h3>
+                                <p className="text-gray-600">
+                                    Download our detailed PDF with day-by-day schedule, inclusions, and everything you need to know
+                                </p>
+                            </div>
+                            <a
+                                href={`/api/tours/${tour.id}/itinerary/download`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Download Itinerary PDF
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="text-center sm:text-left">
+                            <span className="text-gray-600 block mb-1">Price per person</span>
                             <div className="text-4xl font-bold text-blue-600">
                                 {formatCurrency(tour.price)}
                             </div>
@@ -150,7 +197,7 @@ export default function TourDetail() {
                         <button
                             onClick={handleBookNow}
                             disabled={availableSeats === 0}
-                            className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                         >
                             {availableSeats === 0 ? 'Sold Out' : 'Book Now'}
                         </button>
