@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 
 export default function Contact() {
@@ -13,6 +13,11 @@ export default function Contact() {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
     const [errors, setErrors] = useState({});
+
+    // Scroll to top on component mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

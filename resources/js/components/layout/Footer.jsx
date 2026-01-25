@@ -16,6 +16,14 @@ export default function Footer() {
         }
     };
 
+    const handleLinkClick = (path) => {
+        navigate(path);
+        // Smooth scroll to top after navigation
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+    };
+
     return (
         <footer className="bg-gray-800 text-white mt-auto">
             <div className="container mx-auto px-4 py-8">
@@ -36,9 +44,12 @@ export default function Footer() {
                         <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
                         <ul className="space-y-2">
                             <li>
-                                <Link to="/tours" className="text-gray-400 hover:text-white transition">
+                                <button
+                                    onClick={() => handleLinkClick('/tours')}
+                                    className="text-gray-400 hover:text-white transition text-left"
+                                >
                                     Tours
-                                </Link>
+                                </button>
                             </li>
                             <li>
                                 <button 
@@ -49,14 +60,20 @@ export default function Footer() {
                                 </button>
                             </li>
                             <li>
-                                <Link to="/faq" className="text-gray-400 hover:text-white transition">
+                                <button
+                                    onClick={() => handleLinkClick('/faq')}
+                                    className="text-gray-400 hover:text-white transition text-left"
+                                >
                                     FAQ
-                                </Link>
+                                </button>
                             </li>
                             <li>
-                                <Link to="/contact" className="text-gray-400 hover:text-white transition">
+                                <button
+                                    onClick={() => handleLinkClick('/contact')}
+                                    className="text-gray-400 hover:text-white transition text-left"
+                                >
                                     Contact
-                                </Link>
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -64,14 +81,20 @@ export default function Footer() {
                         <h4 className="text-lg font-semibold mb-4">Legal</h4>
                         <ul className="space-y-2">
                             <li>
-                                <Link to="/terms-of-service" className="text-gray-400 hover:text-white transition">
+                                <button
+                                    onClick={() => handleLinkClick('/terms-of-service')}
+                                    className="text-gray-400 hover:text-white transition text-left"
+                                >
                                     Terms of Service
-                                </Link>
+                                </button>
                             </li>
                             <li>
-                                <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition">
+                                <button
+                                    onClick={() => handleLinkClick('/privacy-policy')}
+                                    className="text-gray-400 hover:text-white transition text-left"
+                                >
                                     Privacy Policy
-                                </Link>
+                                </button>
                             </li>
                         </ul>
                     </div>

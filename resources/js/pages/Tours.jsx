@@ -19,6 +19,11 @@ export default function Tours() {
     const [sortBy, setSortBy] = useState('created_at');
     const [showFilters, setShowFilters] = useState(false);
 
+    // Scroll to top on component mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     useEffect(() => {
         fetchCategories();
     }, []);

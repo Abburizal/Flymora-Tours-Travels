@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function FAQ() {
     const [openIndex, setOpenIndex] = useState(null);
+
+    // Scroll to top on component mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     const faqs = [
         {

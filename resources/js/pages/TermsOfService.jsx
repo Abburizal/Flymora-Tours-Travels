@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function TermsOfService() {
+    // Scroll to top on component mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Hero Section */}
