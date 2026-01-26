@@ -7,9 +7,14 @@
         
         <title>{{ config('app.name', 'Tripin Travel') }}</title>
         
-        <!-- Midtrans Snap.js -->
+        <!-- Preconnect to external domains for faster loading -->
+        <link rel="preconnect" href="https://app.sandbox.midtrans.com">
+        <link rel="dns-prefetch" href="https://app.sandbox.midtrans.com">
+        
+        <!-- Midtrans Snap.js - deferred to avoid render blocking -->
         <script src="https://app.sandbox.midtrans.com/snap/snap.js" 
-                data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+                data-client-key="{{ config('services.midtrans.client_key') }}"
+                defer></script>
         
         @vite(['resources/css/app.css', 'resources/js/main.jsx'])
     </head>

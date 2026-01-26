@@ -59,6 +59,7 @@ const CompareButton = ({ tour, size = 'md', variant = 'default' }) => {
                         hover:scale-110
                         focus:outline-none focus:ring-2 focus:ring-blue-500
                     `}
+                    aria-label={inCompare ? 'Remove from comparison' : 'Add to comparison'}
                     title={inCompare ? 'Remove from comparison' : 'Add to comparison'}
                 >
                     <svg
@@ -97,6 +98,7 @@ const CompareButton = ({ tour, size = 'md', variant = 'default' }) => {
                     flex items-center gap-2
                     focus:outline-none focus:ring-2 focus:ring-blue-500
                 `}
+                aria-label={inCompare ? 'Remove from comparison' : 'Add to comparison'}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

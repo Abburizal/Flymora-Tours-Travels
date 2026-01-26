@@ -88,6 +88,13 @@ const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
                 focus:ring-red-500
                 focus:ring-offset-2
             `}
+            aria-label={
+                !user 
+                    ? 'Login to add to wishlist'
+                    : inWishlist 
+                        ? 'Remove from wishlist' 
+                        : 'Add to wishlist'
+            }
             title={
                 !user 
                     ? 'Login to add to wishlist'
