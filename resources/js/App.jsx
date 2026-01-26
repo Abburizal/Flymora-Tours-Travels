@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 
-// Pages
+// Eager load critical pages (above the fold)
 import Home from './pages/Home';
-import Tours from './pages/Tours';
-import TourDetail from './pages/TourDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Booking from './pages/Booking';
-import PaymentSimulator from './pages/PaymentSimulator';
-import FAQ from './pages/FAQ';
-import Contact from './pages/Contact';
-import TermsOfService from './pages/TermsOfService';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import Wishlist from './pages/Wishlist';
-import ComparePage from './pages/ComparePage';
+
+// Lazy load non-critical pages (code splitting)
+const Tours = lazy(() => import('./pages/Tours'));
+const TourDetail = lazy(() => import('./pages/TourDetail'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Booking = lazy(() => import('./pages/Booking'));
+const PaymentSimulator = lazy(() => import('./pages/PaymentSimulator'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const Contact = lazy(() => import('./pages/Contact'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
+const ComparePage = lazy(() => import('./pages/ComparePage'));
+
+// Loading component
+const PageLoader = () => (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 text-lg">Loading...</p>
+        </div>
+    </div>
+);
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
