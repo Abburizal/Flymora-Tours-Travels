@@ -8,6 +8,8 @@ import ImageGallery from '../components/ImageGallery';
 import SocialShare from '../components/SocialShare';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
+import SEO from '../components/SEO';
+import { TourProductSchema, BreadcrumbSchema } from '../components/Schema';
 
 export default function TourDetail() {
     const { id } = useParams();
@@ -122,6 +124,26 @@ export default function TourDetail() {
 
     return (
         <div className="container mx-auto px-4 py-8">
+            {/* Dynamic SEO & Schema Markup */}
+            {tour && (
+                <>
+                    <SEO 
+                        title={`${tour.name} - ${tour.destination}`}
+                        description={`${tour.description.substring(0, 155)}... Book this ${tour.duration}-day tour starting from IDR ${tour.price.toLocaleString('id-ID')}.`}
+                        keywords={`${tour.name}, ${tour.destination}, tour package, ${tour.category?.name || 'travel'}, vacation, holiday`}
+                        image={tour.image_url || '/images/og-default.jpg'}
+                        url={`/tours/${tour.id}`}
+                        type="product"
+                    />
+                    <TourProductSchema tour={tour} />
+                    <BreadcrumbSchema items={[
+                        { name: 'Home', url: 'https://tripin.travel' },
+                        { name: 'Tours', url: 'https://tripin.travel/tours' },
+                        { name: tour.name, url: `https://tripin.travel/tours/${tour.id}` }
+                    ]} />
+                </>
+            )}
+            
             <Link to="/tours" className="text-blue-600 hover:underline mb-4 inline-block">
                 ← Back to Tours
             </Link>

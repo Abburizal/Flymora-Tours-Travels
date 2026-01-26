@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
+import SEO from '../components/SEO';
 
 export default function Tours() {
     const [tours, setTours] = useState([]);
@@ -117,6 +118,13 @@ export default function Tours() {
 
     return (
         <div className="container mx-auto px-4 py-8">
+            <SEO 
+                title="Available Tours - Explore Amazing Destinations"
+                description={`Browse ${tours.length} amazing tour packages across Asia, Europe, and beyond. Find your perfect vacation with destinations including Thailand, Singapore, Korea, Japan, and more. Book your dream adventure today!`}
+                keywords="tour packages, travel tours, vacation packages, Asia tours, Europe tours, adventure travel, holiday packages, international tours, tour booking, travel deals"
+                url="/tours"
+            />
+            
             <h1 className="text-4xl font-bold mb-8">Available Tours</h1>
             
             {/* Search & Filter Section */}

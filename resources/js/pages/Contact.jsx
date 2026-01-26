@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import SEO from '../components/SEO';
 
 export default function Contact() {
     const [formData, setFormData] = useState({

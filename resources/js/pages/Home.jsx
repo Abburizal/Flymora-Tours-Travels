@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
+import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
 
 export default function Home() {
     const location = useLocation();
@@ -24,6 +26,8 @@ export default function Home() {
                 keywords="travel tours, vacation packages, adventure travel, tour booking, holiday packages, international tours, Asia tours, Europe tours, travel agency"
                 url="/"
             />
+            <OrganizationSchema />
+            <WebsiteSearchSchema />
             
             {/* Hero Section */}
             <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">

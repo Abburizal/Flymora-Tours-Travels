@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import SEO from '../components/SEO';
+import { FAQPageSchema } from '../components/Schema';
 
 export default function FAQ() {
     const [openIndex, setOpenIndex] = useState(null);
@@ -57,6 +59,14 @@ export default function FAQ() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+            <SEO 
+                title="FAQ - Frequently Asked Questions"
+                description="Find answers to common questions about booking tours with Tripin Travel. Learn about our booking process, payment methods, cancellation policy, travel insurance, and more."
+                keywords="FAQ, frequently asked questions, tour booking help, travel questions, booking process, payment methods, cancellation policy, travel insurance"
+                url="/faq"
+            />
+            <FAQPageSchema faqs={faqs} />
+            
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
                 <div className="container mx-auto px-4">
