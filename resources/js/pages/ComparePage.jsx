@@ -50,6 +50,15 @@ const ComparePage = () => {
         }).format(amount);
     };
 
+    const formatDuration = (duration) => {
+        // If duration already contains "Days", "Nights", "Day", "Night", return as is
+        if (/days?|nights?/i.test(duration)) {
+            return duration;
+        }
+        // Otherwise, it's just a number, add "days"
+        return `${duration} days`;
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 pt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -184,7 +193,7 @@ const ComparePage = () => {
                                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                                                     />
                                                 </svg>
-                                                <span>{tour.duration}</span>
+                                                <span>{formatDuration(tour.duration)}</span>
                                             </div>
                                         </td>
                                     ))}

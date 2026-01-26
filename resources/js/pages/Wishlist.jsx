@@ -30,6 +30,15 @@ const Wishlist = () => {
         fetchWishlist();
     };
 
+    const formatDuration = (duration) => {
+        // If duration already contains "Days", "Nights", "Day", "Night", return as is
+        if (/days?|nights?/i.test(duration)) {
+            return duration;
+        }
+        // Otherwise, it's just a number, add "days"
+        return `${duration} days`;
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 pt-20">
@@ -137,7 +146,7 @@ const Wishlist = () => {
                                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                                                     />
                                                 </svg>
-                                                <span>{wishlist.tour.duration}</span>
+                                                <span>{formatDuration(wishlist.tour.duration)}</span>
                                             </div>
 
                                             {/* Price */}

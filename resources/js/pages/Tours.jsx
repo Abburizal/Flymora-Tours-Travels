@@ -98,6 +98,15 @@ export default function Tours() {
         }).format(amount);
     };
 
+    const formatDuration = (duration) => {
+        // If duration already contains "Days", "Nights", "Day", "Night", return as is
+        if (/days?|nights?/i.test(duration)) {
+            return duration;
+        }
+        // Otherwise, it's just a number, add "days"
+        return `${duration} days`;
+    };
+
     if (error) {
         return (
             <div className="container mx-auto px-4 py-16 text-center">
@@ -330,7 +339,7 @@ export default function Tours() {
                                             <span className="text-gray-500 text-sm"> / person</span>
                                         </div>
                                         <div className="text-sm text-gray-600">
-                                            {tour.duration} days
+                                            {formatDuration(tour.duration)}
                                         </div>
                                     </div>
                                     
