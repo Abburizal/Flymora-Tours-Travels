@@ -100,112 +100,158 @@ const Wishlist = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {wishlists.map((wishlist) => (
-                            <div
-                                key={wishlist.id}
-                                className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-                            >
-                                {/* Tour Image */}
-                                <div className="relative h-56 overflow-hidden">
-                                    <img
-                                        src={wishlist.tour.images?.[0] || wishlist.tour.image_url || '/images/placeholder.jpg'}
-                                        alt={wishlist.tour.name}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    />
-                                    
-                                    {/* Overlay Gradient */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                                    
-                                    {/* Category Badge */}
-                                    {wishlist.tour.category && (
-                                        <div className="absolute top-3 left-3">
-                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
-                                                🏷️ {wishlist.tour.category.name}
-                                            </span>
-                                        </div>
-                                    )}
-                                    
-                                    {/* Wishlist Button */}
-                                    <div className="absolute top-3 right-3">
-                                        <WishlistButton 
-                                            tourId={wishlist.tour.id}
-                                            size="sm"
-                                        />
-                                    </div>
-                                </div>
+                        {wishlists.map((wishlist) => {
+                            const availableSeats = wishlist.tour.max_participants - wishlist.tour.booked_participants;
+                            const isLowStock = availableSeats <= 5 && availableSeats > 0;
+                            const isSoldOut = availableSeats <= 0;
 
-                                {/* Tour Info */}
-                                <div className="p-5">
-                                    <Link to={`/tours/${wishlist.tour.id}`}>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors">
-                                            {wishlist.tour.name}
-                                        </h3>
-                                    </Link>
-                                    
-                                    {/* Info Grid */}
-                                    <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
-                                        {/* Duration */}
-                                        <div className="flex items-center text-sm text-gray-700">
-                                            <svg className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            <span className="font-medium">{formatDuration(wishlist.tour.duration)}</span>
+                            return (
+                                <div
+                                    key={wishlist.id}
+                                    className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+                                >
+                                    {/* IMAGE SECTION - Fixed Height with Proper Fallback */}
+                                    <div className="relative h-56 overflow-hidden flex-shrink-0">
+                                        {wishlist.tour.image_url ? (
+                                            <img
+                                                src={wishlist.tour.image_url}
+                                                alt={wishlist.tour.name}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%234299e1" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23ffffff" font-size="20" font-family="sans-serif"%3EImage Not Available%3C/text%3E%3C/svg%3E';
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 flex items-center justify-center">
+                                                <div className="text-center text-white">
+                                                    <svg className="w-16 h-16 mx-auto mb-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <p className="text-xs font-medium">No Image Available</p>
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                                        
+                                        {/* Category Badge - Top Left with Padding */}
+                                        {wishlist.tour.category && (
+                                            <div className="absolute top-3 left-3 z-10">
+                                                <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
+                                                    🏷️ {wishlist.tour.category.name}
+                                                </span>
+                                            </div>
+                                        )}
+                                        
+                                        {/* Wishlist Button - Top Right with Padding */}
+                                        <div className="absolute top-3 right-3 z-10">
+                                            <WishlistButton 
+                                                tourId={wishlist.tour.id}
+                                                size="sm"
+                                                onToggle={handleRemove}
+                                            />
+                                        </div>
+
+                                        {/* Status Badge - Bottom Right */}
+                                        {(isSoldOut || isLowStock) && (
+                                            <div className="absolute bottom-3 right-3 z-10">
+                                                <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold shadow-lg ${
+                                                    isSoldOut 
+                                                        ? 'bg-red-500 text-white' 
+                                                        : 'bg-orange-500 text-white animate-pulse'
+                                                }`}>
+                                                    {isSoldOut ? '🚫 SOLD OUT' : `⚡ ${availableSeats} LEFT`}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* CONTENT SECTION - Flexible with Consistent Structure */}
+                                    <div className="flex flex-col flex-1 p-5">
+                                        {/* HEADER: Title - Fixed 2-line height */}
+                                        <Link to={`/tours/${wishlist.tour.id}`} className="block mb-3">
+                                            <h3 className="text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors leading-snug min-h-[3.5rem]">
+                                                {wishlist.tour.name}
+                                            </h3>
+                                        </Link>
+                                        
+                                        {/* BODY: Meta Information - Consistent spacing */}
+                                        <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
+                                            {/* Duration */}
+                                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                                                <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span className="font-medium">{formatDuration(wishlist.tour.duration)}</span>
+                                            </div>
+                                            
+                                            {/* Destination */}
+                                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                                                <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                <span className="font-medium truncate">{wishlist.tour.destination}</span>
+                                            </div>
+                                            
+                                            {/* Seats Available - Conditional rendering without breaking layout */}
+                                            {!isSoldOut && (
+                                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                    </svg>
+                                                    <span className={`font-medium ${isLowStock ? 'text-orange-600' : 'text-green-600'}`}>
+                                                        {availableSeats} seats available
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
                                         
-                                        {/* Destination */}
-                                        <div className="flex items-center text-sm text-gray-700">
-                                            <svg className="w-4 h-4 mr-2 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
-                                            <span className="font-medium truncate">{wishlist.tour.destination}</span>
+                                        {/* FOOTER: Price + Buttons - Pushed to bottom */}
+                                        <div className="mt-auto">
+                                            {/* Price Section */}
+                                            <div className="mb-4">
+                                                <div className="flex items-baseline">
+                                                    <span className="text-2xl font-bold text-blue-600">
+                                                        IDR {wishlist.tour.price.toLocaleString('id-ID')}
+                                                    </span>
+                                                    <span className="text-sm text-gray-500 ml-1 font-medium">/ person</span>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Action Buttons - Equal height and spacing */}
+                                            <div className="flex gap-2">
+                                                <Link
+                                                    to={`/tours/${wishlist.tour.id}`}
+                                                    className="flex-1 flex items-center justify-center h-11 px-4 rounded-lg font-semibold text-sm bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg transition-all duration-200"
+                                                >
+                                                    View Details
+                                                    <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </Link>
+                                                <Link
+                                                    to={`/booking/${wishlist.tour.id}`}
+                                                    className={`flex-1 flex items-center justify-center h-11 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                                                        isSoldOut
+                                                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                                            : 'bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg'
+                                                    }`}
+                                                    onClick={(e) => isSoldOut && e.preventDefault()}
+                                                >
+                                                    <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                    {isSoldOut ? 'Sold Out' : 'Book Now'}
+                                                </Link>
+                                            </div>
                                         </div>
-                                        
-                                        {/* Seats Available */}
-                                        <div className="flex items-center text-sm text-gray-700">
-                                            <svg className="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            </svg>
-                                            <span className="font-medium text-green-600">
-                                                {wishlist.tour.max_participants - wishlist.tour.booked_participants} seats available
-                                            </span>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Price Section */}
-                                    <div className="mb-4">
-                                        <div className="flex items-baseline">
-                                            <span className="text-2xl font-bold text-blue-600">
-                                                IDR {wishlist.tour.price.toLocaleString('id-ID')}
-                                            </span>
-                                            <span className="text-sm text-gray-500 ml-1 font-medium">/ person</span>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Action Buttons */}
-                                    <div className="flex gap-2">
-                                        <Link
-                                            to={`/tours/${wishlist.tour.id}`}
-                                            className="flex-1 flex items-center justify-center py-2.5 px-4 rounded-lg font-semibold text-sm bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg transition-all duration-200"
-                                        >
-                                            View Details
-                                            <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </Link>
-                                        <Link
-                                            to={`/booking/${wishlist.tour.id}`}
-                                            className="flex-1 flex items-center justify-center py-2.5 px-4 rounded-lg font-semibold text-sm bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg transition-all duration-200"
-                                        >
-                                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            Book Now
-                                        </Link>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>
