@@ -126,15 +126,19 @@ const Wishlist = () => {
 
                                     {/* Tour Info */}
                                     <div className="p-4">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition">
                                             {wishlist.tour.name}
                                         </h3>
                                         
-                                        <div className="space-y-2 text-sm text-gray-600">
-                                            {/* Duration */}
-                                            <div className="flex items-center">
+                                        {/* Price & Duration */}
+                                        <div className="mb-3">
+                                            <div className="text-xl font-bold text-blue-600 mb-1">
+                                                IDR {wishlist.tour.price.toLocaleString('id-ID')}
+                                                <span className="text-gray-500 text-xs font-normal"> / person</span>
+                                            </div>
+                                            <div className="flex items-center text-sm text-gray-600">
                                                 <svg
-                                                    className="w-4 h-4 mr-2 text-gray-400"
+                                                    className="w-4 h-4 mr-1"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -146,15 +150,7 @@ const Wishlist = () => {
                                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                                                     />
                                                 </svg>
-                                                <span>{formatDuration(wishlist.tour.duration)}</span>
-                                            </div>
-
-                                            {/* Price */}
-                                            <div className="flex items-center justify-between mt-3 pt-3 border-t">
-                                                <span className="text-xs text-gray-500">Starting from</span>
-                                                <span className="text-xl font-bold text-blue-600">
-                                                    IDR {wishlist.tour.price.toLocaleString('id-ID')}
-                                                </span>
+                                                {formatDuration(wishlist.tour.duration)}
                                             </div>
                                         </div>
                                     </div>

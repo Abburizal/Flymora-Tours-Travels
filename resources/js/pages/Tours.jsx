@@ -331,14 +331,16 @@ export default function Tours() {
                                     <h3 className="text-xl font-bold mb-2">{tour.name}</h3>
                                     <p className="text-gray-600 mb-4 line-clamp-2">{tour.description}</p>
                                     
-                                    <div className="flex justify-between items-center mb-4">
-                                        <div>
-                                            <span className="text-2xl font-bold text-blue-600">
-                                                {formatCurrency(tour.price)}
-                                            </span>
-                                            <span className="text-gray-500 text-sm"> / person</span>
+                                    {/* Price & Duration */}
+                                    <div className="mb-4">
+                                        <div className="text-2xl font-bold text-blue-600 mb-1">
+                                            {formatCurrency(tour.price)}
+                                            <span className="text-gray-500 text-sm font-normal"> / person</span>
                                         </div>
-                                        <div className="text-sm text-gray-600">
+                                        <div className="flex items-center text-sm text-gray-600">
+                                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
                                             {formatDuration(tour.duration)}
                                         </div>
                                     </div>
