@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 
 const Wishlist = () => {
@@ -13,13 +13,19 @@ const Wishlist = () => {
 
     const fetchWishlist = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('/api/wishlist', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            console.log('🔍 Fetching wishlist...');
+            console.log('Token in localStorage:', localStorage.getItem('auth_token') ? 'EXISTS' : 'MISSING');
+            
+            const response = await api.get('/wishlist');
+            
+            console.log('✅ Wishlist API Response:', response.data);
+            console.log('📊 Number of wishlists:', response.data.data?.length || 0);
+            
             setWishlists(response.data.data);
         } catch (error) {
-            console.error('Error fetching wishlist:', error);
+            console.error('❌ Error fetching wishlist:', error);
+            console.error('Error details:', error.response?.data);
+            console.error('Error status:', error.response?.status);
         } finally {
             setLoading(false);
         }

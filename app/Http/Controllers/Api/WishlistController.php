@@ -14,10 +14,23 @@ class WishlistController extends Controller
      */
     public function index()
     {
-        $wishlists = Auth::user()->wishlists()
+        $user = Auth::user();
+        
+        // Debug logging
+        \Log::info('📋 Wishlist Index Called', [
+            'user_id' => $user->id,
+            'user_email' => $user->email,
+        ]);
+        
+        $wishlists = $user->wishlists()
             ->with('tour.category')
             ->latest()
             ->get();
+        
+        \Log::info('✅ Wishlist Retrieved', [
+            'count' => $wishlists->count(),
+            'wishlist_ids' => $wishlists->pluck('id')->toArray(),
+        ]);
 
         return response()->json([
             'success' => true,
@@ -30,14 +43,28 @@ class WishlistController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        
+        // Debug logging
+        \Log::info('💖 Adding to Wishlist', [
+            'user_id' => $user->id,
+            'user_email' => $user->email,
+            'tour_id' => $request->tour_id,
+        ]);
+        
         $request->validate([
             'tour_id' => 'required|exists:tours,id'
         ]);
 
         // Check if already in wishlist
-        $exists = Auth::user()->hasInWishlist($request->tour_id);
+        $exists = $user->hasInWishlist($request->tour_id);
         
         if ($exists) {
+            \Log::warning('⚠️ Tour already in wishlist', [
+                'user_id' => $user->id,
+                'tour_id' => $request->tour_id,
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Tour already in wishlist'
@@ -45,11 +72,17 @@ class WishlistController extends Controller
         }
 
         $wishlist = Wishlist::create([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'tour_id' => $request->tour_id
         ]);
 
         $wishlist->load('tour.category');
+        
+        \Log::info('✅ Wishlist Created', [
+            'wishlist_id' => $wishlist->id,
+            'user_id' => $user->id,
+            'tour_id' => $request->tour_id,
+        ]);
 
         return response()->json([
             'success' => true,
