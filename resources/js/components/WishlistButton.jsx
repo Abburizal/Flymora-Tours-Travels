@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 
 const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
+    const { user } = useAuth();
     const [inWishlist, setInWishlist] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Size variants
     const sizeClasses = {
@@ -14,23 +15,14 @@ const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
     };
 
     useEffect(() => {
-        checkAuth();
-    }, []);
-
-    const checkAuth = async () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
+        if (user) {
             checkWishlistStatus();
         }
-    };
+    }, [user, tourId]);
 
     const checkWishlistStatus = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get(`/api/wishlist/check/${tourId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await api.get(`/wishlist/check/${tourId}`);
             setInWishlist(response.data.in_wishlist);
         } catch (error) {
             console.error('Error checking wishlist:', error);
@@ -41,30 +33,22 @@ const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!isAuthenticated) {
+        if (!user) {
             alert('Please login to add tours to wishlist');
-            // Optionally redirect to login page
-            // window.location.href = '/login';
+            window.location.href = '/login';
             return;
         }
 
         setLoading(true);
 
         try {
-            const token = localStorage.getItem('token');
-            
             if (inWishlist) {
                 // Remove from wishlist
-                await axios.delete(`/api/wishlist/${tourId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                await api.delete(`/wishlist/${tourId}`);
                 setInWishlist(false);
             } else {
                 // Add to wishlist
-                await axios.post('/api/wishlist', 
-                    { tour_id: tourId },
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
+                await api.post('/wishlist', { tour_id: tourId });
                 setInWishlist(true);
             }
         } catch (error) {
@@ -96,7 +80,7 @@ const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
                 focus:ring-offset-2
             `}
             title={
-                !isAuthenticated 
+                !user 
                     ? 'Login to add to wishlist'
                     : inWishlist 
                         ? 'Remove from wishlist' 
