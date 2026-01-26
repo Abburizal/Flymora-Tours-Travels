@@ -100,8 +100,22 @@ export default function TourDetail() {
         if (/days?|nights?/i.test(duration)) {
             return duration;
         }
-        // Otherwise, it's just a number, add "days"
-        return `${duration} days`;
+        // Otherwise, it's just a number, add "Days"
+        const days = parseInt(duration);
+        if (isNaN(days)) return duration;
+        
+        // Calculate nights (days - 1)
+        const nights = Math.max(0, days - 1);
+        return `${days} Days ${nights} Nights`;
+    };
+
+    const formatPrice = (price) => {
+        const numPrice = parseFloat(price);
+        if (isNaN(numPrice)) return price;
+        
+        // Convert to IDR (assuming price is in USD and 1 USD = 15,000 IDR)
+        const idrPrice = numPrice * 15000;
+        return `Rp ${idrPrice.toLocaleString('id-ID')}`;
     };
 
     const handleBookNow = () => {
@@ -113,7 +127,14 @@ export default function TourDetail() {
     };
 
     if (loading) {
-        return <div className="container mx-auto px-4 py-16 text-center">Loading...</div>;
+        return (
+            <div className="container mx-auto px-4 py-16">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-4"></div>
+                    <p className="text-gray-600 text-lg">Loading tour details...</p>
+                </div>
+            </div>
+        );
     }
 
     if (error || !tour) {
@@ -232,8 +253,171 @@ export default function TourDetail() {
                     </div>
                     
                     <div className="mb-8">
-                        <h2 className="text-2xl font-bold mb-4">Description</h2>
-                        <p className="text-gray-700 leading-relaxed">{tour.description}</p>
+                        <h2 className="text-2xl font-bold mb-4">About This Tour</h2>
+                        <p className="text-gray-700 leading-relaxed whitespace-pre-line">{tour.description}</p>
+                    </div>
+
+                    {/* Tour Highlights */}
+                    {tour.highlights && (
+                        <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+                            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                                Tour Highlights
+                            </h2>
+                            <ul className="space-y-3">
+                                {tour.highlights.split('\n').filter(h => h.trim()).map((highlight, index) => (
+                                    <li key={index} className="flex items-start gap-3">
+                                        <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="text-gray-700">{highlight.replace(/^[•\-*]\s*/, '')}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {/* What's Included */}
+                    {tour.included && (
+                        <div className="mb-8">
+                            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                What's Included
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {tour.included.split('\n').filter(i => i.trim()).map((item, index) => (
+                                    <div key={index} className="flex items-start gap-3 bg-green-50 rounded-lg p-3">
+                                        <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="text-gray-700 text-sm">{item.replace(/^[•\-*]\s*/, '')}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* What's Excluded */}
+                    {tour.excluded && (
+                        <div className="mb-8">
+                            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                                <svg className="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                What's Not Included
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {tour.excluded.split('\n').filter(e => e.trim()).map((item, index) => (
+                                    <div key={index} className="flex items-start gap-3 bg-red-50 rounded-lg p-3">
+                                        <svg className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="text-gray-700 text-sm">{item.replace(/^[•\-*]\s*/, '')}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Tour Information Grid */}
+                    <div className="mb-8 bg-gray-50 rounded-xl p-6">
+                        <h2 className="text-2xl font-bold mb-6">Tour Information</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Duration */}
+                            <div className="flex items-start gap-4">
+                                <div className="bg-blue-100 rounded-lg p-3">
+                                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-900 mb-1">Duration</h3>
+                                    <p className="text-gray-600">{formatDuration(tour.duration)}</p>
+                                </div>
+                            </div>
+
+                            {/* Max Participants */}
+                            <div className="flex items-start gap-4">
+                                <div className="bg-purple-100 rounded-lg p-3">
+                                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-900 mb-1">Group Size</h3>
+                                    <p className="text-gray-600">Max {tour.max_participants} people</p>
+                                </div>
+                            </div>
+
+                            {/* Destination */}
+                            <div className="flex items-start gap-4">
+                                <div className="bg-green-100 rounded-lg p-3">
+                                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-900 mb-1">Destination</h3>
+                                    <p className="text-gray-600">{tour.destination}</p>
+                                </div>
+                            </div>
+
+                            {/* Departure Location */}
+                            {tour.departure_location && (
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-orange-100 rounded-lg p-3">
+                                        <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900 mb-1">Departure From</h3>
+                                        <p className="text-gray-600">{tour.departure_location}</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Available Dates */}
+                            {(tour.available_from || tour.start_date) && (
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-indigo-100 rounded-lg p-3">
+                                        <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900 mb-1">Next Departure</h3>
+                                        <p className="text-gray-600">
+                                            {new Date(tour.available_from || tour.start_date).toLocaleDateString('en-US', { 
+                                                year: 'numeric', 
+                                                month: 'long', 
+                                                day: 'numeric' 
+                                            })}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Category */}
+                            {tour.category && (
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-pink-100 rounded-lg p-3">
+                                        <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900 mb-1">Category</h3>
+                                        <p className="text-gray-600">{tour.category.name}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Image Gallery Section */}
@@ -243,21 +427,41 @@ export default function TourDetail() {
                         </div>
                     )}
                     
-                    <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="text-center sm:text-left">
-                            <span className="text-gray-600 block mb-1">Price per person</span>
-                            <div className="text-4xl font-bold text-blue-600">
-                                {formatCurrency(tour.price)}
+                    <div className="border-t pt-8 mt-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+                            {/* Price Section */}
+                            <div className="text-center lg:text-left">
+                                <span className="text-gray-600 block mb-2 text-sm uppercase tracking-wide">Starting From</span>
+                                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+                                    {formatPrice(tour.price)}
+                                </div>
+                                <p className="text-sm text-gray-500">per person</p>
+                            </div>
+                            
+                            {/* Availability Badge */}
+                            <div className="flex flex-col items-center lg:items-end gap-4">
+                                <div className={`px-6 py-3 rounded-full font-semibold text-sm ${
+                                    availableSeats > 10 
+                                        ? 'bg-green-100 text-green-700' 
+                                        : availableSeats > 0 
+                                            ? 'bg-orange-100 text-orange-700' 
+                                            : 'bg-red-100 text-red-700'
+                                }`}>
+                                    {availableSeats > 0 
+                                        ? `${availableSeats} Seats Available` 
+                                        : 'Sold Out'}
+                                </div>
+                                
+                                {/* Book Button */}
+                                <button
+                                    onClick={handleBookNow}
+                                    disabled={availableSeats === 0}
+                                    className="w-full lg:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 hover:shadow-xl shadow-lg"
+                                >
+                                    {availableSeats === 0 ? 'Sold Out' : 'Book This Tour Now'}
+                                </button>
                             </div>
                         </div>
-                        
-                        <button
-                            onClick={handleBookNow}
-                            disabled={availableSeats === 0}
-                            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-                        >
-                            {availableSeats === 0 ? 'Sold Out' : 'Book Now'}
-                        </button>
                     </div>
                 </div>
             </div>
