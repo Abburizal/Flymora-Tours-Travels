@@ -44,16 +44,25 @@ const WishlistButton = ({ tourId, size = 'md', showText = false }) => {
         try {
             if (inWishlist) {
                 // Remove from wishlist
-                await api.delete(`/wishlist/${tourId}`);
+                console.log('Removing tour from wishlist:', tourId);
+                const response = await api.delete(`/wishlist/${tourId}`);
+                console.log('Remove response:', response.data);
                 setInWishlist(false);
+                alert('Tour removed from wishlist! ❤️');
             } else {
                 // Add to wishlist
-                await api.post('/wishlist', { tour_id: tourId });
+                console.log('Adding tour to wishlist:', tourId);
+                const response = await api.post('/wishlist', { tour_id: tourId });
+                console.log('Add response:', response.data);
                 setInWishlist(true);
+                alert('Tour added to wishlist! 💖');
             }
         } catch (error) {
             console.error('Error toggling wishlist:', error);
+            console.error('Error response:', error.response?.data);
             alert(error.response?.data?.message || 'Failed to update wishlist');
+            // Revert state on error
+            setInWishlist(!inWishlist);
         } finally {
             setLoading(false);
         }
