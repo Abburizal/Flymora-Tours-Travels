@@ -97,79 +97,106 @@ const Wishlist = () => {
                         {wishlists.map((wishlist) => (
                             <div
                                 key={wishlist.id}
-                                className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition group"
+                                className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                             >
-                                <Link to={`/tours/${wishlist.tour.id}`} className="block">
-                                    {/* Tour Image */}
-                                    <div className="relative h-48 overflow-hidden">
-                                        <img
-                                            src={wishlist.tour.images?.[0] || '/images/placeholder.jpg'}
-                                            alt={wishlist.tour.name}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                        {/* Wishlist Button */}
-                                        <div className="absolute top-2 right-2 bg-white rounded-full shadow-lg">
-                                            <WishlistButton 
-                                                tourId={wishlist.tour.id}
-                                                size="sm"
-                                            />
+                                {/* Tour Image */}
+                                <div className="relative h-56 overflow-hidden">
+                                    <img
+                                        src={wishlist.tour.images?.[0] || wishlist.tour.image_url || '/images/placeholder.jpg'}
+                                        alt={wishlist.tour.name}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                    
+                                    {/* Overlay Gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                                    
+                                    {/* Category Badge */}
+                                    {wishlist.tour.category && (
+                                        <div className="absolute top-3 left-3">
+                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
+                                                🏷️ {wishlist.tour.category.name}
+                                            </span>
                                         </div>
-                                        {/* Category Badge */}
-                                        {wishlist.tour.category && (
-                                            <div className="absolute bottom-2 left-2">
-                                                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">
-                                                    {wishlist.tour.category.name}
-                                                </span>
-                                            </div>
-                                        )}
+                                    )}
+                                    
+                                    {/* Wishlist Button */}
+                                    <div className="absolute top-3 right-3">
+                                        <WishlistButton 
+                                            tourId={wishlist.tour.id}
+                                            size="sm"
+                                        />
                                     </div>
+                                </div>
 
-                                    {/* Tour Info */}
-                                    <div className="p-4">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition">
+                                {/* Tour Info */}
+                                <div className="p-5">
+                                    <Link to={`/tours/${wishlist.tour.id}`}>
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors">
                                             {wishlist.tour.name}
                                         </h3>
+                                    </Link>
+                                    
+                                    {/* Info Grid */}
+                                    <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
+                                        {/* Duration */}
+                                        <div className="flex items-center text-sm text-gray-700">
+                                            <svg className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span className="font-medium">{formatDuration(wishlist.tour.duration)}</span>
+                                        </div>
                                         
-                                        {/* Price & Duration */}
-                                        <div className="mb-3">
-                                            <div className="text-xl font-bold text-blue-600 mb-1">
-                                                IDR {wishlist.tour.price.toLocaleString('id-ID')}
-                                                <span className="text-gray-500 text-xs font-normal"> / person</span>
-                                            </div>
-                                            <div className="flex items-center text-sm text-gray-600">
-                                                <svg
-                                                    className="w-4 h-4 mr-1"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                    />
-                                                </svg>
-                                                {formatDuration(wishlist.tour.duration)}
-                                            </div>
+                                        {/* Destination */}
+                                        <div className="flex items-center text-sm text-gray-700">
+                                            <svg className="w-4 h-4 mr-2 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            <span className="font-medium truncate">{wishlist.tour.destination}</span>
+                                        </div>
+                                        
+                                        {/* Seats Available */}
+                                        <div className="flex items-center text-sm text-gray-700">
+                                            <svg className="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                            <span className="font-medium text-green-600">
+                                                {wishlist.tour.max_participants - wishlist.tour.booked_participants} seats available
+                                            </span>
                                         </div>
                                     </div>
-                                </Link>
-
-                                {/* Action Buttons */}
-                                <div className="px-4 pb-4 flex gap-2">
-                                    <Link
-                                        to={`/tours/${wishlist.tour.id}`}
-                                        className="flex-1 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition text-sm font-medium"
-                                    >
-                                        View Details
-                                    </Link>
-                                    <Link
-                                        to={`/booking/${wishlist.tour.id}`}
-                                        className="flex-1 bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium"
-                                    >
-                                        Book Now
-                                    </Link>
+                                    
+                                    {/* Price Section */}
+                                    <div className="mb-4">
+                                        <div className="flex items-baseline">
+                                            <span className="text-2xl font-bold text-blue-600">
+                                                IDR {wishlist.tour.price.toLocaleString('id-ID')}
+                                            </span>
+                                            <span className="text-sm text-gray-500 ml-1 font-medium">/ person</span>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Action Buttons */}
+                                    <div className="flex gap-2">
+                                        <Link
+                                            to={`/tours/${wishlist.tour.id}`}
+                                            className="flex-1 flex items-center justify-center py-2.5 px-4 rounded-lg font-semibold text-sm bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg transition-all duration-200"
+                                        >
+                                            View Details
+                                            <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
+                                        <Link
+                                            to={`/booking/${wishlist.tour.id}`}
+                                            className="flex-1 flex items-center justify-center py-2.5 px-4 rounded-lg font-semibold text-sm bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg transition-all duration-200"
+                                        >
+                                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            Book Now
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         ))}
