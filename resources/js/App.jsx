@@ -16,6 +16,7 @@ import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Wishlist from './pages/Wishlist';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -52,6 +53,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="wishlist"
+                    element={
+                        <ProtectedRoute>
+                            <Wishlist />
                         </ProtectedRoute>
                     }
                 />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import WishlistButton from '../components/WishlistButton';
 
 export default function Tours() {
     const [tours, setTours] = useState([]);
@@ -305,6 +306,10 @@ export default function Tours() {
                                             </svg>
                                         </div>
                                     )}
+                                    {/* Wishlist Button */}
+                                    <div className="absolute top-2 right-2 bg-white rounded-full shadow-lg">
+                                        <WishlistButton tourId={tour.id} size="sm" />
+                                    </div>
                                     {tour.category && (
                                         <span className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-medium text-gray-700 shadow-md">
                                             {tour.category.name}

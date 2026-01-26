@@ -65,4 +65,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    /**
+     * Get the wishlists for the user.
+     */
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    /**
+     * Check if user has tour in wishlist.
+     */
+    public function hasInWishlist($tourId)
+    {
+        return $this->wishlists()->where('tour_id', $tourId)->exists();
+    }
 }

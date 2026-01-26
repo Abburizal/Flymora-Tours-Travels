@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\PaymentSimulatorController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ItineraryController;
+use App\Http\Controllers\Api\WishlistController;
 
 // Public routes
 Route::get('/tours', [TourController::class, 'index']);
@@ -53,4 +54,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Review routes
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::get('/bookings/{booking}/can-review', [ReviewController::class, 'canReview']);
+
+    // Wishlist routes
+    Route::get('/wishlist', [WishlistController::class, 'index']);
+    Route::post('/wishlist', [WishlistController::class, 'store']);
+    Route::delete('/wishlist/{tourId}', [WishlistController::class, 'destroy']);
+    Route::get('/wishlist/check/{tourId}', [WishlistController::class, 'check']);
 });

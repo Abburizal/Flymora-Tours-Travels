@@ -6,6 +6,7 @@ import ReviewList from '../components/ReviewList';
 import StarRating from '../components/StarRating';
 import ImageGallery from '../components/ImageGallery';
 import SocialShare from '../components/SocialShare';
+import WishlistButton from '../components/WishlistButton';
 
 export default function TourDetail() {
     const { id } = useParams();
@@ -134,7 +135,13 @@ export default function TourDetail() {
                 <div className="p-8">
                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
                         <div className="flex-1">
-                            <h1 className="text-4xl font-bold mb-4">{tour.name}</h1>
+                            <div className="flex items-start justify-between mb-4">
+                                <h1 className="text-4xl font-bold flex-1">{tour.name}</h1>
+                                {/* Wishlist Button */}
+                                <div className="ml-4">
+                                    <WishlistButton tourId={tour.id} size="lg" showText />
+                                </div>
+                            </div>
                             
                             {/* Rating Section */}
                             {reviewStats && reviewStats.total_reviews > 0 && (
