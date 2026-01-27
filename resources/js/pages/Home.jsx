@@ -113,10 +113,15 @@ export default function Home() {
                         </div>
                         <Link
                             to="/tours"
-                            className="hidden md:block text-blue-600 hover:text-blue-700 font-semibold flex items-center"
+                            className="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-all duration-300 group"
                         >
-                            Lihat Semua
-                            <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span>Lihat Semua</span>
+                            <svg 
+                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </Link>
