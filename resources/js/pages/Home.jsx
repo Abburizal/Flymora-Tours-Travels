@@ -5,6 +5,7 @@ import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
 import TestimonialCard from '../components/TestimonialCard';
 import CategoryCard from '../components/CategoryCard';
 import RecommendedBadge from '../components/RecommendedBadge';
+import HeroSearchBar from '../components/HeroSearchBar';
 import api from '../services/api';
 
 export default function Home() {
@@ -198,7 +199,7 @@ export default function Home() {
             
             {/* Hero Section */}
             <section 
-                className="relative bg-cover bg-center text-white py-20 min-h-[500px] flex items-center"
+                className="relative bg-cover bg-center text-white py-24 min-h-[600px] flex items-center"
                 style={{
                     backgroundImage: "url('/images/hero-bg.jpg')",
                     backgroundSize: 'cover',
@@ -206,23 +207,33 @@ export default function Home() {
                 }}
             >
                 {/* Overlay for better text readability */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-600/50"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-600/60"></div>
                 
                 {/* Content */}
                 <div className="container mx-auto px-4 text-center relative z-10">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-2xl">
+                    <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl">
                         Explore the World with Flymora
                     </h1>
-                    <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-lg">
+                    <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto drop-shadow-lg">
                         Discover amazing destinations, create unforgettable memories,
                         and embark on adventures you'll treasure forever.
                     </p>
-                    <Link
-                        to="/tours"
-                        className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 hover:shadow-xl inline-block transition-all duration-300 transform hover:scale-105"
-                    >
-                        Browse Tours
-                    </Link>
+                    
+                    {/* Search Bar */}
+                    <HeroSearchBar />
+                    
+                    {/* Browse Tours Link - Secondary CTA */}
+                    <div className="mt-6">
+                        <Link
+                            to="/tours"
+                            className="text-white hover:text-blue-200 font-semibold text-sm inline-flex items-center gap-2 transition-colors"
+                        >
+                            <span>or browse all tours</span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
