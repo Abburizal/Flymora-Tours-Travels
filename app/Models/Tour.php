@@ -32,6 +32,9 @@ class Tour extends Model implements HasMedia
         'available_until',
         'is_recommended',
         'recommendation_order',
+        'discount_percentage',
+        'promo_end_date',
+        'promo_label',
     ];
 
     protected $casts = [
@@ -45,6 +48,7 @@ class Tour extends Model implements HasMedia
         'included' => 'array',
         'excluded' => 'array',
         'is_recommended' => 'boolean',
+        'promo_end_date' => 'datetime',
     ];
 
     /**

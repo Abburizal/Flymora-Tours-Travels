@@ -5,12 +5,14 @@ import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
 import TestimonialCard from '../components/TestimonialCard';
 import CategoryCard from '../components/CategoryCard';
 import RecommendedBadge from '../components/RecommendedBadge';
+import PromoBadge from '../components/PromoBadge';
 import HeroSearchBar from '../components/HeroSearchBar';
 import api from '../services/api';
 
 export default function Home() {
     const location = useLocation();
     const [bestSellerTours, setBestSellerTours] = useState([]);
+    const [promoTours, setPromoTours] = useState([]);
     const [loadingTours, setLoadingTours] = useState(true);
     const [categories, setCategories] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(true);
@@ -160,6 +162,16 @@ export default function Home() {
             // Get first 10 tours (best sellers)
             const tours = response.data.slice(0, 10);
             setBestSellerTours(tours);
+            
+            // Filter promo tours (tours with active discount)
+            const now = new Date();
+            const toursWithPromo = tours.filter(tour => {
+                if (!tour.discount_percentage) return false;
+                if (!tour.promo_end_date) return true; // No end date = always active
+                const endDate = new Date(tour.promo_end_date);
+                return endDate > now;
+            });
+            setPromoTours(toursWithPromo);
         } catch (error) {
             console.error('Error fetching best seller tours:', error);
         } finally {
@@ -237,6 +249,136 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Promo/Deals Section */}
+            {promoTours.length > 0 && (
+                <section className="py-16 bg-gradient-to-br from-orange-50 via-red-50 to-pink-50">
+                    <div className="container mx-auto px-4">
+                        {/* Section Header */}
+                        <div className="text-center mb-12">
+                            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 text-white px-6 py-2 rounded-full mb-4 shadow-lg">
+                                <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span className="font-bold text-sm uppercase tracking-wider">Flash Deals</span>
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                                🔥 Hot Deals & Promotions
+                            </h2>
+                            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                                Don't miss out! Limited time offers with amazing discounts on our best tours
+                            </p>
+                        </div>
+
+                        {/* Promo Tours Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {promoTours.slice(0, 6).map((tour) => {
+                                const discountedPrice = tour.price - (tour.price * tour.discount_percentage / 100);
+                                const imageUrl = tour.image 
+                                    ? `/storage/${tour.image}`
+                                    : tour.images?.[0]
+                                    ? `/storage/${tour.images[0]}`
+                                    : '/images/default-tour.jpg';
+
+                                return (
+                                    <div key={tour.id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                                        {/* Tour Image with Badges */}
+                                        <div className="relative h-64 overflow-hidden">
+                                            <img
+                                                src={imageUrl}
+                                                alt={tour.name}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                onError={(e) => {
+                                                    e.target.src = '/images/default-tour.jpg';
+                                                }}
+                                            />
+                                            
+                                            {/* Gradient Overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                            
+                                            {/* Promo Badge */}
+                                            <PromoBadge tour={tour} position="top-left" />
+                                            
+                                            {/* Recommended Badge (if applicable) */}
+                                            {tour.is_recommended && (
+                                                <div className="absolute top-2 right-2 z-20">
+                                                    <RecommendedBadge />
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Tour Details */}
+                                        <div className="p-6">
+                                            <div className="flex items-start justify-between mb-3">
+                                                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors flex-1">
+                                                    {tour.name}
+                                                </h3>
+                                            </div>
+
+                                            <div className="flex items-center text-gray-600 mb-4 text-sm">
+                                                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                <span className="font-medium">{tour.destination}</span>
+                                                <span className="mx-3 text-gray-400">•</span>
+                                                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span>{tour.duration}</span>
+                                            </div>
+
+                                            {/* Price Section */}
+                                            <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+                                                <div>
+                                                    <div className="text-sm text-gray-500 line-through mb-1">
+                                                        Rp {tour.price.toLocaleString('id-ID')}
+                                                    </div>
+                                                    <div className="text-2xl font-bold text-green-600">
+                                                        Rp {discountedPrice.toLocaleString('id-ID')}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">per person</div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
+                                                        Save Rp {(tour.price - discountedPrice).toLocaleString('id-ID')}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* CTA Button */}
+                                            <Link
+                                                to={`/tours/${tour.id}`}
+                                                className="block w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white text-center py-3 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-xl transform hover:scale-105"
+                                            >
+                                                Grab This Deal Now! 🎉
+                                            </Link>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* View All Promos Button */}
+                        {promoTours.length > 6 && (
+                            <div className="text-center mt-12">
+                                <Link
+                                    to="/tours?promo=true"
+                                    className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                >
+                                    <span>View All {promoTours.length} Promo Tours</span>
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            )}
+
             {/* Best Seller Tours Section */}
             <section className="py-16 bg-gray-50">
                 <div className="container mx-auto px-4">
@@ -279,7 +421,21 @@ export default function Home() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                            {bestSellerTours.map((tour) => (
+                            {bestSellerTours.map((tour) => {
+                                const imageUrl = tour.image 
+                                    ? `/storage/${tour.image}`
+                                    : tour.images?.[0]
+                                    ? `/storage/${tour.images[0]}`
+                                    : '/images/default-tour.jpg';
+
+                                // Calculate discounted price if promo exists
+                                const hasActivePromo = tour.discount_percentage && 
+                                    (!tour.promo_end_date || new Date(tour.promo_end_date) > new Date());
+                                const discountedPrice = hasActivePromo
+                                    ? tour.price - (tour.price * tour.discount_percentage / 100)
+                                    : tour.price;
+
+                                return (
                                 <Link
                                     key={tour.id}
                                     to={`/tours/${tour.id}`}
@@ -287,23 +443,27 @@ export default function Home() {
                                 >
                                     {/* Image */}
                                     <div className="relative overflow-hidden h-40">
-                                        {tour.image_url ? (
-                                            <img
-                                                src={tour.image_url}
-                                                alt={tour.name}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                                <svg className="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
+                                        <img
+                                            src={imageUrl}
+                                            alt={tour.name}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                            onError={(e) => {
+                                                e.target.src = '/images/default-tour.jpg';
+                                            }}
+                                        />
+                                        
+                                        {/* Promo Badge (if has active promo) */}
+                                        {hasActivePromo && (
+                                            <div className="absolute top-2 left-2 z-20">
+                                                <div className="bg-red-600 text-white px-2 py-1 rounded-md shadow-lg font-bold text-xs animate-pulse">
+                                                    -{tour.discount_percentage}%
+                                                </div>
                                             </div>
                                         )}
                                         
                                         {/* Recommended Badge */}
                                         {tour.is_recommended && (
-                                            <div className="absolute top-2 left-2">
+                                            <div className={`absolute ${hasActivePromo ? 'top-10' : 'top-2'} left-2 z-10`}>
                                                 <RecommendedBadge />
                                             </div>
                                         )}
@@ -374,7 +534,8 @@ export default function Home() {
                                         </button>
                                     </div>
                                 </Link>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
 
