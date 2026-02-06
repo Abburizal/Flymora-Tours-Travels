@@ -30,6 +30,8 @@ class Tour extends Model implements HasMedia
         'departure_location',
         'available_from',
         'available_until',
+        'is_recommended',
+        'recommendation_order',
     ];
 
     protected $casts = [
@@ -42,6 +44,7 @@ class Tour extends Model implements HasMedia
         'highlights' => 'array',
         'included' => 'array',
         'excluded' => 'array',
+        'is_recommended' => 'boolean',
     ];
 
     /**

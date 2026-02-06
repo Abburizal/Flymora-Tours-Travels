@@ -4,6 +4,7 @@ import SEO from '../components/SEO';
 import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
 import TestimonialCard from '../components/TestimonialCard';
 import CategoryCard from '../components/CategoryCard';
+import RecommendedBadge from '../components/RecommendedBadge';
 import api from '../services/api';
 
 export default function Home() {
@@ -288,12 +289,21 @@ export default function Home() {
                                                 </svg>
                                             </div>
                                         )}
+                                        
+                                        {/* Recommended Badge */}
+                                        {tour.is_recommended && (
+                                            <div className="absolute top-2 left-2">
+                                                <RecommendedBadge />
+                                            </div>
+                                        )}
+                                        
                                         {/* Category Badge */}
-                                        <div className="absolute top-2 left-2">
+                                        <div className={`absolute ${tour.is_recommended ? 'top-12' : 'top-2'} left-2`}>
                                             <span className="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2 py-1 rounded text-gray-800">
                                                 {tour.category?.name}
                                             </span>
                                         </div>
+                                        
                                         {/* Duration Badge */}
                                         <div className="absolute top-2 right-2">
                                             <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">

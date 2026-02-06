@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
+import RecommendedBadge from '../components/RecommendedBadge';
 import SEO from '../components/SEO';
 import { useAnalytics } from '../hooks/useAnalytics';
 
@@ -351,9 +352,16 @@ export default function Tours() {
                                     {/* Overlay Gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                                     
+                                    {/* Recommended Badge */}
+                                    {tour.is_recommended && (
+                                        <div className="absolute top-3 left-3">
+                                            <RecommendedBadge />
+                                        </div>
+                                    )}
+                                    
                                     {/* Category Badge */}
                                     {tour.category && (
-                                        <div className="absolute top-3 left-3">
+                                        <div className={`absolute ${tour.is_recommended ? 'top-14' : 'top-3'} left-3`}>
                                             <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
                                                 🏷️ {tour.category.name}
                                             </span>
