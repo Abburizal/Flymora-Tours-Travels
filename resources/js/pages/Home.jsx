@@ -2,12 +2,138 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
+import TestimonialCard from '../components/TestimonialCard';
+import CategoryCard from '../components/CategoryCard';
 import api from '../services/api';
 
 export default function Home() {
     const location = useLocation();
     const [bestSellerTours, setBestSellerTours] = useState([]);
     const [loadingTours, setLoadingTours] = useState(true);
+    const [categories, setCategories] = useState([]);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+
+    // Popular Categories Data (with attractive icons and colors)
+    const popularCategories = [
+        {
+            id: 1,
+            name: 'Beach Paradise',
+            slug: 'beach',
+            description: 'Explore pristine beaches and tropical islands with crystal clear waters',
+            icon: 'beach',
+            color: 'blue',
+            tourCount: 24
+        },
+        {
+            id: 2,
+            name: 'Mountain Adventure',
+            slug: 'mountain',
+            description: 'Conquer peaks and enjoy breathtaking views from the mountains',
+            icon: 'mountain',
+            color: 'green',
+            tourCount: 18
+        },
+        {
+            id: 3,
+            name: 'Cultural Heritage',
+            slug: 'cultural',
+            description: 'Immerse yourself in rich history and local traditions',
+            icon: 'cultural',
+            color: 'purple',
+            tourCount: 32
+        },
+        {
+            id: 4,
+            name: 'City Exploration',
+            slug: 'city',
+            description: 'Discover vibrant cities and modern attractions',
+            icon: 'city',
+            color: 'orange',
+            tourCount: 21
+        },
+        {
+            id: 5,
+            name: 'Nature & Wildlife',
+            slug: 'nature',
+            description: 'Get close to nature and observe amazing wildlife',
+            icon: 'nature',
+            color: 'teal',
+            tourCount: 15
+        },
+        {
+            id: 6,
+            name: 'Honeymoon Romance',
+            slug: 'honeymoon',
+            description: 'Create unforgettable memories with your loved one',
+            icon: 'honeymoon',
+            color: 'pink',
+            tourCount: 12
+        }
+    ];
+
+    // Testimonial data
+    const testimonials = [
+        {
+            id: 1,
+            name: 'Budi Santoso',
+            location: 'Jakarta',
+            rating: 5,
+            comment: 'Pengalaman yang luar biasa! Tour guide sangat ramah dan profesional. Destinasi yang dikunjungi sangat indah dan sesuai dengan ekspektasi. Highly recommended!',
+            tourName: 'Bali Paradise 5D4N',
+            date: 'January 2026',
+            image: null
+        },
+        {
+            id: 2,
+            name: 'Siti Nurhaliza',
+            location: 'Surabaya',
+            rating: 5,
+            comment: 'Pelayanan terbaik yang pernah saya dapatkan. Semua diatur dengan rapi dari awal sampai akhir. Hotelnya bagus, makanannya enak, dan itinerary-nya pas banget!',
+            tourName: 'Yogyakarta Cultural Tour',
+            date: 'December 2025',
+            image: null
+        },
+        {
+            id: 3,
+            name: 'Andi Wijaya',
+            location: 'Bandung',
+            rating: 5,
+            comment: 'Worth it banget! Harganya sangat terjangkau tapi kualitasnya premium. Tim Flymora sangat responsif dan helpful. Pasti akan booking lagi untuk trip berikutnya.',
+            tourName: 'Bromo Sunrise Adventure',
+            date: 'January 2026',
+            image: null
+        },
+        {
+            id: 4,
+            name: 'Maya Putri',
+            location: 'Medan',
+            rating: 5,
+            comment: 'Trip impian saya jadi kenyataan! Terima kasih Flymora sudah mengatur semuanya dengan sempurna. Foto-fotonya bagus semua, memories yang tak terlupakan!',
+            tourName: 'Raja Ampat Diving Trip',
+            date: 'November 2025',
+            image: null
+        },
+        {
+            id: 5,
+            name: 'Rudi Hartono',
+            location: 'Semarang',
+            rating: 5,
+            comment: 'Pelayanan customer service sangat baik, fast response dan solutif. Proses booking mudah dan pembayarannya aman. Akan merekomendasikan ke teman dan keluarga!',
+            tourName: 'Lombok Beach Escape',
+            date: 'December 2025',
+            image: null
+        },
+        {
+            id: 6,
+            name: 'Dewi Lestari',
+            location: 'Bali',
+            rating: 5,
+            comment: 'Paket tour terlengkap dengan harga bersahabat. Guide lokal sangat menguasai area dan memberikan insight menarik. Transportasi nyaman dan tepat waktu. Sangat puas!',
+            tourName: 'Java Heritage Tour',
+            date: 'January 2026',
+            image: null
+        }
+    ];
 
     useEffect(() => {
         // Handle scroll after navigation from footer
@@ -243,6 +369,58 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Popular Categories Section */}
+            <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+                <div className="container mx-auto px-4">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-bold mb-4 text-gray-800">
+                            Explore by Category
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                            Choose your perfect adventure from our curated collection of destinations
+                        </p>
+                    </div>
+
+                    {/* Categories Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        {popularCategories.map((category) => (
+                            <CategoryCard key={category.id} category={category} />
+                        ))}
+                    </div>
+
+                    {/* Additional Info */}
+                    <div className="text-center mt-12">
+                        <p className="text-gray-600 mb-6">
+                            Can't find what you're looking for? 
+                            <Link to="/tours" className="text-blue-600 font-semibold hover:text-blue-700 ml-2">
+                                Browse all tours →
+                            </Link>
+                        </p>
+                        
+                        {/* Quick Stats */}
+                        <div className="flex flex-wrap justify-center gap-8 mt-8">
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-blue-600 mb-1">120+</div>
+                                <div className="text-sm text-gray-600">Total Tours</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-green-600 mb-1">50+</div>
+                                <div className="text-sm text-gray-600">Destinations</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-purple-600 mb-1">6</div>
+                                <div className="text-sm text-gray-600">Categories</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-orange-600 mb-1">1,200+</div>
+                                <div className="text-sm text-gray-600">Happy Travelers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* About Us Section */}
             <section id="about" className="py-20 bg-white">
                 <div className="container mx-auto px-4">
@@ -467,6 +645,70 @@ export default function Home() {
                                 Safe and secure payment with Midtrans
                             </p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-bold mb-4 text-gray-800">
+                            What Our Travelers Say
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                            Pengalaman nyata dari ribuan pelanggan yang telah mempercayai kami untuk perjalanan mereka
+                        </p>
+                    </div>
+
+                    {/* Testimonials Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        {testimonials.map((testimonial) => (
+                            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+                        ))}
+                    </div>
+
+                    {/* Overall Stats */}
+                    <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-8 mt-12">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                            <div>
+                                <div className="text-4xl font-bold text-blue-600 mb-2">4.9/5</div>
+                                <div className="text-gray-700 font-semibold">Average Rating</div>
+                                <div className="flex justify-center mt-2">
+                                    {[...Array(5)].map((_, i) => (
+                                        <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <div className="text-4xl font-bold text-blue-600 mb-2">1,200+</div>
+                                <div className="text-gray-700 font-semibold">Happy Customers</div>
+                            </div>
+                            <div>
+                                <div className="text-4xl font-bold text-blue-600 mb-2">850+</div>
+                                <div className="text-gray-700 font-semibold">Reviews</div>
+                            </div>
+                            <div>
+                                <div className="text-4xl font-bold text-blue-600 mb-2">98%</div>
+                                <div className="text-gray-700 font-semibold">Satisfaction Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="text-center mt-8">
+                        <Link
+                            to="/tours"
+                            className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                        >
+                            <span>Mulai Petualangan Anda</span>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </Link>
                     </div>
                 </div>
             </section>

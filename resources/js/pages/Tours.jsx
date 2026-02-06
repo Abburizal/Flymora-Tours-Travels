@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
@@ -8,6 +8,7 @@ import { useAnalytics } from '../hooks/useAnalytics';
 
 export default function Tours() {
     const { trackSearch, trackFilter } = useAnalytics();
+    const [searchParams] = useSearchParams();
     const [tours, setTours] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,6 +29,14 @@ export default function Tours() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
+
+    // Initialize category from URL params
+    useEffect(() => {
+        const categoryParam = searchParams.get('category');
+        if (categoryParam) {
+            setSelectedCategory(categoryParam);
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         fetchCategories();
