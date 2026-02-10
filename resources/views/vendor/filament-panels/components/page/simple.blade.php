@@ -57,18 +57,15 @@
             </div>
         </header>
 
-        <!-- Login Card with Enhanced Depth -->
-        <main class="login-card relative bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/80 overflow-hidden animate-slide-up">
-            <!-- Top Accent Border -->
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#d97706]"></div>
-            
+        <!-- Login Form - Clean Minimalist Design -->
+        <main class="login-form animate-slide-up">
             <!-- Form Content -->
-            <div class="px-8 pt-9 pb-8">
+            <div class="px-4 py-8">
                 {{ $slot }}
             </div>
             
-            <!-- Card Footer with Links -->
-            <footer class="bg-gradient-to-br from-slate-50/80 to-slate-100/50 backdrop-blur-sm border-t border-slate-200/80 px-8 py-6 space-y-4">
+            <!-- Links Section -->
+            <footer class="px-4 py-6 space-y-4">
                 @if (filament()->hasPasswordReset())
                     <div class="text-center">
                         <a 
@@ -83,7 +80,7 @@
                     </div>
                 @endif
                 
-                <div class="text-center pt-2 border-t border-slate-200/60">
+                <div class="text-center pt-2">
                     <a 
                         href="/" 
                         class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-all duration-200 group"
@@ -114,7 +111,7 @@
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_PAGE_END, scopes: $this->getRenderHookScopes()) }}
     </div>
     
-    <!-- Premium Enterprise Login Styles -->
+    <!-- Clean Minimalist Admin Login Styles -->
     <style>
         /* === Brand Color System === */
         :root {
@@ -122,38 +119,20 @@
             --flymora-navy-light: #2563eb;
             --flymora-gold: #d97706;
             --flymora-gold-light: #f59e0b;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        /* === Login Card with Enhanced Depth === */
-        .login-card {
-            box-shadow: 
-                0 20px 25px -5px rgba(0, 0, 0, 0.08),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04),
-                0 0 0 1px rgba(0, 0, 0, 0.05),
-                0 0 60px -15px rgba(30, 58, 138, 0.15);
+        /* === Login Form - No Card, No Shadows === */
+        .login-form {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .login-card:hover {
-            box-shadow: 
-                0 25px 30px -5px rgba(0, 0, 0, 0.1),
-                0 15px 15px -5px rgba(0, 0, 0, 0.05),
-                0 0 0 1px rgba(30, 58, 138, 0.08),
-                0 0 80px -15px rgba(30, 58, 138, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        /* === Input Fields - Premium Feel === */
+        /* === Input Fields - Clean Minimal Style === */
         .flymora-admin-login input[type="email"],
         .flymora-admin-login input[type="password"],
         .flymora-admin-login input[type="text"] {
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
-            border: 2px solid #e2e8f0 !important;
-            border-radius: 0.625rem !important;
+            box-shadow: none !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
             font-size: 0.9375rem !important;
             padding: 0.75rem 1rem !important;
@@ -165,18 +144,14 @@
         .flymora-admin-login input[type="password"]:hover,
         .flymora-admin-login input[type="text"]:hover {
             border-color: #cbd5e1 !important;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06) !important;
         }
         
         .flymora-admin-login input[type="email"]:focus,
         .flymora-admin-login input[type="password"]:focus,
         .flymora-admin-login input[type="text"]:focus {
-            box-shadow: 
-                0 0 0 4px rgba(30, 58, 138, 0.12) !important,
-                0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1) !important;
             border-color: var(--flymora-navy) !important;
             outline: none !important;
-            transform: translateY(-1px) !important;
         }
         
         /* === Form Labels === */
@@ -188,94 +163,43 @@
             margin-bottom: 0.5rem !important;
         }
         
-        /* === Primary Button - Enhanced Gradient === */
+        /* === Primary Button - Clean Style === */
         .flymora-admin-login button[type="submit"],
         .flymora-admin-login .fi-btn-primary {
-            background: linear-gradient(135deg, var(--flymora-navy) 0%, #1e40af 50%, var(--flymora-navy-light) 100%) !important;
+            background: linear-gradient(135deg, var(--flymora-navy) 0%, #1e40af 100%) !important;
             border: none !important;
-            box-shadow: 
-                0 4px 6px -1px rgba(30, 58, 138, 0.3), 
-                0 2px 4px -1px rgba(30, 58, 138, 0.2),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+            box-shadow: none !important;
             font-weight: 600 !important;
             letter-spacing: 0.025em !important;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            border-radius: 0.625rem !important;
+            border-radius: 0.5rem !important;
             padding: 0.75rem 1.5rem !important;
-            position: relative !important;
-            overflow: hidden !important;
-        }
-        
-        .flymora-admin-login button[type="submit"]::before,
-        .flymora-admin-login .fi-btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .flymora-admin-login button[type="submit"]:hover::before,
-        .flymora-admin-login .fi-btn-primary:hover::before {
-            left: 100%;
         }
         
         .flymora-admin-login button[type="submit"]:hover:not(:disabled),
         .flymora-admin-login .fi-btn-primary:hover:not(:disabled) {
-            background: linear-gradient(135deg, #1e40af 0%, var(--flymora-navy) 50%, #1e40af 100%) !important;
-            box-shadow: 
-                0 12px 20px -5px rgba(30, 58, 138, 0.4), 
-                0 6px 8px -2px rgba(30, 58, 138, 0.3),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
-            transform: translateY(-2px) !important;
+            background: linear-gradient(135deg, #1e40af 0%, var(--flymora-navy) 100%) !important;
+            opacity: 0.9 !important;
         }
         
         .flymora-admin-login button[type="submit"]:active:not(:disabled),
         .flymora-admin-login .fi-btn-primary:active:not(:disabled) {
-            transform: translateY(0) !important;
-            box-shadow: 
-                0 2px 4px -1px rgba(30, 58, 138, 0.3), 
-                0 1px 2px -1px rgba(30, 58, 138, 0.2) !important;
+            opacity: 0.8 !important;
         }
         
         /* === Button Loading State === */
         .flymora-admin-login button[type="submit"]:disabled,
         .flymora-admin-login .fi-btn-primary:disabled {
-            opacity: 0.65 !important;
+            opacity: 0.6 !important;
             cursor: not-allowed !important;
-            transform: none !important;
-            position: relative !important;
-        }
-        
-        .flymora-admin-login button[type="submit"]:disabled::after {
-            content: '';
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: translateY(-50%) rotate(360deg); }
         }
         
         /* === Checkbox Styling === */
         .flymora-admin-login input[type="checkbox"] {
-            border-radius: 0.375rem !important;
-            border: 2px solid #cbd5e1 !important;
+            border-radius: 0.25rem !important;
+            border: 1px solid #cbd5e1 !important;
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
             cursor: pointer !important;
-            width: 1.125rem !important;
-            height: 1.125rem !important;
         }
         
         .flymora-admin-login input[type="checkbox"]:hover {
@@ -285,11 +209,10 @@
         .flymora-admin-login input[type="checkbox"]:checked {
             background-color: var(--flymora-navy) !important;
             border-color: var(--flymora-navy) !important;
-            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e") !important;
         }
         
         .flymora-admin-login input[type="checkbox"]:focus {
-            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.12) !important;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1) !important;
             border-color: var(--flymora-navy) !important;
         }
         
@@ -297,17 +220,10 @@
         .flymora-admin-login button[type="button"] {
             color: #64748b !important;
             transition: all 0.2s ease !important;
-            padding: 0.5rem !important;
-            border-radius: 0.375rem !important;
         }
         
         .flymora-admin-login button[type="button"]:hover {
             color: var(--flymora-navy) !important;
-            background-color: rgba(30, 58, 138, 0.05) !important;
-        }
-        
-        .flymora-admin-login button[type="button"]:active {
-            transform: scale(0.95) !important;
         }
         
         /* === Error States === */
@@ -316,29 +232,14 @@
             font-size: 0.8125rem !important;
             font-weight: 500 !important;
             margin-top: 0.5rem !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 0.375rem !important;
         }
         
         .flymora-admin-login .fi-input-wrp-error input {
             border-color: #dc2626 !important;
-            background-color: #fef2f2 !important;
         }
         
         .flymora-admin-login .fi-input-wrp-error input:focus {
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12) !important;
-            border-color: #dc2626 !important;
-        }
-        
-        /* === Success States === */
-        .flymora-admin-login .fi-input-wrp-success input {
-            border-color: #16a34a !important;
-            background-color: #f0fdf4 !important;
-        }
-        
-        .flymora-admin-login .fi-input-wrp-success input:focus {
-            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12) !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
         }
         
         /* === Smooth Animations === */
@@ -356,11 +257,11 @@
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px) scale(0.98);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
         
@@ -376,41 +277,8 @@
             animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
         }
         
-        /* === Link Hover Effects === */
-        .flymora-admin-login a {
-            position: relative;
-        }
-        
-        .flymora-admin-login a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: currentColor;
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.3;
-        }
-        
-        .flymora-admin-login a:hover::after {
-            width: 100%;
-        }
-        
         /* === Responsive Improvements === */
         @media (max-width: 640px) {
-            .login-card {
-                border-radius: 1.5rem;
-            }
-            
-            .login-card > div:first-of-type {
-                padding: 1.5rem 1.5rem 1.25rem;
-            }
-            
-            .login-card footer {
-                padding: 1.25rem 1.5rem;
-            }
-            
             .flymora-admin-login input[type="email"],
             .flymora-admin-login input[type="password"],
             .flymora-admin-login input[type="text"] {
@@ -423,12 +291,7 @@
         .flymora-admin-login button:focus-visible,
         .flymora-admin-login input:focus-visible {
             outline: 2px solid var(--flymora-navy) !important;
-            outline-offset: 3px !important;
-        }
-        
-        /* === Smooth Transitions for All Interactive Elements === */
-        .flymora-admin-login * {
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            outline-offset: 2px !important;
         }
     </style>
 </div>
