@@ -901,7 +901,7 @@ export default function Home() {
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: 'url(/images/contact-img.png)' }}
                 >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-purple-900/85"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-800/50 to-purple-900/60"></div>
                 </div>
                 
                 {/* Content */}
