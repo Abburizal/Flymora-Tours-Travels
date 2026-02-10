@@ -3,31 +3,32 @@
     'subheading' => null,
 ])
 
-<!-- Enhanced Login Page with Background - Single Root Element -->
-<div {{ $attributes->class(['fi-simple-page relative min-h-screen flex items-center justify-center']) }}>
-    <!-- Background Image with Overlay -->
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/langit-malam.jpg');">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-purple-900/80"></div>
-    </div>
+<!-- Enhanced Login Page - Clean Design with Logo - Single Root Element -->
+<div {{ $attributes->class(['fi-simple-page relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100']) }}>
     
     <!-- Content -->
     <div class="relative z-10 w-full max-w-md px-4 py-8">
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_PAGE_START, scopes: $this->getRenderHookScopes()) }}
 
         <section class="space-y-6">
-            <!-- Enhanced Header with Tagline -->
-            <div class="text-center mb-6">
+            <!-- Enhanced Header with Logo -->
+            <div class="text-center mb-8">
+                <!-- Flymora Logo -->
+                <div class="mb-6">
+                    <img src="/images/flymora-logo.png" alt="Flymora Tours & Travels" class="mx-auto h-20 w-auto">
+                </div>
+                
                 <x-filament-panels::header.simple
                     :heading="$heading ??= $this->getHeading()"
-                    :logo="$this->hasLogo()"
+                    :logo="false"
                     :subheading="$subheading ??= $this->getSubHeading()"
                 />
-                <h2 class="text-white text-2xl font-bold mt-4 mb-2" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.3);">Admin Control Panel</h2>
-                <p class="text-white/90 text-sm" style="text-shadow: 0 2px 8px rgba(0,0,0,0.4);">Manage your tours & bookings</p>
+                <h2 class="text-gray-800 text-2xl font-bold mt-4 mb-2">Admin Control Panel</h2>
+                <p class="text-gray-600 text-sm">Manage your tours & bookings</p>
             </div>
 
             <!-- Enhanced Card with Links Inside -->
-            <div class="fi-simple-main-content-card border border-white/20">
+            <div class="fi-simple-main-content-card border border-gray-200">
                 {{ $slot }}
                 
                 <!-- Links Inside Card for Better Visibility -->
@@ -52,7 +53,7 @@
             
             <!-- Footer Copyright -->
             <div class="text-center pt-4">
-                <p class="text-white text-xs font-medium" style="text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.2);">
+                <p class="text-gray-600 text-xs font-medium">
                     © {{ date('Y') }} Flymora Tours & Travels. All rights reserved.
                 </p>
             </div>
@@ -67,21 +68,24 @@
     
     <!-- Custom Styles for Enhanced Login -->
     <style>
-        /* Enhanced card with dramatic shadow and glow */
+        /* Enhanced card with clean shadow */
         .fi-simple-main-content-card {
             box-shadow: 
-                0 40px 60px -15px rgba(0, 0, 0, 0.5),
-                0 20px 30px -10px rgba(0, 0, 0, 0.4),
-                0 0 60px rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.98) !important;
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+            background: white !important;
             border-radius: 1rem !important;
             overflow: hidden;
         }
         
-        /* Logo enhancement with stronger shadow */
+        /* Logo enhancement */
         .fi-simple-page img {
-            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+        
+        .fi-simple-page img:hover {
+            transform: scale(1.05);
         }
         
         /* Smooth animations */
@@ -100,7 +104,7 @@
             }
         }
         
-        /* Heading glow effect */
+        /* Heading fade in */
         .fi-simple-page h2 {
             animation: fadeIn 0.8s ease-out 0.2s both;
         }
