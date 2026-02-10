@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()  // ✅ Enable user profile dropdown
             ->brandName('Flymora Admin Panel')
             ->brandLogo('/images/logo.svg')
             ->brandLogoHeight('3rem')
