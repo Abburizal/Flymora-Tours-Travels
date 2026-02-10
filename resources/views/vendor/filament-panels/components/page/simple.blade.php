@@ -117,5 +117,21 @@
                 opacity: 1;
             }
         }
+        
+        /* Remove shadows from input fields */
+        .fi-simple-page input[type="email"],
+        .fi-simple-page input[type="password"],
+        .fi-simple-page input[type="text"] {
+            box-shadow: none !important;
+            border: 1px solid #e5e7eb !important;
+        }
+        
+        .fi-simple-page input[type="email"]:focus,
+        .fi-simple-page input[type="password"]:focus,
+        .fi-simple-page input[type="text"]:focus {
+            box-shadow: none !important;
+            border-color: #3b82f6 !important;
+            outline: none !important;
+        }
     </style>
 </div>
