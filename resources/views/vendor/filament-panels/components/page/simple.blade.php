@@ -3,15 +3,15 @@
     'subheading' => null,
 ])
 
-<!-- Enhanced Login Page with Background -->
-<div class="relative min-h-screen">
+<!-- Enhanced Login Page with Background - Single Root Element -->
+<div {{ $attributes->class(['fi-simple-page relative min-h-screen']) }}>
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/langit-malam.jpg');">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-purple-900/80"></div>
     </div>
     
     <!-- Content -->
-    <div {{ $attributes->class(['fi-simple-page relative z-10']) }}>
+    <div class="relative z-10 py-8 px-4">
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_PAGE_START, scopes: $this->getRenderHookScopes()) }}
 
         <section class="grid auto-cols-fr gap-y-6">
@@ -71,11 +71,6 @@
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
         backdrop-filter: blur(10px);
         background: rgba(255, 255, 255, 0.98) !important;
-    }
-    
-    /* Ensure proper spacing and centering */
-    .fi-simple-page {
-        padding: 2rem 1rem;
     }
     
     /* Logo enhancement */
