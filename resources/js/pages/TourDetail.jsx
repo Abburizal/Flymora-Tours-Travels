@@ -22,11 +22,12 @@ export default function TourDetail() {
     const [error, setError] = useState('');
     const [reviewStats, setReviewStats] = useState(null);
 
-    // DEBUG: Log component mount and ID
+    // Scroll to top on mount and when ID changes
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
         console.log('🔍 TourDetail mounted with ID:', id);
         console.log('🔍 Current URL:', window.location.href);
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         console.log('🔍 Fetching tour with ID:', id);
