@@ -239,7 +239,13 @@ export default function TourDetail() {
                                 {/* Action Buttons */}
                                 <div className="ml-4 flex gap-2">
                                     <CompareButton tour={tour} size="md" variant="outline" />
-                                    <WishlistButton tourId={tour.id} tourName={tour.name} size="lg" showText />
+                                    <WishlistButton 
+                                        tourId={tour.id} 
+                                        tourName={tour.name} 
+                                        size="md" 
+                                        variant="outline"
+                                        showText 
+                                    />
                                 </div>
                             </div>
                             

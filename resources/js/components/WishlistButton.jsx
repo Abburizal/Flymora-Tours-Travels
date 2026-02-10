@@ -3,7 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import { useAnalytics } from '../hooks/useAnalytics';
 
-const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => {
+const WishlistButton = ({ 
+    tourId, 
+    tourName, 
+    size = 'md', 
+    showText = false,
+    variant = 'solid' // 'solid', 'outline', 'ghost'
+}) => {
     const { user } = useAuth();
     const { trackWishlistAdd, trackWishlistRemove } = useAnalytics();
     const [inWishlist, setInWishlist] = useState(false);
@@ -11,9 +17,39 @@ const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => 
 
     // Size variants
     const sizeClasses = {
-        sm: 'text-lg p-1',
-        md: 'text-2xl p-2',
-        lg: 'text-3xl p-3'
+        sm: {
+            button: 'px-3 py-1.5 text-sm',
+            icon: 'w-4 h-4',
+            gap: 'gap-1.5'
+        },
+        md: {
+            button: 'px-4 py-2 text-sm',
+            icon: 'w-5 h-5',
+            gap: 'gap-2'
+        },
+        lg: {
+            button: 'px-5 py-2.5 text-base',
+            icon: 'w-5 h-5',
+            gap: 'gap-2'
+        }
+    };
+
+    // Variant styles
+    const getVariantClasses = () => {
+        if (variant === 'outline') {
+            return inWishlist
+                ? 'bg-red-50 border-2 border-red-500 text-red-600 hover:bg-red-100'
+                : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-600 hover:bg-red-50';
+        } else if (variant === 'ghost') {
+            return inWishlist
+                ? 'bg-red-50 text-red-600 hover:bg-red-100'
+                : 'bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-red-600';
+        } else {
+            // solid variant
+            return inWishlist
+                ? 'bg-red-500 text-white hover:bg-red-600 shadow-md hover:shadow-lg'
+                : 'bg-white border-2 border-gray-300 text-gray-700 hover:bg-red-500 hover:border-red-500 hover:text-white';
+        }
     };
 
     useEffect(() => {
@@ -72,25 +108,27 @@ const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => 
         }
     };
 
-    // Always show button, but with different behavior
     return (
         <button
             onClick={toggleWishlist}
             disabled={loading}
             className={`
-                ${sizeClasses[size]}
-                rounded-full
+                ${sizeClasses[size].button}
+                ${showText ? sizeClasses[size].gap : ''}
+                ${getVariantClasses()}
+                inline-flex
+                items-center
+                justify-center
+                rounded-lg
+                font-medium
                 transition-all
                 duration-200
-                ${inWishlist 
-                    ? 'text-red-500 hover:text-red-600' 
-                    : 'text-gray-400 hover:text-red-500'
-                }
-                ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}
+                ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105 active:scale-95'}
                 focus:outline-none
                 focus:ring-2
                 focus:ring-red-500
                 focus:ring-offset-2
+                disabled:pointer-events-none
             `}
             aria-label={
                 !user 
@@ -113,7 +151,7 @@ const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 24 24" 
                     fill="currentColor" 
-                    className="w-6 h-6"
+                    className={sizeClasses[size].icon}
                 >
                     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                 </svg>
@@ -123,9 +161,9 @@ const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => 
                     xmlns="http://www.w3.org/2000/svg" 
                     fill="none" 
                     viewBox="0 0 24 24" 
-                    strokeWidth={1.5} 
+                    strokeWidth={2} 
                     stroke="currentColor" 
-                    className="w-6 h-6"
+                    className={sizeClasses[size].icon}
                 >
                     <path 
                         strokeLinecap="round" 
@@ -135,8 +173,8 @@ const WishlistButton = ({ tourId, tourName, size = 'md', showText = false }) => 
                 </svg>
             )}
             {showText && (
-                <span className="ml-2">
-                    {inWishlist ? 'Saved' : 'Save'}
+                <span className="font-semibold whitespace-nowrap">
+                    {inWishlist ? 'Saved' : 'Save Tour'}
                 </span>
             )}
         </button>
