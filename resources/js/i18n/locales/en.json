@@ -221,6 +221,7 @@
   },
   "dashboard": {
     "title": "My Dashboard",
+    "welcome": "Welcome back",
     "myBookings": "My Bookings",
     "myReviews": "My Reviews",
     "myWishlist": "My Wishlist",

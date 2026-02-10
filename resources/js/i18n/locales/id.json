@@ -221,6 +221,7 @@
   },
   "dashboard": {
     "title": "Dasbor Saya",
+    "welcome": "Selamat datang kembali",
     "myBookings": "Pemesanan Saya",
     "myReviews": "Ulasan Saya",
     "myWishlist": "Favorit Saya",

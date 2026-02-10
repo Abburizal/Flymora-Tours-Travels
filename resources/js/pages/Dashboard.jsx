@@ -105,7 +105,7 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-8">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">{t('dashboard.myBookings')}</h1>
-                <p className="text-gray-600">{t('dashboard.welcome') || `Welcome back, ${user?.name}!`}</p>
+                <p className="text-gray-600">{t('dashboard.welcome')}, {user?.name}!</p>
             </div>
 
             {bookings.length === 0 ? (
