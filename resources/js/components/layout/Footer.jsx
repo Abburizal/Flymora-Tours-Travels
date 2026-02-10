@@ -64,8 +64,8 @@ export default function Footer() {
             <div className="relative overflow-hidden">
                 {/* Background Image with Overlay */}
                 <div 
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: 'url(/images/nature.hd.jpg)' }}
+                    className="absolute inset-0 bg-cover bg-top"
+                    style={{ backgroundImage: 'url(/images/langit-malam.jpg)' }}
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-blue-900/70"></div>
                 </div>
