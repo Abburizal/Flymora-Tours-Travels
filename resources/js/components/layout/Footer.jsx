@@ -61,11 +61,20 @@ export default function Footer() {
     return (
         <footer className="bg-gray-800 text-white mt-auto">
             {/* Newsletter Section */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700">
-                <div className="container mx-auto px-4 py-12">
+            <div className="relative overflow-hidden">
+                {/* Background Image with Overlay */}
+                <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: 'url(/images/Subscribe-Our-Newsletter.png)' }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-blue-900/70"></div>
+                </div>
+                
+                {/* Content */}
+                <div className="container mx-auto px-4 py-12 relative z-10">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h3 className="text-3xl font-bold mb-3">Subscribe to Our Newsletter</h3>
-                        <p className="text-blue-100 mb-6">
+                        <h3 className="text-3xl font-bold mb-3 drop-shadow-lg">Subscribe to Our Newsletter</h3>
+                        <p className="text-blue-100 mb-6 drop-shadow">
                             Get exclusive deals, travel tips, and destination inspiration delivered to your inbox
                         </p>
                         
