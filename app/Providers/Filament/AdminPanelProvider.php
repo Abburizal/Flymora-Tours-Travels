@@ -65,6 +65,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                \App\Http\Middleware\EnsureUserIsAdmin::class, // ✅ ADDED: Only admins can access panel
             ])
             ->navigationGroups([
                 'Travel Management',

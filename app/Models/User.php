@@ -23,6 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'is_admin',
+        'role',
+        'is_active',
     ];
 
     /**
@@ -42,12 +45,36 @@ class User extends Authenticatable
      */
     protected function casts(): array
     {
-
-        
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
+            'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Check if user is an administrator.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin === true;
+    }
+
+    /**
+     * Check if user has specific role.
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    /**
+     * Get user's role name.
+     */
+    public function getRoleName(): string
+    {
+        return ucfirst($this->role);
     }
 
     /**

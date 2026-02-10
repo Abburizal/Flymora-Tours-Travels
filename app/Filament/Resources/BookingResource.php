@@ -83,7 +83,7 @@ class BookingResource extends Resource
                     ->prefix('Rp')
                     ->hint('Auto-calculated based on tour price × participants')
                     ->disabled()
-                    ->dehydrated(),
+                    ->dehydrated(false), // ✅ FIXED: Prevent manual price manipulation
                     
                 Forms\Components\Select::make('status')
                     ->label('Status')
