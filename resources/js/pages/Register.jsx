@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 
 export default function Register() {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,7 +29,7 @@ export default function Register() {
         setError('');
 
         if (formData.password !== formData.password_confirmation) {
-            setError('Passwords do not match');
+            setError(t('auth.passwordMismatch') || 'Passwords do not match');
             return;
         }
 
@@ -45,7 +47,7 @@ export default function Register() {
     return (
         <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-8">
             <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Register</h2>
+                <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">{t('auth.register')}</h2>
                 
                 {error && (
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -55,7 +57,7 @@ export default function Register() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">{t('auth.fullName')}</label>
                         <input
                             type="text"
                             name="name"
@@ -67,7 +69,7 @@ export default function Register() {
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">{t('auth.email')}</label>
                         <input
                             type="email"
                             name="email"
@@ -80,7 +82,7 @@ export default function Register() {
 
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Phone (Optional)
+                            {t('auth.phone')} ({t('booking.optional')})
                         </label>
                         <input
                             type="tel"
@@ -92,7 +94,7 @@ export default function Register() {
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">{t('auth.password')}</label>
                         <input
                             type="password"
                             name="password"
@@ -106,7 +108,7 @@ export default function Register() {
 
                     <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Confirm Password
+                            {t('auth.confirmPassword')}
                         </label>
                         <input
                             type="password"
@@ -124,14 +126,14 @@ export default function Register() {
                         disabled={loading}
                         className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
                     >
-                        {loading ? 'Registering...' : 'Register'}
+                        {loading ? t('common.loading') : t('auth.register')}
                     </button>
                 </form>
 
                 <p className="text-center mt-4 text-gray-600">
-                    Already have an account?{' '}
+                    {t('auth.hasAccount')}{' '}
                     <Link to="/login" className="text-blue-600 hover:underline">
-                        Login here
+                        {t('auth.signIn')}
                     </Link>
                 </p>
             </div>

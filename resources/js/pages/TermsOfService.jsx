@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function TermsOfService() {
+    const { t } = useTranslation();
     // Scroll to top on component mount
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -12,12 +14,12 @@ export default function TermsOfService() {
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Terms of Service</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('footer.terms')}</h1>
                     <p className="text-xl text-blue-100">
-                        Please read these terms carefully before using our services
+                        {t('terms.readCarefully')}
                     </p>
                     <p className="text-sm text-blue-200 mt-4">
-                        Last Updated: January 25, 2026
+                        {t('terms.lastUpdated')}: January 25, 2026
                     </p>
                 </div>
             </div>
@@ -28,114 +30,114 @@ export default function TermsOfService() {
                     <div className="prose prose-blue max-w-none">
                         
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">1. Acceptance of Terms</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">1. {t('terms.acceptance')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                By accessing and using Flymora Tours and Travels ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use our services.
+                                {t('terms.acceptanceText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">2. Booking and Payment</h2>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">2.1 Booking Process</h3>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">2. {t('terms.bookingAndPayment')}</h2>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">2.1 {t('terms.bookingProcess')}</h3>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                All bookings must be made through our website or authorized agents. A booking is confirmed only after full payment has been received and a confirmation email has been sent to you.
+                                {t('terms.bookingProcessText')}
                             </p>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">2.2 Payment Terms</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">2.2 {t('terms.paymentTerms')}</h3>
                             <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-                                <li>Full payment is required at the time of booking</li>
-                                <li>All prices are in Indonesian Rupiah (IDR)</li>
-                                <li>We accept credit/debit cards, bank transfers, and e-wallets through Midtrans</li>
-                                <li>Payment must be completed within 24 hours of booking initiation</li>
+                                <li>{t('terms.fullPaymentRequired')}</li>
+                                <li>{t('terms.pricesInIDR')}</li>
+                                <li>{t('terms.acceptedPaymentMethods')}</li>
+                                <li>{t('terms.paymentDeadline')}</li>
                             </ul>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">3. Cancellation and Refund Policy</h2>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">3.1 Cancellation by Customer</h3>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">3. {t('terms.cancellationAndRefund')}</h2>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">3.1 {t('terms.cancellationByCustomer')}</h3>
                             <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-                                <li><strong>More than 14 days before departure:</strong> Full refund minus 10% administrative fee</li>
-                                <li><strong>7-14 days before departure:</strong> 50% refund</li>
-                                <li><strong>Less than 7 days before departure:</strong> No refund</li>
-                                <li><strong>No-show:</strong> No refund</li>
+                                <li>{t('terms.moreThan14Days')}</li>
+                                <li>{t('terms.sevenTo14Days')}</li>
+                                <li>{t('terms.lessThan7Days')}</li>
+                                <li>{t('terms.noShow')}</li>
                             </ul>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">3.2 Cancellation by Flymora</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">3.2 {t('terms.cancellationByFlymora')}</h3>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                We reserve the right to cancel any tour due to insufficient bookings, natural disasters, or other unforeseen circumstances. In such cases, you will receive a full refund or the option to reschedule.
+                                {t('terms.cancellationByFlymoraText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">4. Travel Documents and Insurance</h2>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">4.1 Travel Documents</h3>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">4. {t('terms.travelDocumentsAndInsurance')}</h2>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">4.1 {t('terms.travelDocuments')}</h3>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                You are responsible for ensuring you have valid passports, visas, and any other required travel documents. Flymora is not responsible for any costs incurred due to invalid or missing documents.
+                                {t('terms.travelDocumentsText')}
                             </p>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">4.2 Travel Insurance</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">4.2 {t('terms.travelInsurance')}</h3>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                We strongly recommend purchasing comprehensive travel insurance. Flymora is not liable for any medical expenses, lost luggage, or other incidents during your tour.
+                                {t('terms.travelInsuranceText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">5. Liability and Responsibilities</h2>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">5.1 Our Liability</h3>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">5. {t('terms.liabilityAndResponsibilities')}</h2>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">5.1 {t('terms.ourLiability')}</h3>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                Flymora acts only as an agent for various service providers including hotels, airlines, and activity providers. We are not liable for any loss, injury, or damage arising from services provided by third parties.
+                                {t('terms.ourLiabilityText')}
                             </p>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-3">5.2 Your Responsibilities</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-3">5.2 {t('terms.yourResponsibilities')}</h3>
                             <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-                                <li>Follow all instructions from tour guides and local authorities</li>
-                                <li>Respect local customs and laws</li>
-                                <li>Take care of personal belongings</li>
-                                <li>Inform us of any medical conditions or special requirements</li>
-                                <li>Arrive on time for all scheduled activities</li>
+                                <li>{t('terms.followInstructions')}</li>
+                                <li>{t('terms.respectLaws')}</li>
+                                <li>{t('terms.takeCareOfBelongings')}</li>
+                                <li>{t('terms.informOfConditions')}</li>
+                                <li>{t('terms.arriveOnTime')}</li>
                             </ul>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">6. Changes to Itinerary</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">6. {t('terms.changesToItinerary')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                We reserve the right to alter tour itineraries due to weather conditions, safety concerns, or other circumstances beyond our control. We will make every effort to provide comparable alternatives.
+                                {t('terms.changesToItineraryText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">7. Health and Fitness</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">7. {t('terms.healthAndFitness')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                Some tours require a reasonable level of fitness. You must inform us of any medical conditions that may affect your ability to participate. We reserve the right to refuse participation if we believe your health or fitness may pose a risk to yourself or others.
+                                {t('terms.healthAndFitnessText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">8. Intellectual Property</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">8. {t('terms.intellectualProperty')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                All content on this website, including text, graphics, logos, and images, is the property of Flymora Tours and Travels and protected by copyright laws. Unauthorized use is prohibited.
+                                {t('terms.intellectualPropertyText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">9. Governing Law</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">9. {t('terms.governingLaw')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                These Terms of Service are governed by the laws of the Republic of Indonesia. Any disputes shall be subject to the exclusive jurisdiction of the courts of Jakarta.
+                                {t('terms.governingLawText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">10. Changes to Terms</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">10. {t('terms.changesToTerms')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on our website. Your continued use of our services constitutes acceptance of any changes.
+                                {t('terms.changesToTermsText')}
                             </p>
                         </section>
 
                         <section className="mb-8">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">11. Contact Information</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">11. {t('footer.contact')}</h2>
                             <p className="text-gray-600 leading-relaxed mb-2">
-                                If you have any questions about these Terms of Service, please contact us:
+                                {t('terms.contactQuestions')}
                             </p>
                             <div className="bg-gray-50 p-6 rounded-lg">
-                                <p className="text-gray-600"><strong>Email:</strong> info@flymoratours.com</p>
-                                <p className="text-gray-600"><strong>Phone:</strong> +62 812 3456 7890</p>
-                                <p className="text-gray-600"><strong>Address:</strong> Jl. Sudirman No. 123, Jakarta Pusat, 10220, Indonesia</p>
+                                <p className="text-gray-600"><strong>{t('contact.email')}:</strong> info@flymoratours.com</p>
+                                <p className="text-gray-600"><strong>{t('contact.phone')}:</strong> +62 812 3456 7890</p>
+                                <p className="text-gray-600"><strong>{t('contact.office')}:</strong> Jl. Sudirman No. 123, Jakarta Pusat, 10220, Indonesia</p>
                             </div>
                         </section>
 
@@ -147,19 +149,19 @@ export default function TermsOfService() {
                             to="/privacy-policy"
                             className="text-blue-600 hover:text-blue-700 font-medium"
                         >
-                            Privacy Policy →
+                            {t('footer.privacy')} →
                         </Link>
                         <Link
                             to="/faq"
                             className="text-blue-600 hover:text-blue-700 font-medium"
                         >
-                            FAQ →
+                            {t('nav.faq')} →
                         </Link>
                         <Link
                             to="/contact"
                             className="text-blue-600 hover:text-blue-700 font-medium"
                         >
-                            Contact Us →
+                            {t('footer.contact')} →
                         </Link>
                     </div>
                 </div>

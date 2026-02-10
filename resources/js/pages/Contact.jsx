@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 import SEO from '../components/SEO';
 
 export default function Contact() {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -71,9 +73,9 @@ export default function Contact() {
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('contact.title')}</h1>
                     <p className="text-xl text-blue-100">
-                        Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                        {t('contact.subtitle')}
                     </p>
                 </div>
             </div>
@@ -83,7 +85,7 @@ export default function Contact() {
                     {/* Contact Information */}
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-lg shadow-md p-6 sticky top-8">
-                            <h2 className="text-2xl font-bold mb-6 text-gray-800">Get In Touch</h2>
+                            <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('contact.getInTouch')}</h2>
                             
                             <div className="space-y-6">
                                 {/* Email */}
@@ -94,7 +96,7 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-1">Email</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-1">{t('contact.email')}</h3>
                                         <a href="mailto:info@flymoratours.com" className="text-blue-600 hover:text-blue-700">
                                             info@flymoratours.com
                                         </a>
@@ -109,7 +111,7 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-1">{t('contact.phone')}</h3>
                                         <a href="tel:+6281234567890" className="text-blue-600 hover:text-blue-700">
                                             +62 812 3456 7890
                                         </a>
@@ -125,7 +127,7 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-1">Office</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-1">{t('contact.office')}</h3>
                                         <p className="text-gray-600">
                                             Jl. Sudirman No. 123<br />
                                             Jakarta Pusat, 10220<br />
@@ -142,7 +144,7 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-1">Business Hours</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-1">{t('contact.businessHours')}</h3>
                                         <p className="text-gray-600">
                                             Monday - Friday: 9AM - 6PM<br />
                                             Saturday: 9AM - 3PM<br />
@@ -154,7 +156,7 @@ export default function Contact() {
 
                             {/* Social Media */}
                             <div className="mt-8 pt-8 border-t">
-                                <h3 className="font-semibold text-gray-800 mb-4">Follow Us</h3>
+                                <h3 className="font-semibold text-gray-800 mb-4">{t('contact.followUs')}</h3>
                                 <div className="flex gap-3">
                                     <a href="#" className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 transition">
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -179,7 +181,7 @@ export default function Contact() {
                     {/* Contact Form */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-lg shadow-md p-8">
-                            <h2 className="text-2xl font-bold mb-6 text-gray-800">Send us a Message</h2>
+                            <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('contact.sendMessage')}</h2>
 
                             {/* Success Message */}
                             {success && (
@@ -188,8 +190,8 @@ export default function Contact() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <div>
-                                        <p className="font-semibold">Message sent successfully!</p>
-                                        <p className="text-sm">We'll get back to you as soon as possible.</p>
+                                        <p className="font-semibold">{t('contact.successTitle')}</p>
+                                        <p className="text-sm">{t('contact.successMessage')}</p>
                                     </div>
                                 </div>
                             )}
@@ -205,7 +207,7 @@ export default function Contact() {
                                 {/* Name */}
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                                        Full Name *
+                                        {t('contact.name')} *
                                     </label>
                                     <input
                                         type="text"
@@ -227,7 +229,7 @@ export default function Contact() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                            Email Address *
+                                            {t('contact.email')} *
                                         </label>
                                         <input
                                             type="email"
@@ -247,7 +249,7 @@ export default function Contact() {
 
                                     <div>
                                         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                                            Phone Number
+                                            {t('contact.phone')}
                                         </label>
                                         <input
                                             type="tel"
@@ -268,7 +270,7 @@ export default function Contact() {
                                 {/* Subject */}
                                 <div>
                                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                                        Subject *
+                                        {t('contact.subject')} *
                                     </label>
                                     <input
                                         type="text"
@@ -289,7 +291,7 @@ export default function Contact() {
                                 {/* Message */}
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                                        Message *
+                                        {t('contact.message')} *
                                     </label>
                                     <textarea
                                         id="message"
@@ -320,14 +322,14 @@ export default function Contact() {
                                     {loading ? (
                                         <>
                                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                            Sending...
+                                            {t('contact.sending')}...
                                         </>
                                     ) : (
                                         <>
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                             </svg>
-                                            Send Message
+                                            {t('contact.sendMessage')}
                                         </>
                                     )}
                                 </button>

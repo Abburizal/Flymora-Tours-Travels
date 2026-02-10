@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
 import RecommendedBadge from '../components/RecommendedBadge';
 import SEO from '../components/SEO';
 import { useAnalytics } from '../hooks/useAnalytics';
+import { useCurrency } from '../hooks/useCurrency';
 
 export default function Tours() {
+    const { t } = useTranslation();
+    const { formatCurrency } = useCurrency();
     const { trackSearch, trackFilter } = useAnalytics();
     const [searchParams] = useSearchParams();
     const [tours, setTours] = useState([]);
@@ -115,14 +119,6 @@ export default function Tours() {
         setSortBy('created_at');
     };
 
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-        }).format(amount);
-    };
-
     const formatDuration = (duration) => {
         // If duration already contains "Days", "Nights", "Day", "Night", return as is
         if (/days?|nights?/i.test(duration)) {
@@ -149,7 +145,7 @@ export default function Tours() {
                 url="/tours"
             />
             
-            <h1 className="text-4xl font-bold mb-8">Available Tours</h1>
+            <h1 className="text-4xl font-bold mb-8">{t('tours.title')}</h1>
             
             {/* Search & Filter Section */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -159,7 +155,7 @@ export default function Tours() {
                         <div className="relative flex-1">
                             <input
                                 type="text"
-                                placeholder="Search tours by name, destination, or description..."
+                                placeholder={t('tours.searchPlaceholder')}
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
@@ -176,12 +172,12 @@ export default function Tours() {
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                            Search
+                            {t('common.search')}
                         </button>
                     </form>
                     {searchQuery && (
                         <div className="mt-2 text-sm text-gray-600">
-                            Searching for: <span className="font-semibold">"{searchQuery}"</span>
+                            {t('tours.searchingFor')}: <span className="font-semibold">"{searchQuery}"</span>
                             <button
                                 onClick={() => {
                                     setSearchInput('');
@@ -189,7 +185,7 @@ export default function Tours() {
                                 }}
                                 className="ml-2 text-blue-600 hover:text-blue-700"
                             >
-                                Clear
+                                {t('common.clear')}
                             </button>
                         </div>
                     )}
@@ -203,7 +199,7 @@ export default function Tours() {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                     </svg>
-                    {showFilters ? 'Hide Filters' : 'Show Filters'}
+                    {showFilters ? t('tours.hideFilters') : t('tours.showFilters')}
                 </button>
 
                 {/* Filter Panel */}
@@ -211,13 +207,13 @@ export default function Tours() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
                         {/* Category Filter */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">{t('tours.category')}</label>
                             <select
                                 value={selectedCategory}
                                 onChange={(e) => setSelectedCategory(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                             >
-                                <option value="">All Categories</option>
+                                <option value="">{t('tours.allCategories')}</option>
                                 {categories.map((cat) => (
                                     <option key={cat.id} value={cat.id}>
                                         {cat.name} ({cat.tours_count})
@@ -228,7 +224,7 @@ export default function Tours() {
 
                         {/* Price Range */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Min Price</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">{t('tours.minPrice')}</label>
                             <input
                                 type="number"
                                 placeholder="0"
@@ -239,7 +235,7 @@ export default function Tours() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Max Price</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">{t('tours.maxPrice')}</label>
                             <input
                                 type="number"
                                 placeholder="10000000"
@@ -251,18 +247,18 @@ export default function Tours() {
 
                         {/* Duration Filter */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Duration (days)</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">{t('tours.duration')}</label>
                             <select
                                 value={duration}
                                 onChange={(e) => setDuration(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                             >
-                                <option value="">Any Duration</option>
-                                <option value="1">1 Day</option>
-                                <option value="2">2 Days</option>
-                                <option value="3">3 Days</option>
-                                <option value="4">4 Days</option>
-                                <option value="5">5+ Days</option>
+                                <option value="">{t('tours.anyDuration')}</option>
+                                <option value="1">1 {t('tours.day')}</option>
+                                <option value="2">2 {t('tours.days')}</option>
+                                <option value="3">3 {t('tours.days')}</option>
+                                <option value="4">4 {t('tours.days')}</option>
+                                <option value="5">5+ {t('tours.days')}</option>
                             </select>
                         </div>
 
@@ -276,7 +272,7 @@ export default function Tours() {
                                 className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                             />
                             <label htmlFor="available" className="ml-2 text-sm text-gray-700">
-                                Available only
+                                {t('tours.availableOnly')}
                             </label>
                         </div>
 
@@ -286,7 +282,7 @@ export default function Tours() {
                                 onClick={clearFilters}
                                 className="text-sm text-red-600 hover:text-red-700 font-medium"
                             >
-                                Clear All Filters
+                                {t('tours.clearFilters')}
                             </button>
                         </div>
                     </div>
@@ -294,26 +290,26 @@ export default function Tours() {
 
                 {/* Sort Options */}
                 <div className="flex items-center gap-4 mt-4 pt-4 border-t">
-                    <span className="text-sm font-medium text-gray-700">Sort by:</span>
+                    <span className="text-sm font-medium text-gray-700">{t('tours.sortBy')}:</span>
                     <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     >
-                        <option value="created_at">Newest</option>
-                        <option value="price_low">Price: Low to High</option>
-                        <option value="price_high">Price: High to Low</option>
-                        <option value="popularity">Most Popular</option>
-                        <option value="date">Start Date</option>
+                        <option value="created_at">{t('tours.newest')}</option>
+                        <option value="price_low">{t('tours.priceLowToHigh')}</option>
+                        <option value="price_high">{t('tours.priceHighToLow')}</option>
+                        <option value="popularity">{t('tours.mostPopular')}</option>
+                        <option value="date">{t('tours.startDate')}</option>
                     </select>
                     <span className="text-sm text-gray-600 ml-auto">
                         {loading ? (
                             <span className="flex items-center gap-2">
                                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                                Loading...
+                                {t('common.loading')}...
                             </span>
                         ) : (
-                            `${tours.length} ${tours.length === 1 ? 'tour' : 'tours'} found`
+                            `${tours.length} ${tours.length === 1 ? t('tours.tour') : t('tours.tours')} ${t('tours.found')}`
                         )}
                     </span>
                 </div>
@@ -381,7 +377,7 @@ export default function Tours() {
                                                     ? 'bg-red-500 text-white' 
                                                     : 'bg-orange-500 text-white animate-pulse'
                                             }`}>
-                                                {isSoldOut ? '🚫 SOLD OUT' : `⚡ ${availableSeats} LEFT`}
+                                                 {isSoldOut ? t('tours.soldOut') : `⚡ ${availableSeats} ${t('tours.left')}`}
                                             </span>
                                         </div>
                                     )}
@@ -443,7 +439,7 @@ export default function Tours() {
                                                         {availableSeats}
                                                     </div>
                                                     <div className={`text-xs font-semibold uppercase tracking-wide ${isLowStock ? 'text-orange-700' : 'text-green-700'}`}>
-                                                        Seats Left
+                                                        {t('tours.seatsLeft')}
                                                     </div>
                                                 </div>
                                             </div>
@@ -453,10 +449,10 @@ export default function Tours() {
                                     {/* Price Section */}
                                     <div className="mb-4">
                                         <div className="flex items-baseline">
-                                            <span className="text-2xl font-bold text-blue-600">
+                                             <span className="text-2xl font-bold text-blue-600">
                                                 {formatCurrency(tour.price)}
                                             </span>
-                                            <span className="text-sm text-gray-500 ml-1 font-medium">/ person</span>
+                                            <span className="text-sm text-gray-500 ml-1 font-medium">/ {t('tours.person')}</span>
                                         </div>
                                     </div>
                                     
@@ -477,11 +473,11 @@ export default function Tours() {
                                                     <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
-                                                    Sold Out
+                                                    {t('tours.soldOut')}
                                                 </>
                                             ) : (
                                                 <>
-                                                    View Details
+                                                    {t('tours.viewDetails')}
                                                     <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                                     </svg>
@@ -502,13 +498,13 @@ export default function Tours() {
                     <svg className="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 className="text-xl font-semibold text-gray-700 mb-2">No tours found</h3>
-                    <p className="text-gray-600 mb-4">Try adjusting your filters or search criteria</p>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-2">{t('tours.noToursFound')}</h3>
+                    <p className="text-gray-600 mb-4">{t('tours.tryAdjusting')}</p>
                     <button
                         onClick={clearFilters}
                         className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
-                        Clear Filters
+                        {t('tours.clearFilters')}
                     </button>
                 </div>
             )}

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SubmitReview from '../components/SubmitReview';
 
 export default function Dashboard() {
+    const { t } = useTranslation();
     const { user } = useAuth();
     const navigate = useNavigate();
     const [bookings, setBookings] = useState([]);
@@ -94,7 +96,7 @@ export default function Dashboard() {
     if (loading) {
         return (
             <div className="container mx-auto px-4 py-16 text-center">
-                <div className="text-xl">Loading...</div>
+                <div className="text-xl">{t('common.loading')}</div>
             </div>
         );
     }
@@ -102,15 +104,15 @@ export default function Dashboard() {
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold">My Bookings</h1>
-                <p className="text-gray-600">Welcome back, {user?.name}!</p>
+                <h1 className="text-3xl font-bold">{t('dashboard.myBookings')}</h1>
+                <p className="text-gray-600">{t('dashboard.welcome') || `Welcome back, ${user?.name}!`}</p>
             </div>
 
             {bookings.length === 0 ? (
                 <div className="bg-white rounded-lg shadow-md p-8 text-center">
-                    <p className="text-gray-600 mb-4">You haven't made any bookings yet.</p>
+                    <p className="text-gray-600 mb-4">{t('dashboard.noBookings')}</p>
                     <a href="/tours" className="text-blue-600 hover:underline">
-                        Browse available tours
+                        {t('dashboard.startExploring')}
                     </a>
                 </div>
             ) : (
@@ -122,7 +124,7 @@ export default function Dashboard() {
                                     <h3 className="text-xl font-bold mb-2">{booking.tour?.name}</h3>
                                     <p className="text-gray-600">📍 {booking.tour?.destination}</p>
                                     <p className="text-gray-600">📅 {formatDate(booking.booking_date)}</p>
-                                    <p className="text-gray-600">👥 {booking.number_of_participants} participants</p>
+                                    <p className="text-gray-600">👥 {booking.number_of_participants} {t('booking.participants')}</p>
                                 </div>
                                 <div className="text-right">
                                     {getStatusBadge(booking.status)}
@@ -135,13 +137,13 @@ export default function Dashboard() {
                             {booking.status === 'pending' && (
                                 <div className="border-t pt-4">
                                     <p className="text-sm text-gray-600 mb-3">
-                                        ⏰ Expires: {booking.expired_at ? formatDate(booking.expired_at) : 'N/A'}
+                                        ⏰ {t('dashboard.expires')}: {booking.expired_at ? formatDate(booking.expired_at) : 'N/A'}
                                     </p>
                                     <button
                                         onClick={() => handlePayment(booking.id)}
                                         className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
                                     >
-                                        Pay Now
+                                        {t('booking.confirmBooking')}
                                     </button>
                                 </div>
                             )}
@@ -153,7 +155,7 @@ export default function Dashboard() {
                                             onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: true})}
                                             className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 flex items-center gap-2"
                                         >
-                                            ⭐ Write a Review
+                                            ⭐ {t('dashboard.writeReview')}
                                         </button>
                                     ) : (
                                         <div>
@@ -161,13 +163,13 @@ export default function Dashboard() {
                                                 onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: false})}
                                                 className="mb-4 text-gray-600 hover:text-gray-800 text-sm flex items-center gap-1"
                                             >
-                                                ← Hide Review Form
+                                                ← {t('dashboard.hideReviewForm')}
                                             </button>
                                             <SubmitReview
                                                 booking={booking}
                                                 onSubmitted={(review) => {
                                                     setShowReviewForm({...showReviewForm, [booking.id]: false});
-                                                    alert('✅ Thank you for your review!');
+                                                    alert(t('dashboard.reviewThanks') || '✅ Thank you for your review!');
                                                 }}
                                             />
                                         </div>

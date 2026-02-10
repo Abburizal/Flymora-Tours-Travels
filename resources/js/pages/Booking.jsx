@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 export default function Booking() {
+    const { t } = useTranslation();
     const { tourId } = useParams();
     const navigate = useNavigate();
     const [tour, setTour] = useState(null);
@@ -99,7 +101,7 @@ export default function Booking() {
     };
 
     if (loading) {
-        return <div className="container mx-auto px-4 py-16 text-center">Loading...</div>;
+        return <div className="container mx-auto px-4 py-16 text-center">{t('common.loading')}</div>;
     }
 
     if (!tour) {
@@ -108,13 +110,13 @@ export default function Booking() {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-2xl">
-            <h1 className="text-3xl font-bold mb-8">Book Your Tour</h1>
+            <h1 className="text-3xl font-bold mb-8">{t('booking.title')}</h1>
             
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h2 className="text-xl font-bold mb-4">{tour.name}</h2>
                 <p className="text-gray-600 mb-2">📍 {tour.destination}</p>
-                <p className="text-gray-600 mb-2">⏱️ {tour.duration} days</p>
-                <p className="text-2xl font-bold text-blue-600">{formatCurrency(tour.price)} / person</p>
+                <p className="text-gray-600 mb-2">⏱️ {tour.duration} {t('tours.days')}</p>
+                <p className="text-2xl font-bold text-blue-600">{formatCurrency(tour.price)} / {t('booking.person') || t('tours.person')}</p>
             </div>
 
             {error && (
@@ -126,7 +128,7 @@ export default function Booking() {
             <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Booking Date
+                        {t('booking.bookingDate')}
                     </label>
                     <input
                         type="date"
@@ -140,7 +142,7 @@ export default function Booking() {
 
                 <div className="mb-6">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Number of Participants
+                        {t('booking.participants')}
                     </label>
                     <input
                         type="number"
@@ -152,17 +154,17 @@ export default function Booking() {
                         required
                     />
                     <p className="text-sm text-gray-500 mt-1">
-                        Available: {tour.max_participants - tour.booked_participants} seats
+                        {t('booking.available') || 'Available'}: {tour.max_participants - tour.booked_participants} {t('tours.seatsLeft')}
                     </p>
                 </div>
 
                 <div className="border-t pt-4 mb-6">
                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-600">Subtotal</span>
+                        <span className="text-gray-600">{t('booking.basePrice')}</span>
                         <span className="text-xl font-bold">{formatCurrency(calculateTotal())}</span>
                     </div>
                     <p className="text-sm text-gray-500">
-                        Booking will expire in 30 minutes after creation
+                        {t('booking.expiresIn') || 'Booking will expire in 30 minutes after creation'}
                     </p>
                 </div>
 
@@ -171,7 +173,7 @@ export default function Booking() {
                     disabled={submitting}
                     className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 font-semibold"
                 >
-                    {submitting ? 'Processing...' : `Pay ${formatCurrency(calculateTotal())}`}
+                    {submitting ? t('common.loading') : `${t('common.submit')} ${formatCurrency(calculateTotal())}`}
                 </button>
             </form>
         </div>
