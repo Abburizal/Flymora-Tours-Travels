@@ -15,7 +15,7 @@ export default function Layout() {
             <Footer />
             <CompareBar />
             <WhatsAppButton 
-                phoneNumber="6281234567890" 
+                phoneNumber="6282189905173" 
                 message="Hi Flymora! I'm interested in your tour packages. Can you help me?"
             />
         </div>

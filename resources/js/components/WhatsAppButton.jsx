@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function WhatsAppButton({ phoneNumber = '6281234567890', message = 'Hello, I would like to inquire about your tour packages.' }) {
+export default function WhatsAppButton({ phoneNumber = '6282189905173', message = 'Hello, I would like to inquire about your tour packages.' }) {
     const [isVisible, setIsVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
