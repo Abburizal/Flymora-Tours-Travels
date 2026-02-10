@@ -183,14 +183,7 @@ export default function Home() {
         }
     };
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }).format(price);
-    };
+    // Note: formatCurrency is now imported from useCurrency hook
 
     const formatDuration = (duration) => {
         if (/days?|nights?/i.test(duration)) {
@@ -268,10 +261,10 @@ export default function Home() {
                                 </svg>
                             </div>
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                                🔥 Hot Deals & Promotions
+                                {t('home.promoDeals')}
                             </h2>
                             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                                Don't miss out! Limited time offers with amazing discounts on our best tours
+                                {t('home.promoDesc')}
                             </p>
                         </div>
 
@@ -342,11 +335,11 @@ export default function Home() {
                                                     <div className="text-2xl font-bold text-green-600">
                                                         Rp {discountedPrice.toLocaleString('id-ID')}
                                                     </div>
-                                                    <div className="text-xs text-gray-500">per person</div>
+                                                    <div className="text-xs text-gray-500">{t('home.perPerson')}</div>
                                                 </div>
                                                 <div className="text-center">
                                                     <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
-                                                        Save Rp {(tour.price - discountedPrice).toLocaleString('id-ID')}
+                                                        {t('home.save')} Rp {(tour.price - discountedPrice).toLocaleString('id-ID')}
                                                     </div>
                                                 </div>
                                             </div>
@@ -356,7 +349,7 @@ export default function Home() {
                                                 to={`/tours/${tour.id}`}
                                                 className="block w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white text-center py-3 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-xl transform hover:scale-105"
                                             >
-                                                Grab This Deal Now! 🎉
+                                                {t('home.grabDeal')}
                                             </Link>
                                         </div>
                                     </div>
@@ -371,7 +364,7 @@ export default function Home() {
                                     to="/tours?promo=true"
                                     className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                                 >
-                                    <span>View All {promoTours.length} Promo Tours</span>
+                                    <span>{t('home.seeAll')} ({promoTours.length})</span>
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                     </svg>
@@ -388,17 +381,17 @@ export default function Home() {
                     <div className="flex items-center justify-between mb-8">
                         <div>
                             <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                                🔥 Paket Best Seller
+                                {t('home.bestSellers')}
                             </h2>
                             <p className="text-gray-600">
-                                Pilihan favorit traveler Flymora dengan harga terbaik!
+                                {t('home.bestSellersDesc')}
                             </p>
                         </div>
                         <Link
                             to="/tours"
                             className="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-all duration-300 group"
                         >
-                            <span>Lihat Semua</span>
+                            <span>{t('home.seeAll')}</span>
                             <svg 
                                 className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
                                 fill="none" 
@@ -507,9 +500,9 @@ export default function Home() {
                                         {/* Price */}
                                         <div className="flex items-baseline justify-between">
                                             <div>
-                                                <p className="text-xs text-gray-500 mb-1">Mulai dari</p>
+                                                <p className="text-xs text-gray-500 mb-1">{t('home.startingFrom')}</p>
                                                 <p className="text-orange-600 font-bold text-base">
-                                                    {formatPrice(tour.price)}
+                                                    {formatCurrency(tour.price)}
                                                 </p>
                                             </div>
                                         </div>
@@ -548,7 +541,7 @@ export default function Home() {
                             to="/tours"
                             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                         >
-                            Lihat Semua Paket Tour
+                            {t('home.seeAll')} Paket Tour
                         </Link>
                     </div>
                 </div>
@@ -560,10 +553,10 @@ export default function Home() {
                     {/* Section Header */}
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold mb-4 text-gray-800">
-                            Explore by Category
+                            {t('home.categories.title')}
                         </h2>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                            Choose your perfect adventure from our curated collection of destinations
+                            {t('home.categories.subtitle')}
                         </p>
                     </div>
 
@@ -840,10 +833,10 @@ export default function Home() {
                     {/* Section Header */}
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold mb-4 text-gray-800">
-                            What Our Travelers Say
+                            {t('home.testimonials.title')}
                         </h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            Pengalaman nyata dari ribuan pelanggan yang telah mempercayai kami untuk perjalanan mereka
+                            {t('home.testimonials.subtitle')}
                         </p>
                     </div>
 

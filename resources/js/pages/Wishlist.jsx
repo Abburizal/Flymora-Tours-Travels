@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
 import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 
 const Wishlist = () => {
+    const { t } = useTranslation();
+    const { formatCurrency } = useCurrency();
     const [wishlists, setWishlists] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -51,7 +55,7 @@ const Wishlist = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                        <p className="mt-4 text-gray-600">Loading wishlist...</p>
+                        <p className="mt-4 text-gray-600">{t('wishlist.loading')}</p>
                     </div>
                 </div>
             </div>
@@ -63,9 +67,9 @@ const Wishlist = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">My Wishlist</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">{t('wishlist.title')}</h1>
                     <p className="mt-2 text-gray-600">
-                        Tours you've saved for later ({wishlists.length})
+                        {t('wishlist.subtitle')} ({wishlists.length})
                     </p>
                 </div>
 
@@ -86,16 +90,16 @@ const Wishlist = () => {
                             />
                         </svg>
                         <h3 className="mt-4 text-xl font-medium text-gray-900">
-                            Your wishlist is empty
+                            {t('wishlist.empty')}
                         </h3>
                         <p className="mt-2 text-gray-500">
-                            Start adding tours to your wishlist by clicking the heart icon
+                            {t('wishlist.emptyDesc')}
                         </p>
                         <Link
                             to="/tours"
                             className="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
                         >
-                            Browse Tours
+                            {t('wishlist.exploreTours')}
                         </Link>
                     </div>
                 ) : (
