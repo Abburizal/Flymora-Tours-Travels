@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import { OrganizationSchema, WebsiteSearchSchema } from '../components/Schema';
 import TestimonialCard from '../components/TestimonialCard';
@@ -8,8 +9,11 @@ import RecommendedBadge from '../components/RecommendedBadge';
 import PromoBadge from '../components/PromoBadge';
 import HeroSearchBar from '../components/HeroSearchBar';
 import api from '../services/api';
+import { useCurrency } from '../hooks/useCurrency';
 
 export default function Home() {
+    const { t } = useTranslation();
+    const { formatCurrency } = useCurrency();
     const location = useLocation();
     const [bestSellerTours, setBestSellerTours] = useState([]);
     const [promoTours, setPromoTours] = useState([]);
@@ -224,11 +228,10 @@ export default function Home() {
                 {/* Content */}
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl">
-                        Explore the World with Flymora
+                        {t('home.hero.title')}
                     </h1>
                     <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto drop-shadow-lg">
-                        Discover amazing destinations, create unforgettable memories,
-                        and embark on adventures you'll treasure forever.
+                        {t('home.hero.subtitle')}
                     </p>
                     
                     {/* Search Bar */}
@@ -240,7 +243,7 @@ export default function Home() {
                             to="/tours"
                             className="text-white hover:text-blue-200 font-semibold text-sm inline-flex items-center gap-2 transition-colors"
                         >
-                            <span>or browse all tours</span>
+                            <span>{t('home.hero.browseAll')}</span>
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>

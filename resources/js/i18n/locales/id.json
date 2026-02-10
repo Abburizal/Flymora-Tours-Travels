@@ -57,12 +57,62 @@
   },
   "home": {
     "hero": {
-      "title": "Temukan Petualangan Anda Selanjutnya",
-      "subtitle": "Jelajahi destinasi menakjubkan dan ciptakan kenangan tak terlupakan",
-      "cta": "Jelajahi Paket Wisata"
+      "title": "Jelajahi Dunia Bersama Flymora",
+      "subtitle": "Temukan destinasi menakjubkan, ciptakan kenangan tak terlupakan, dan mulai petualangan yang akan Anda hargai selamanya.",
+      "cta": "Jelajahi Paket Wisata",
+      "browseAll": "atau lihat semua paket wisata"
     },
     "featured": "Paket Wisata Unggulan",
-    "viewAll": "Lihat Semua Paket Wisata"
+    "viewAll": "Lihat Semua Paket Wisata",
+    "bestSellers": "Paket Wisata Terlaris",
+    "bestSellersDesc": "Paket wisata paling populer yang disukai wisatawan",
+    "seeAll": "Lihat Semua",
+    "promoDeals": "Promo & Penawaran Spesial",
+    "promoDesc": "Penawaran terbatas - Jangan sampai terlewat!",
+    "limitedOffer": "Penawaran Terbatas!",
+    "endsIn": "Berakhir dalam",
+    "categories": {
+      "title": "Jelajahi Berdasarkan Kategori",
+      "subtitle": "Temukan petualangan sempurna Anda",
+      "beach": "Surga Pantai",
+      "beachDesc": "Jelajahi pantai-pantai indah dan pulau tropis dengan air jernih",
+      "mountain": "Petualangan Gunung",
+      "mountainDesc": "Taklukkan puncak dan nikmati pemandangan menakjubkan dari pegunungan",
+      "cultural": "Warisan Budaya",
+      "culturalDesc": "Benamkan diri dalam sejarah kaya dan tradisi lokal",
+      "city": "Eksplorasi Kota",
+      "cityDesc": "Temukan kota-kota yang semarak dan atraksi modern",
+      "nature": "Alam & Satwa Liar",
+      "natureDesc": "Dekati alam dan amati satwa liar yang menakjubkan",
+      "honeymoon": "Romantis Bulan Madu",
+      "honeymoonDesc": "Ciptakan kenangan tak terlupakan dengan orang tercinta",
+      "tours": "paket"
+    },
+    "testimonials": {
+      "title": "Kata Pelanggan Kami",
+      "subtitle": "Pengalaman nyata dari wisatawan nyata",
+      "verified": "Pelanggan Terverifikasi"
+    },
+    "newsletter": {
+      "title": "Berlangganan Newsletter Kami",
+      "subtitle": "Dapatkan penawaran eksklusif, tips perjalanan, dan inspirasi langsung ke email Anda!",
+      "placeholder": "Masukkan alamat email Anda",
+      "button": "Berlangganan Sekarang",
+      "success": "Terima kasih telah berlangganan!",
+      "error": "Mohon masukkan alamat email yang valid"
+    },
+    "whyChooseUs": {
+      "title": "Mengapa Memilih Flymora?",
+      "subtitle": "Mitra perjalanan terpercaya Anda",
+      "bestPrice": "Jaminan Harga Terbaik",
+      "bestPriceDesc": "Harga kompetitif tanpa biaya tersembunyi",
+      "support": "Dukungan Pelanggan 24/7",
+      "supportDesc": "Kami siap membantu kapan pun Anda membutuhkan",
+      "experience": "Pemandu Lokal Ahli",
+      "experienceDesc": "Pemandu berpengalaman untuk pengalaman autentik",
+      "safe": "Pemesanan Aman & Terpercaya",
+      "safeDesc": "Keamanan Anda adalah prioritas kami"
+    }
   },
   "tours": {
     "title": "Semua Paket Wisata",
@@ -161,6 +211,45 @@
       "cancelled": "Dibatalkan",
       "completed": "Selesai"
     }
+  },
+  "wishlist": {
+    "title": "Favorit Saya",
+    "subtitle": "Paket wisata yang Anda simpan",
+    "loading": "Memuat favorit...",
+    "empty": "Favorit Anda kosong",
+    "emptyDesc": "Mulai tambahkan paket wisata ke favorit untuk melihatnya di sini",
+    "exploreTours": "Jelajahi Paket Wisata",
+    "perPerson": "per orang",
+    "days": "hari",
+    "remove": "Hapus dari favorit",
+    "bookNow": "Pesan Sekarang"
+  },
+  "compare": {
+    "title": "Bandingkan Paket Wisata",
+    "subtitle": "Bandingkan hingga 3 paket wisata secara berdampingan",
+    "empty": "Tidak ada paket untuk dibandingkan",
+    "emptyDesc": "Tambahkan paket wisata untuk membandingkan fitur, harga, dan detailnya",
+    "browseTours": "Jelajahi Paket Wisata",
+    "clearAll": "Hapus Semua",
+    "price": "Harga",
+    "duration": "Durasi",
+    "maxParticipants": "Maks Peserta",
+    "departure": "Lokasi Keberangkatan",
+    "highlights": "Highlight",
+    "included": "Yang Termasuk",
+    "excluded": "Yang Tidak Termasuk",
+    "rating": "Rating",
+    "reviews": "Ulasan",
+    "bookNow": "Pesan Sekarang",
+    "remove": "Hapus",
+    "noInfo": "Informasi tidak tersedia"
+  },
+  "faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "subtitle": "Temukan jawaban untuk pertanyaan umum",
+    "searchPlaceholder": "Cari pertanyaan...",
+    "noResults": "Tidak ada pertanyaan ditemukan",
+    "tryDifferent": "Coba kata kunci pencarian yang berbeda"
   },
   "contact": {
     "title": "Hubungi Kami",
