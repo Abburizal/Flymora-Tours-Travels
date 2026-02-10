@@ -62,19 +62,19 @@
 
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_PAGE_END, scopes: $this->getRenderHookScopes()) }}
     </div>
-</div>
-
-<!-- Custom Styles for Enhanced Login -->
-<style>
-    /* Enhanced card shadow and styling */
-    .fi-simple-main-content-card {
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
-        backdrop-filter: blur(10px);
-        background: rgba(255, 255, 255, 0.98) !important;
-    }
     
-    /* Logo enhancement */
-    .fi-simple-page img {
-        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-    }
-</style>
+    <!-- Custom Styles for Enhanced Login -->
+    <style>
+        /* Enhanced card shadow and styling */
+        .fi-simple-main-content-card {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98) !important;
+        }
+        
+        /* Logo enhancement */
+        .fi-simple-page img {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+    </style>
+</div>
