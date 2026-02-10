@@ -65,7 +65,7 @@ export default function Footer() {
                 {/* Background Image with Overlay */}
                 <div 
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: 'url(/images/Subscribe-Our-Newsletter.png)' }}
+                    style={{ backgroundImage: 'url(/images/nature.hd.jpg)' }}
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-blue-900/70"></div>
                 </div>
