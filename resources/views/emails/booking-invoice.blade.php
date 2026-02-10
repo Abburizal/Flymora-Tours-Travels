@@ -93,7 +93,7 @@
                         <td style="background-color: #f7fafc; padding: 30px; text-align: center; border-top: 1px solid #e2e8f0;">
                             <p style="margin: 0 0 10px 0; color: #4a5568; font-size: 14px;">Butuh bantuan? Hubungi kami</p>
                             <p style="margin: 0; color: #718096; font-size: 13px;">
-                                📧 support@flymoratours.com | 📞 +62 812-3456-7890
+                                📧 support@flymoratours.com | 📞 +62 821-8990-5173
                             </p>
                             <p style="margin: 15px 0 0 0; color: #a0aec0; font-size: 12px;">
                                 &copy; {{ date('Y') }} Flymora Tours and Travels. All rights reserved.

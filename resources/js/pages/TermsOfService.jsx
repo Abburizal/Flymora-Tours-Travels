@@ -136,7 +136,7 @@ export default function TermsOfService() {
                             </p>
                             <div className="bg-gray-50 p-6 rounded-lg">
                                 <p className="text-gray-600"><strong>{t('contact.email')}:</strong> info@flymoratours.com</p>
-                                <p className="text-gray-600"><strong>{t('contact.phone')}:</strong> +62 812 3456 7890</p>
+                                <p className="text-gray-600"><strong>{t('contact.phone')}:</strong> +62 821 8990 5173</p>
                                 <p className="text-gray-600"><strong>{t('contact.office')}:</strong> Jl. Sudirman No. 123, Jakarta Pusat, 10220, Indonesia</p>
                             </div>
                         </section>

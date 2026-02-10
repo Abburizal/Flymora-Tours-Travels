@@ -923,8 +923,8 @@ export default function Home() {
                                 </svg>
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                            <a href="tel:+62-21-1234-5678" className="text-blue-200 hover:text-white transition" aria-label="Call us at +62 21 1234 5678">
-                                +62 21 1234 5678
+                            <a href="tel:+6282189905173" className="text-blue-200 hover:text-white transition" aria-label="Call us at +62 821 8990 5173">
+                                +62 821 8990 5173
                             </a>
                         </div>
 

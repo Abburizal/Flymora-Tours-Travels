@@ -372,7 +372,7 @@
             <div class="section-title">📞 Contact Us</div>
             <p><strong>Flymora Tours and Travels</strong></p>
             <p>📧 Email: info@flymoratours.com</p>
-            <p>📱 Phone: +62 812 3456 7890</p>
+            <p>📱 Phone: +62 821-8990-5173</p>
             <p>📍 Address: Jl. Sudirman No. 123, Jakarta Pusat, 10220, Indonesia</p>
             <p style="margin-top: 10px;">🌐 Website: www.flymoratours.com</p>
         </div>

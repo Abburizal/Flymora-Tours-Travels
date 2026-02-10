@@ -112,8 +112,8 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-gray-800 mb-1">{t('contact.phone')}</h3>
-                                        <a href="tel:+6281234567890" className="text-blue-600 hover:text-blue-700">
-                                            +62 812 3456 7890
+                                        <a href="tel:+6282189905173" className="text-blue-600 hover:text-blue-700">
+                                            +62 821 8990 5173
                                         </a>
                                     </div>
                                 </div>
