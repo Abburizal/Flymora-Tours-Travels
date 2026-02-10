@@ -892,11 +892,23 @@ export default function Home() {
             </section>
 
             {/* Contact Section */}
-            <section id="contact" className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
-                <div className="container mx-auto px-4">
+            <section 
+                id="contact" 
+                className="relative py-20 text-white overflow-hidden"
+            >
+                {/* Background Image with Overlay */}
+                <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: 'url(/images/contact-img.png)' }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900/85 via-blue-800/80 to-purple-900/85"></div>
+                </div>
+                
+                {/* Content */}
+                <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
-                        <p className="text-xl text-blue-100">
+                        <h2 className="text-4xl font-bold mb-4 drop-shadow-lg">Get In Touch</h2>
+                        <p className="text-xl text-blue-100 drop-shadow">
                             Have questions? We're here to help you plan your perfect adventure
                         </p>
                     </div>
