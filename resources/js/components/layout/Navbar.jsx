@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../LanguageSwitcher';
+import Swal from 'sweetalert2';
 
 export default function Navbar() {
     const { user, logout } = useAuth();
@@ -10,8 +11,81 @@ export default function Navbar() {
     const { t } = useTranslation();
 
     const handleLogout = async () => {
-        await logout();
-        navigate('/login');
+        const currentLang = localStorage.getItem('i18nextLng') || 'en';
+        
+        const messages = {
+            en: {
+                title: '👋 Leaving Already?',
+                question: 'Are you sure you want to log out from Flymora?',
+                miss: "We'll miss you! Come back soon! ✈️",
+                confirmBtn: 'Yes, Log Me Out',
+                cancelBtn: 'No, Stay Here',
+                successTitle: 'See You Soon! 👋',
+                successMsg: "You've been successfully logged out",
+                thanks: '✨ Thank you for visiting Flymora! ✨',
+                goodbye: 'Safe travels! 🌍✈️'
+            },
+            id: {
+                title: '👋 Sudah Mau Pergi?',
+                question: 'Apakah Anda yakin ingin keluar dari Flymora?',
+                miss: 'Kami akan merindukanmu! Sampai jumpa lagi! ✈️',
+                confirmBtn: 'Ya, Log Out',
+                cancelBtn: 'Tidak, Tetap Disini',
+                successTitle: 'Sampai Bertemu Lagi! 👋',
+                successMsg: 'Anda telah berhasil keluar',
+                thanks: '✨ Terima kasih sudah berkunjung ke Flymora! ✨',
+                goodbye: 'Selamat jalan! 🌍✈️'
+            }
+        };
+
+        const msg = messages[currentLang] || messages.en;
+        
+        const result = await Swal.fire({
+            title: msg.title,
+            html: `
+                <div class="text-center">
+                    <p class="text-gray-600 mb-2">${msg.question}</p>
+                    <p class="text-sm text-gray-500">${msg.miss}</p>
+                </div>
+            `,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#3b82f6',
+            confirmButtonText: msg.confirmBtn,
+            cancelButtonText: msg.cancelBtn,
+            customClass: {
+                popup: 'rounded-lg',
+                confirmButton: 'px-6 py-2 rounded-lg font-semibold',
+                cancelButton: 'px-6 py-2 rounded-lg font-semibold'
+            }
+        });
+
+        if (result.isConfirmed) {
+            await logout();
+            
+            Swal.fire({
+                title: msg.successTitle,
+                html: `
+                    <div class="text-center">
+                        <p class="text-gray-600 mb-2">${msg.successMsg}</p>
+                        <p class="text-lg">${msg.thanks}</p>
+                        <p class="text-sm text-gray-500 mt-2">${msg.goodbye}</p>
+                    </div>
+                `,
+                icon: 'success',
+                timer: 3000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                customClass: {
+                    popup: 'rounded-lg'
+                }
+            });
+
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
+        }
     };
 
     return (
