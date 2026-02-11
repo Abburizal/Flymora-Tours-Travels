@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ItineraryController;
 use App\Http\Controllers\Api\WishlistController;
+use App\Http\Controllers\Api\NewsletterController;
 use App\Http\Controllers\AnalyticsController;
 
 // Public routes
@@ -25,6 +26,11 @@ Route::get('/tours/{tour}/reviews', [ReviewController::class, 'index']);
 
 // Contact form submission
 Route::post('/contact', [ContactController::class, 'submit']);
+
+// Newsletter subscription routes (Public)
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe']);
+Route::post('/newsletter/check-status', [NewsletterController::class, 'checkStatus']);
 
 // Authentication routes (Public)
 Route::post('/auth/register', [AuthController::class, 'register']);
