@@ -5,6 +5,7 @@ import api from '../services/api';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
 import RecommendedBadge from '../components/RecommendedBadge';
+import SocialProofBadge from '../components/SocialProofBadge';
 import SEO from '../components/SEO';
 import { useAnalytics } from '../hooks/useAnalytics';
 import { useCurrency } from '../hooks/useCurrency';
@@ -444,6 +445,15 @@ export default function Tours() {
                                                 </div>
                                             </div>
                                         )}
+                                    </div>
+                                    
+                                    {/* Social Proof Badge */}
+                                    <div className="mb-3">
+                                        <SocialProofBadge 
+                                            bookedCount={tour.booked_participants || 0}
+                                            maxParticipants={tour.max_participants || 0}
+                                            variant="card"
+                                        />
                                     </div>
                                     
                                     {/* Price Section */}

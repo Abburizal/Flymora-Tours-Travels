@@ -298,6 +298,15 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "socialProof": {
+    "booked": "terbooking",
+    "travelers": "traveler",
+    "travelersBooked": "traveler sudah booking tour ini",
+    "popular": "Populer",
+    "hotTour": "Tour Paling Laris",
+    "joinOthers": "Bergabunglah dengan traveler lainnya dalam petualangan menakjubkan ini!",
+    "seatsLeft": "seat tersisa"
+  },
   "compare": {
     "title": "Bandingkan Paket Tour",
     "comparing": "Membandingkan {{count}} paket tour",

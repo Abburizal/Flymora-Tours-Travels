@@ -69,7 +69,7 @@ const ComparePage = () => {
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900">{t('compare.title', 'Compare Tours')}</h1>
                         <p className="mt-2 text-gray-600">
-                            {t('compare.comparing', 'Comparing {{count}} tour', { count: compareTours.length, count: compareTours.length })}
+                            {t('compare.comparing', 'Comparing {{count}} tour', { count: compareTours.length })}
                             {compareTours.length !== 1 ? 's' : ''}
                         </p>
                     </div>

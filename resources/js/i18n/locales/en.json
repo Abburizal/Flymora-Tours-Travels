@@ -298,6 +298,15 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "socialProof": {
+    "booked": "booked",
+    "travelers": "travelers",
+    "travelersBooked": "travelers booked this tour",
+    "popular": "Popular",
+    "hotTour": "Hot Tour",
+    "joinOthers": "Join other travelers on this amazing adventure!",
+    "seatsLeft": "seats left"
+  },
   "compare": {
     "title": "Compare Tours",
     "comparing": "Comparing {{count}} tour",

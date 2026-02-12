@@ -9,6 +9,7 @@ import SocialShare from '../components/SocialShare';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
 import WhatsAppButton from '../components/WhatsAppButton';
+import SocialProofBadge from '../components/SocialProofBadge';
 import SEO from '../components/SEO';
 import { TourProductSchema, BreadcrumbSchema } from '../components/Schema';
 import { useAnalytics } from '../hooks/useAnalytics';
@@ -305,6 +306,17 @@ export default function TourDetail() {
                             {availableSeats} seats available
                         </div>
                     </div>
+                    
+                    {/* Social Proof Section */}
+                    {tour.booked_participants > 0 && (
+                        <div className="mb-8">
+                            <SocialProofBadge 
+                                bookedCount={tour.booked_participants || 0}
+                                maxParticipants={tour.max_participants || 0}
+                                variant="detail"
+                            />
+                        </div>
+                    )}
                     
                     <div className="mb-8">
                         <h2 className="text-2xl font-bold mb-4">About This Tour</h2>
