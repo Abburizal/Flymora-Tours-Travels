@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ItineraryController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\NewsletterController;
+use App\Http\Controllers\Api\BookingCancellationController;
 use App\Http\Controllers\AnalyticsController;
 
 // Public routes
@@ -53,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Booking routes
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
+    Route::post('/bookings/{id}/cancel', [BookingCancellationController::class, 'cancel']);
 
     // Payment routes
     Route::post('/payments/{booking}', [PaymentController::class, 'create']);

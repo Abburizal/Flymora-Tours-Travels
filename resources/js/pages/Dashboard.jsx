@@ -203,15 +203,28 @@ export default function Dashboard() {
 
                             {booking.status === 'pending' && (
                                 <div className="border-t pt-4">
-                                    <p className="text-sm text-gray-600 mb-3">
-                                        ⏰ {t('dashboard.expires')}: {booking.expired_at ? formatDate(booking.expired_at) : 'N/A'}
-                                    </p>
-                                    <button
-                                        onClick={() => handlePayment(booking.id)}
-                                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-                                    >
-                                        {t('booking.confirmBooking')}
-                                    </button>
+                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                        <p className="text-sm text-gray-600">
+                                            ⏰ {t('dashboard.expires')}: {booking.expired_at ? formatDate(booking.expired_at) : 'N/A'}
+                                        </p>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => handleCancelBooking(booking.id, booking.tour?.name)}
+                                                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition-all"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                                {t('dashboard.cancelBooking') || 'Cancel'}
+                                            </button>
+                                            <button
+                                                onClick={() => handlePayment(booking.id)}
+                                                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+                                            >
+                                                {t('booking.confirmBooking')}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
 
