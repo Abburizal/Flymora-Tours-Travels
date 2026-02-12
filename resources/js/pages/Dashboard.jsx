@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SubmitReview from '../components/SubmitReview';
+import CountdownTimer from '../components/CountdownTimer';
 
 export default function Dashboard() {
     const { t } = useTranslation();
@@ -119,6 +120,18 @@ export default function Dashboard() {
                 <div className="space-y-4">
                     {bookings.map((booking) => (
                         <div key={booking.id} className="bg-white rounded-lg shadow-md p-6">
+                            {/* Countdown Timer for paid/upcoming bookings */}
+                            {(booking.status === 'paid' && booking.tour?.start_date) && (
+                                <div className="mb-4">
+                                    <CountdownTimer 
+                                        startDate={booking.tour.start_date}
+                                        tourName={booking.tour.name}
+                                        status={booking.status}
+                                        size="md"
+                                    />
+                                </div>
+                            )}
+                            
                             <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                                 <div className="mb-4 md:mb-0">
                                     <h3 className="text-xl font-bold mb-2">{booking.tour?.name}</h3>

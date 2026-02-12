@@ -307,6 +307,18 @@
     "joinOthers": "Bergabunglah dengan traveler lainnya dalam petualangan menakjubkan ini!",
     "seatsLeft": "seat tersisa"
   },
+  "countdown": {
+    "day": "hari",
+    "days": "hari",
+    "hours": "jam",
+    "minutes": "menit",
+    "departingToday": "Berangkat Hari Ini!",
+    "departingSoon": "Berangkat Sebentar Lagi",
+    "upcomingTrip": "Trip Mendatang",
+    "tripCompleted": "Trip Selesai",
+    "shareExperience": "Bagaimana pengalamannya?",
+    "packYourBags": "Waktunya siap-siap berangkat!"
+  },
   "compare": {
     "title": "Bandingkan Paket Tour",
     "comparing": "Membandingkan {{count}} paket tour",

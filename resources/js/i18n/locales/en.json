@@ -307,6 +307,18 @@
     "joinOthers": "Join other travelers on this amazing adventure!",
     "seatsLeft": "seats left"
   },
+  "countdown": {
+    "day": "day",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "departingToday": "Departing Today!",
+    "departingSoon": "Departing Soon",
+    "upcomingTrip": "Upcoming Trip",
+    "tripCompleted": "Trip Completed",
+    "shareExperience": "How was your experience?",
+    "packYourBags": "Time to pack your bags!"
+  },
   "compare": {
     "title": "Compare Tours",
     "comparing": "Comparing {{count}} tour",
