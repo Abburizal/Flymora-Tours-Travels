@@ -134,6 +134,10 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route 
+                    path="my-bookings" 
+                    element={<Navigate to="/dashboard" replace />}
+                />
                 <Route
                     path="wishlist"
                     element={
