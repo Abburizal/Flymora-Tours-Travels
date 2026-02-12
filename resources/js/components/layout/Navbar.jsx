@@ -228,7 +228,7 @@ export default function Navbar() {
                                         {t('nav.wishlist')}
                                     </Link>
                                     
-                                    <div className="py-2 px-4">
+                                    <div className="px-4">
                                         <LanguageSwitcher />
                                     </div>
                                     
@@ -248,7 +248,7 @@ export default function Navbar() {
                                 </>
                             ) : (
                                 <>
-                                    <div className="py-2 px-4">
+                                    <div className="px-4">
                                         <LanguageSwitcher />
                                     </div>
                                     
