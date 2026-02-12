@@ -194,6 +194,7 @@
     "email": "Email Address",
     "phone": "Phone Number",
     "participants": "Number of Participants",
+    "person": "person",
     "specialRequests": "Special Requests",
     "optional": "Optional",
     "bookingDate": "Preferred Booking Date",
@@ -201,7 +202,9 @@
     "basePrice": "Base Price",
     "totalPrice": "Total Price",
     "confirmBooking": "Confirm Booking",
-    "termsAgree": "I agree to the Terms of Service and Privacy Policy"
+    "termsAgree": "I agree to the Terms of Service and Privacy Policy",
+    "available": "Available",
+    "expiresIn": "Booking will expire in 30 minutes after creation"
   },
   "auth": {
     "login": "Login",
@@ -229,6 +232,10 @@
     "settings": "Settings",
     "noBookings": "You haven't made any bookings yet",
     "startExploring": "Start exploring our tours!",
+    "expires": "Expires",
+    "writeReview": "Write a Review",
+    "hideReviewForm": "Cancel Review",
+    "reviewThanks": "Thank you for your review!",
     "bookingStatus": {
       "pending": "Pending",
       "paid": "Paid",

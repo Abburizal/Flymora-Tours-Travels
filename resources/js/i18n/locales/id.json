@@ -194,6 +194,7 @@
     "email": "Alamat Email",
     "phone": "Nomor Telepon",
     "participants": "Jumlah Peserta",
+    "person": "orang",
     "specialRequests": "Permintaan Khusus",
     "optional": "Opsional",
     "bookingDate": "Tanggal Pemesanan",
@@ -201,7 +202,9 @@
     "basePrice": "Harga Dasar",
     "totalPrice": "Total Harga",
     "confirmBooking": "Konfirmasi Pemesanan",
-    "termsAgree": "Saya setuju dengan Syarat & Ketentuan dan Kebijakan Privasi"
+    "termsAgree": "Saya setuju dengan Syarat & Ketentuan dan Kebijakan Privasi",
+    "available": "Tersedia",
+    "expiresIn": "Pemesanan akan kadaluarsa dalam 30 menit setelah dibuat"
   },
   "auth": {
     "login": "Masuk",
@@ -229,6 +232,10 @@
     "settings": "Pengaturan",
     "noBookings": "Anda belum melakukan pemesanan",
     "startExploring": "Mulai jelajahi paket wisata kami!",
+    "expires": "Kadaluarsa",
+    "writeReview": "Tulis Ulasan",
+    "hideReviewForm": "Batal Ulasan",
+    "reviewThanks": "Terima kasih atas ulasan Anda!",
     "bookingStatus": {
       "pending": "Menunggu",
       "paid": "Dibayar",
