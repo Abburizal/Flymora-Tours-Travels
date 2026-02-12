@@ -10,6 +10,7 @@ export default function PaymentSimulator() {
     const [bookingData, setBookingData] = useState(null);
     const [error, setError] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('credit_card');
+    const [showCancelDialog, setShowCancelDialog] = useState(false);
 
     useEffect(() => {
         loadBookingData();
@@ -79,8 +80,84 @@ export default function PaymentSimulator() {
         );
     }
 
+    const handleCancel = () => {
+        setShowCancelDialog(true);
+    };
+
+    const confirmCancel = () => {
+        setShowCancelDialog(false);
+        navigate('/dashboard');
+    };
+
+    const closeDialog = () => {
+        setShowCancelDialog(false);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 py-12 px-4">
+            {/* Cancel Confirmation Dialog */}
+            {showCancelDialog && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-fade-in">
+                        <div className="text-center mb-6">
+                            <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg className="w-12 h-12 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                                Batalkan Pembayaran?
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Anda yakin ingin membatalkan pembayaran ini?
+                            </p>
+                        </div>
+
+                        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 mb-6">
+                            <p className="text-red-800 font-semibold mb-2 flex items-center gap-2">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                Konsekuensi Pembatalan:
+                            </p>
+                            <ul className="text-red-700 text-sm space-y-1 ml-7">
+                                <li>• Pemesanan akan dibatalkan</li>
+                                <li>• Kursi yang sudah dipesan akan dirilis</li>
+                                <li>• Email pembatalan akan dikirim</li>
+                                <li>• Anda perlu booking ulang dari awal</li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-6">
+                            <p className="text-blue-800 font-semibold mb-1 flex items-center gap-2">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                </svg>
+                                Rekomendasi:
+                            </p>
+                            <p className="text-blue-700 text-sm ml-7">
+                                Jika ada masalah teknis, silakan hubungi customer service kami via WhatsApp
+                            </p>
+                        </div>
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={closeDialog}
+                                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+                            >
+                                Lanjutkan Bayar
+                            </button>
+                            <button
+                                onClick={confirmCancel}
+                                className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-300 transition-all"
+                            >
+                                Ya, Batalkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="max-w-2xl mx-auto">
                 {/* Development Mode Warning */}
                 <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg mb-6">
