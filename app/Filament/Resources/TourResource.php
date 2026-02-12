@@ -70,12 +70,16 @@ class TourResource extends Resource
                     ->disk('public')
                     ->directory('tours')
                     ->visibility('public')
+                    ->required()
                     ->maxSize(1024) // 1MB max
                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
                     ->imageResizeMode('cover')
                     ->imageResizeTargetWidth('800')
                     ->imageResizeTargetHeight('600')
                     ->helperText('JPG or PNG - Max 1MB')
+                    ->loadingIndicatorPosition('center')
+                    ->uploadingMessage('Uploading image...')
+                    ->removeUploadedFileButtonPosition('right')
                     ->columnSpanFull(),
                 SpatieMediaLibraryFileUpload::make('tour_images')
                     ->label('Tour Gallery')
@@ -92,6 +96,9 @@ class TourResource extends Resource
                     ->imageCropAspectRatio('16:9')
                     ->imageResizeTargetWidth('1920')
                     ->imageResizeTargetHeight('1080')
+                    ->loadingIndicatorPosition('center')
+                    ->uploadingMessage('Uploading gallery images...')
+                    ->removeUploadedFileButtonPosition('right')
                     ->helperText('Upload up to 10 images for gallery. Drag to reorder. Max 5MB per image.')
                     ->columnSpanFull(),
                 FileUpload::make('custom_itinerary')
@@ -103,6 +110,9 @@ class TourResource extends Resource
                     ->visibility('public')
                     ->downloadable()
                     ->openable()
+                    ->loadingIndicatorPosition('center')
+                    ->uploadingMessage('Uploading PDF itinerary...')
+                    ->removeUploadedFileButtonPosition('right')
                     ->helperText('Upload a custom PDF itinerary. If not uploaded, system will auto-generate one. Max 10MB.')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('max_participants')
