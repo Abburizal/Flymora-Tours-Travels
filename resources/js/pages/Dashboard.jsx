@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import SubmitReview from '../components/SubmitReview';
 import CountdownTimer from '../components/CountdownTimer';
@@ -10,9 +10,13 @@ export default function Dashboard() {
     const { t } = useTranslation();
     const { user } = useAuth();
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const paymentSuccess = searchParams.get('payment') === 'success';
+    
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showReviewForm, setShowReviewForm] = useState({});
+    const [showSuccessBanner, setShowSuccessBanner] = useState(paymentSuccess);
 
     // Scroll to top on mount
     useEffect(() => {
@@ -21,7 +25,16 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchBookings();
-    }, []);
+        
+        // Auto-hide success banner after 8 seconds
+        if (paymentSuccess) {
+            const timer = setTimeout(() => {
+                setShowSuccessBanner(false);
+                setSearchParams({}); // Remove ?payment=success from URL
+            }, 8000);
+            return () => clearTimeout(timer);
+        }
+    }, [paymentSuccess]);
 
     const fetchBookings = async () => {
         try {
@@ -109,6 +122,42 @@ export default function Dashboard() {
 
     return (
         <div className="container mx-auto px-4 py-8">
+            {/* Payment Success Banner */}
+            {showSuccessBanner && (
+                <div className="mb-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow-2xl p-6 animate-fade-in border-4 border-green-300">
+                    <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0">
+                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center animate-bounce">
+                                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                                🎉 {t('dashboard.paymentSuccess') || 'Payment Successful!'}
+                            </h3>
+                            <p className="text-green-50 text-lg mb-3">
+                                {t('dashboard.paymentSuccessMessage') || 'Your booking is confirmed! E-ticket has been sent to your email.'}
+                            </p>
+                            <div className="flex flex-wrap gap-2 text-sm">
+                                <span className="bg-white/20 px-3 py-1 rounded-full">✅ {t('dashboard.bookingConfirmed') || 'Booking Confirmed'}</span>
+                                <span className="bg-white/20 px-3 py-1 rounded-full">📧 {t('dashboard.emailSent') || 'E-ticket Sent'}</span>
+                                <span className="bg-white/20 px-3 py-1 rounded-full">🎫 {t('dashboard.readyToGo') || 'Ready to Go!'}</span>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => setShowSuccessBanner(false)}
+                            className="text-white hover:text-green-100 transition-colors flex-shrink-0"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            )}
+            
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">{t('dashboard.myBookings')}</h1>
                 <p className="text-gray-600">{t('dashboard.welcome')}, {user?.name}!</p>

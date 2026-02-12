@@ -37,11 +37,12 @@ export default function PaymentSimulator() {
             });
 
             if (response.data.success) {
-                // Show success message
-                alert(`✅ Payment Successful!\n\nTransaction ID: ${response.data.transaction_id}\n\nE-ticket has been sent to your email!`);
-                
-                // Redirect to my bookings
-                navigate('/my-bookings');
+                // Show success message with better UX
+                setTimeout(() => {
+                    alert(`✅ Payment Successful!\n\nTransaction ID: ${response.data.transaction_id}\n\nYour booking is confirmed!\nE-ticket has been sent to your email.`);
+                    // Redirect to dashboard with success flag
+                    navigate('/dashboard?payment=success', { replace: true });
+                }, 500);
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Payment failed');
@@ -68,10 +69,10 @@ export default function PaymentSimulator() {
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">Error</h2>
                     <p className="text-gray-600 mb-6">{error}</p>
                     <button
-                        onClick={() => navigate('/my-bookings')}
+                        onClick={() => navigate('/dashboard')}
                         className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700"
                     >
-                        Back to My Bookings
+                        Back to Dashboard
                     </button>
                 </div>
             </div>

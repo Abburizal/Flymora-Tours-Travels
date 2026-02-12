@@ -239,6 +239,11 @@
     "hideReviewForm": "Batal Ulasan",
     "reviewThanks": "Terima kasih atas ulasan Anda!",
     "bookAgain": "Pesan Lagi",
+    "paymentSuccess": "Pembayaran Berhasil!",
+    "paymentSuccessMessage": "Pemesanan Anda dikonfirmasi! E-tiket telah dikirim ke email Anda.",
+    "bookingConfirmed": "Pemesanan Dikonfirmasi",
+    "emailSent": "E-tiket Terkirim",
+    "readyToGo": "Siap Berangkat!",
     "bookingStatus": {
       "pending": "Menunggu",
       "paid": "Dibayar",

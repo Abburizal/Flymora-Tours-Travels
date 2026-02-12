@@ -239,6 +239,11 @@
     "hideReviewForm": "Cancel Review",
     "reviewThanks": "Thank you for your review!",
     "bookAgain": "Book Again",
+    "paymentSuccess": "Payment Successful!",
+    "paymentSuccessMessage": "Your booking is confirmed! E-ticket has been sent to your email.",
+    "bookingConfirmed": "Booking Confirmed",
+    "emailSent": "E-ticket Sent",
+    "readyToGo": "Ready to Go!",
     "bookingStatus": {
       "pending": "Pending",
       "paid": "Paid",
