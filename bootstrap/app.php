@@ -14,10 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Configure API authentication to return JSON instead of redirecting
         $middleware->redirectGuestsTo(function ($request) {
+            // Don't redirect Livewire internal routes
+            if ($request->is('livewire/*')) {
+                return null; // Let Livewire handle auth internally
+            }
+            
             if ($request->is('api/*')) {
                 // For API routes, don't redirect - let Sanctum handle it
                 return null;
             }
+            
             return route('login');
         });
     })
