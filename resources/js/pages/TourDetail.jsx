@@ -8,6 +8,7 @@ import ImageGallery from '../components/ImageGallery';
 import SocialShare from '../components/SocialShare';
 import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
+import WhatsAppButton from '../components/WhatsAppButton';
 import SEO from '../components/SEO';
 import { TourProductSchema, BreadcrumbSchema } from '../components/Schema';
 import { useAnalytics } from '../hooks/useAnalytics';
@@ -492,7 +493,7 @@ export default function TourDetail() {
                             </div>
                             
                             {/* Availability Badge */}
-                            <div className="flex flex-col items-center lg:items-end gap-4">
+                            <div className="flex flex-col items-center lg:items-end gap-4 w-full lg:w-auto">
                                 <div className={`px-6 py-3 rounded-full font-semibold text-sm ${
                                     availableSeats > 10 
                                         ? 'bg-green-100 text-green-700' 
@@ -505,14 +506,24 @@ export default function TourDetail() {
                                         : 'Sold Out'}
                                 </div>
                                 
-                                {/* Book Button */}
-                                <button
-                                    onClick={handleBookNow}
-                                    disabled={availableSeats === 0}
-                                    className="w-full lg:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 hover:shadow-xl shadow-lg"
-                                >
-                                    {availableSeats === 0 ? 'Sold Out' : 'Book This Tour Now'}
-                                </button>
+                                {/* Action Buttons */}
+                                <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                                    {/* WhatsApp Button */}
+                                    <WhatsAppButton 
+                                        tour={tour} 
+                                        variant="inline"
+                                        source="tour_detail"
+                                    />
+                                    
+                                    {/* Book Button */}
+                                    <button
+                                        onClick={handleBookNow}
+                                        disabled={availableSeats === 0}
+                                        className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 hover:shadow-xl shadow-lg"
+                                    >
+                                        {availableSeats === 0 ? 'Sold Out' : 'Book This Tour Now'}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

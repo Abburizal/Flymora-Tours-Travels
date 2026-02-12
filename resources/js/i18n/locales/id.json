@@ -298,6 +298,12 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "whatsapp": {
+    "inquire": "Tanya via WhatsApp",
+    "chat": "Chat dengan kami via WhatsApp",
+    "chatNow": "Chat Sekarang",
+    "needHelp": "Butuh bantuan?"
+  },
   "errors": {
     "generic": "Terjadi kesalahan. Silakan coba lagi.",
     "network": "Kesalahan jaringan. Periksa koneksi Anda.",

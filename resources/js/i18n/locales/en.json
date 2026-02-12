@@ -298,6 +298,12 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "whatsapp": {
+    "inquire": "Inquire via WhatsApp",
+    "chat": "Chat with us on WhatsApp",
+    "chatNow": "Chat Now",
+    "needHelp": "Need help?"
+  },
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "network": "Network error. Please check your connection.",
