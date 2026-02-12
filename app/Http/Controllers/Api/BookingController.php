@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Jobs\SendInvoiceEmail;
+use App\Notifications\BookingConfirmationNotification;
 
 class BookingController extends Controller
 {
@@ -83,6 +84,12 @@ class BookingController extends Controller
                     'expired_at' => $expiredAt,
                 ]);
 
+                // Update booked_participants count
+                $tour->increment('booked_participants', $validated['number_of_participants']);
+                
+                // Load tour relationship
+                $booking->load('tour');
+
                 return [
                     'booking' => $booking,
                     'expired_at' => $expiredAt,
@@ -90,6 +97,13 @@ class BookingController extends Controller
                     'total_price' => $total_price,
                 ];
             }, 5); // 5 attempts for deadlock retry
+
+            // Send booking confirmation email
+            try {
+                $request->user()->notify(new BookingConfirmationNotification($result['booking']));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send booking confirmation email: ' . $e->getMessage());
+            }
 
             // Load relationships for email
             $booking = Booking::with(['user', 'tour'])->find($result['booking']->id);

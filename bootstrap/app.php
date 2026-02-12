@@ -24,6 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule): void {
         // Auto-expire pending bookings every minute
         $schedule->command('bookings:expire')->everyMinute();
+        
+        // Send payment reminders every hour for bookings expiring soon
+        $schedule->command('reminders:payment')->hourly();
+        
+        // Send trip reminders twice daily (morning 9AM and evening 6PM)
+        $schedule->command('reminders:trip')->twiceDaily(9, 18);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Handle unauthenticated users for API routes
