@@ -17,6 +17,11 @@ export default function Booking() {
         number_of_participants: 1,
     });
 
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
+
     useEffect(() => {
         fetchTour();
     }, [tourId]);

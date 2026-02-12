@@ -2,11 +2,17 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCompare } from '../context/CompareContext';
+import { useEffect } from 'react';
 
 const ComparePage = () => {
     const { t } = useTranslation();
     const { compareTours, removeFromCompare, clearCompare } = useCompare();
     const navigate = useNavigate();
+
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
 
     if (compareTours.length === 0) {
         return (

@@ -14,6 +14,11 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [showReviewForm, setShowReviewForm] = useState({});
 
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
+
     useEffect(() => {
         fetchBookings();
     }, []);

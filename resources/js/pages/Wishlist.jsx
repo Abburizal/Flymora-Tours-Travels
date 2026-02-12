@@ -13,6 +13,11 @@ const Wishlist = () => {
     const [wishlists, setWishlists] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
+
     useEffect(() => {
         fetchWishlist();
     }, []);

@@ -21,6 +21,11 @@ export default function Home() {
     const [categories, setCategories] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(true);
 
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
+
     // Popular Categories Data (with attractive icons and colors)
     const popularCategories = [
         {

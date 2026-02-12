@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
@@ -16,6 +16,11 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const { register } = useAuth();
     const navigate = useNavigate();
+
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
 
     const handleChange = (e) => {
         setFormData({
