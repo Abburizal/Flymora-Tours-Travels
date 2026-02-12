@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ export default function Navbar() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleLogout = async () => {
         const currentLang = localStorage.getItem('i18nextLng') || 'en';
@@ -159,16 +160,117 @@ export default function Navbar() {
                         )}
                     </div>
 
-                    {/* Mobile menu button - simplified for now */}
+                    {/* Mobile menu button */}
                     <button 
-                        className="md:hidden text-gray-700"
-                        aria-label="Open navigation menu"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden text-gray-700 hover:text-blue-600 transition-colors"
+                        aria-label="Toggle navigation menu"
                     >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        {isMenuOpen ? (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
                     </button>
                 </div>
+
+                {/* Mobile menu */}
+                {isMenuOpen && (
+                    <div className="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4 animate-fade-in">
+                        <div className="flex flex-col space-y-3">
+                            <Link 
+                                to="/" 
+                                onClick={() => setIsMenuOpen(false)}
+                                className="text-gray-700 hover:text-blue-600 py-2 px-4 rounded hover:bg-gray-50 transition-colors"
+                            >
+                                {t('nav.home')}
+                            </Link>
+                            <Link 
+                                to="/tours" 
+                                onClick={() => setIsMenuOpen(false)}
+                                className="text-gray-700 hover:text-blue-600 py-2 px-4 rounded hover:bg-gray-50 transition-colors"
+                            >
+                                {t('nav.tours')}
+                            </Link>
+                            
+                            {user ? (
+                                <>
+                                    <Link 
+                                        to="/dashboard" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-gray-700 hover:text-blue-600 py-2 px-4 rounded hover:bg-gray-50 transition-colors"
+                                    >
+                                        {t('nav.dashboard')}
+                                    </Link>
+                                    <Link 
+                                        to="/wishlist" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-gray-700 hover:text-blue-600 py-2 px-4 rounded hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                    >
+                                        <svg 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            fill="none" 
+                                            viewBox="0 0 24 24" 
+                                            strokeWidth={1.5} 
+                                            stroke="currentColor" 
+                                            className="w-5 h-5"
+                                        >
+                                            <path 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" 
+                                            />
+                                        </svg>
+                                        {t('nav.wishlist')}
+                                    </Link>
+                                    
+                                    <div className="py-2 px-4">
+                                        <LanguageSwitcher />
+                                    </div>
+                                    
+                                    <div className="text-gray-600 py-2 px-4 bg-gray-50 rounded">
+                                        👋 Hi, {user.name}
+                                    </div>
+                                    
+                                    <button
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+                                            handleLogout();
+                                        }}
+                                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors text-center"
+                                    >
+                                        {t('nav.logout')}
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="py-2 px-4">
+                                        <LanguageSwitcher />
+                                    </div>
+                                    
+                                    <Link
+                                        to="/login"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-gray-700 hover:text-blue-600 py-2 px-4 rounded hover:bg-gray-50 transition-colors text-center"
+                                    >
+                                        {t('nav.login')}
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-center"
+                                    >
+                                        {t('nav.register')}
+                                    </Link>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </nav>
     );
