@@ -93,9 +93,9 @@ class TourResource extends Resource
                     ->imageResizeTargetHeight('1080')
                     ->helperText('Upload up to 10 images for gallery. Drag to reorder. Max 5MB per image.')
                     ->columnSpanFull(),
-                SpatieMediaLibraryFileUpload::make('custom_itinerary')
+                FileUpload::make('custom_itinerary')
                     ->label('Custom Itinerary PDF (Optional)')
-                    ->collection('itinerary')
+                    ->directory('tours/itineraries')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(10240) // 10MB
                     ->disk('public')
