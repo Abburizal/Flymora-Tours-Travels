@@ -66,9 +66,14 @@ class TourResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Tour Image')
                     ->image()
+                    ->disk('public')
                     ->directory('tours')
+                    ->visibility('public')
                     ->maxSize(1024) // 1MB max
                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
+                    ->imageResizeMode('cover')
+                    ->imageResizeTargetWidth('800')
+                    ->imageResizeTargetHeight('600')
                     ->helperText('JPG or PNG - Max 1MB')
                     ->columnSpanFull(),
                 SpatieMediaLibraryFileUpload::make('tour_images')
@@ -80,6 +85,12 @@ class TourResource extends Resource
                     ->image()
                     ->imageEditor()
                     ->maxSize(5120) // 5MB
+                    ->disk('public')
+                    ->visibility('public')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('1920')
+                    ->imageResizeTargetHeight('1080')
                     ->helperText('Upload up to 10 images for gallery. Drag to reorder. Max 5MB per image.')
                     ->columnSpanFull(),
                 SpatieMediaLibraryFileUpload::make('custom_itinerary')
@@ -87,6 +98,8 @@ class TourResource extends Resource
                     ->collection('itinerary')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(10240) // 10MB
+                    ->disk('public')
+                    ->visibility('public')
                     ->downloadable()
                     ->openable()
                     ->helperText('Upload a custom PDF itinerary. If not uploaded, system will auto-generate one. Max 10MB.')
