@@ -112,6 +112,48 @@ export default function Dashboard() {
         }
     };
 
+    const handleRebook = (tourId, tourName) => {
+        // Track rebook event
+        if (window.gtag) {
+            window.gtag('event', 'rebook_tour', {
+                event_category: 'Booking',
+                event_label: tourName,
+                value: tourId
+            });
+        }
+        
+        navigate(`/booking/${tourId}?rebook=true`);
+    };
+
+    const handleCancelBooking = async (bookingId, tourName) => {
+        if (!window.confirm(t('dashboard.confirmCancel') || 'Apakah Anda yakin ingin membatalkan pemesanan ini?')) {
+            return;
+        }
+
+        try {
+            await api.post(`/bookings/${bookingId}/cancel`, {
+                reason: 'user_cancelled'
+            });
+
+            // Track cancellation event
+            if (window.gtag) {
+                window.gtag('event', 'cancel_booking', {
+                    event_category: 'Booking',
+                    event_label: tourName,
+                    value: bookingId
+                });
+            }
+
+            alert(t('dashboard.cancelSuccess') || 'Pemesanan berhasil dibatalkan');
+            
+            // Refresh bookings list
+            fetchBookings();
+        } catch (error) {
+            console.error('Cancel booking error:', error);
+            alert(error.response?.data?.message || 'Gagal membatalkan pemesanan');
+        }
+    };
+
     if (loading) {
         return (
             <div className="container mx-auto px-4 py-16 text-center">
