@@ -208,7 +208,9 @@
     "rebookSuccess": "Siap pesan lagi!",
     "rebookMessage": "Detail paket sudah dimuat. Tinggal pilih tanggal dan konfirmasi.",
     "estimateLoaded": "Estimasi harga dimuat!",
-    "estimateMessage": "Detail pemesanan sudah terisi. Anda bisa menyesuaikan di bawah."
+    "estimateMessage": "Detail pemesanan sudah terisi. Anda bisa menyesuaikan di bawah.",
+    "selectedAddOns": "Tambahan yang Anda Pilih",
+    "addOnsNote": "Tambahan ini sudah termasuk dalam total harga di bawah"
   },
   "priceEstimator": {
     "title": "Kalkulator Harga Cerdas",

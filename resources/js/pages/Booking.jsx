@@ -16,11 +16,27 @@ export default function Booking() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [savedEstimate, setSavedEstimate] = useState(null);
     
     const [formData, setFormData] = useState({
         booking_date: '',
         number_of_participants: isFromEstimate ? estimatedParticipants : 1,
     });
+
+    // Load saved estimate from localStorage
+    useEffect(() => {
+        if (isFromEstimate) {
+            const estimateData = localStorage.getItem('priceEstimate');
+            if (estimateData) {
+                const estimate = JSON.parse(estimateData);
+                // Check if estimate is recent (within 10 minutes)
+                const ageMinutes = (Date.now() - estimate.timestamp) / 1000 / 60;
+                if (ageMinutes < 10) {
+                    setSavedEstimate(estimate);
+                }
+            }
+        }
+    }, [isFromEstimate]);
 
     // Scroll to top on mount
     useEffect(() => {
@@ -107,7 +123,25 @@ export default function Booking() {
 
     const calculateTotal = () => {
         if (!tour) return 0;
-        return tour.price * formData.number_of_participants;
+        let total = tour.price * formData.number_of_participants;
+        
+        // Add add-ons if from estimate
+        if (savedEstimate && savedEstimate.addOns) {
+            const addOnPrices = {
+                insurance: 150000,
+                extraMeal: 300000,
+                privateGuide: 500000,
+                airportTransfer: 200000,
+            };
+            
+            Object.keys(savedEstimate.addOns).forEach(key => {
+                if (savedEstimate.addOns[key]) {
+                    total += addOnPrices[key] * formData.number_of_participants;
+                }
+            });
+        }
+        
+        return total;
     };
 
     if (loading) {
@@ -162,6 +196,47 @@ export default function Booking() {
                 <p className="text-gray-600 mb-2">⏱️ {tour.duration} {t('tours.days')}</p>
                 <p className="text-2xl font-bold text-blue-600">{formatCurrency(tour.price)} / {t('booking.person') || t('tours.person')}</p>
             </div>
+
+            {/* Saved Estimate Details */}
+            {savedEstimate && savedEstimate.addOns && Object.values(savedEstimate.addOns).some(Boolean) && (
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-blue-200 shadow-md p-6 mb-6">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                        </svg>
+                        {t('booking.selectedAddOns') || 'Your Selected Add-ons'}
+                    </h3>
+                    <div className="space-y-2">
+                        {savedEstimate.addOns.insurance && (
+                            <div className="flex justify-between items-center bg-white rounded-lg p-3 border border-blue-200">
+                                <span className="text-gray-700">✈️ {t('priceEstimator.addOn.insurance')}</span>
+                                <span className="font-semibold text-blue-600">{formatCurrency(150000 * formData.number_of_participants)}</span>
+                            </div>
+                        )}
+                        {savedEstimate.addOns.extraMeal && (
+                            <div className="flex justify-between items-center bg-white rounded-lg p-3 border border-blue-200">
+                                <span className="text-gray-700">🍽️ {t('priceEstimator.addOn.extraMeal')}</span>
+                                <span className="font-semibold text-blue-600">{formatCurrency(300000 * formData.number_of_participants)}</span>
+                            </div>
+                        )}
+                        {savedEstimate.addOns.privateGuide && (
+                            <div className="flex justify-between items-center bg-white rounded-lg p-3 border border-blue-200">
+                                <span className="text-gray-700">👤 {t('priceEstimator.addOn.privateGuide')}</span>
+                                <span className="font-semibold text-blue-600">{formatCurrency(500000 * formData.number_of_participants)}</span>
+                            </div>
+                        )}
+                        {savedEstimate.addOns.airportTransfer && (
+                            <div className="flex justify-between items-center bg-white rounded-lg p-3 border border-blue-200">
+                                <span className="text-gray-700">🚗 {t('priceEstimator.addOn.airportTransfer')}</span>
+                                <span className="font-semibold text-blue-600">{formatCurrency(200000 * formData.number_of_participants)}</span>
+                            </div>
+                        )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-3 italic">
+                        💡 {t('booking.addOnsNote') || 'These add-ons are included in your total price below'}
+                    </p>
+                </div>
+            )}
 
             {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
