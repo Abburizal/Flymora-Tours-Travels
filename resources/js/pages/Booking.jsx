@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
@@ -7,6 +7,9 @@ export default function Booking() {
     const { t } = useTranslation();
     const { tourId } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const isRebook = searchParams.get('rebook') === 'true';
+    
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
@@ -115,6 +118,23 @@ export default function Booking() {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-2xl">
+            {/* Rebook Success Message */}
+            {isRebook && tour && (
+                <div className="mb-6 bg-green-50 border-2 border-green-200 rounded-lg p-4 flex items-start gap-3">
+                    <svg className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <p className="text-green-800 font-semibold">
+                            ✅ {t('booking.rebookSuccess')}
+                        </p>
+                        <p className="text-green-700 text-sm mt-1">
+                            {t('booking.rebookMessage')}
+                        </p>
+                    </div>
+                </div>
+            )}
+            
             <h1 className="text-3xl font-bold mb-8">{t('booking.title')}</h1>
             
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">

@@ -168,30 +168,46 @@ export default function Dashboard() {
 
                             {(booking.status === 'paid' || booking.status === 'completed') && (
                                 <div className="border-t pt-4">
-                                    {!showReviewForm[booking.id] ? (
-                                        <button
-                                            onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: true})}
-                                            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 flex items-center gap-2"
-                                        >
-                                            ⭐ {t('dashboard.writeReview')}
-                                        </button>
-                                    ) : (
-                                        <div>
+                                    <div className="flex flex-wrap gap-3">
+                                        {/* Rebook Button - Only for completed */}
+                                        {booking.status === 'completed' && booking.tour && (
                                             <button
-                                                onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: false})}
-                                                className="mb-4 text-gray-600 hover:text-gray-800 text-sm flex items-center gap-1"
+                                                onClick={() => handleRebook(booking.tour.id, booking.tour.name)}
+                                                className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 flex items-center gap-2 font-semibold shadow-md hover:shadow-lg transition-all"
                                             >
-                                                ← {t('dashboard.hideReviewForm')}
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                </svg>
+                                                {t('dashboard.bookAgain')}
                                             </button>
-                                            <SubmitReview
-                                                booking={booking}
-                                                onSubmitted={(review) => {
-                                                    setShowReviewForm({...showReviewForm, [booking.id]: false});
-                                                    alert(t('dashboard.reviewThanks') || '✅ Thank you for your review!');
-                                                }}
-                                            />
-                                        </div>
-                                    )}
+                                        )}
+                                        
+                                        {/* Review Button */}
+                                        {!showReviewForm[booking.id] ? (
+                                            <button
+                                                onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: true})}
+                                                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 flex items-center gap-2 font-semibold shadow-md hover:shadow-lg transition-all"
+                                            >
+                                                ⭐ {t('dashboard.writeReview')}
+                                            </button>
+                                        ) : (
+                                            <div className="w-full">
+                                                <button
+                                                    onClick={() => setShowReviewForm({...showReviewForm, [booking.id]: false})}
+                                                    className="mb-4 text-gray-600 hover:text-gray-800 text-sm flex items-center gap-1"
+                                                >
+                                                    ← {t('dashboard.hideReviewForm')}
+                                                </button>
+                                                <SubmitReview
+                                                    booking={booking}
+                                                    onSubmitted={(review) => {
+                                                        setShowReviewForm({...showReviewForm, [booking.id]: false});
+                                                        alert(t('dashboard.reviewThanks') || '✅ Thank you for your review!');
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             )}
                         </div>

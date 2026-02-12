@@ -204,7 +204,9 @@
     "confirmBooking": "Konfirmasi Pemesanan",
     "termsAgree": "Saya setuju dengan Syarat & Ketentuan dan Kebijakan Privasi",
     "available": "Tersedia",
-    "expiresIn": "Pemesanan akan kadaluarsa dalam 30 menit setelah dibuat"
+    "expiresIn": "Pemesanan akan kadaluarsa dalam 30 menit setelah dibuat",
+    "rebookSuccess": "Siap pesan lagi!",
+    "rebookMessage": "Detail paket sudah dimuat. Tinggal pilih tanggal dan konfirmasi."
   },
   "auth": {
     "login": "Masuk",
@@ -236,6 +238,7 @@
     "writeReview": "Tulis Ulasan",
     "hideReviewForm": "Batal Ulasan",
     "reviewThanks": "Terima kasih atas ulasan Anda!",
+    "bookAgain": "Pesan Lagi",
     "bookingStatus": {
       "pending": "Menunggu",
       "paid": "Dibayar",

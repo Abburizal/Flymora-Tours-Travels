@@ -204,7 +204,9 @@
     "confirmBooking": "Confirm Booking",
     "termsAgree": "I agree to the Terms of Service and Privacy Policy",
     "available": "Available",
-    "expiresIn": "Booking will expire in 30 minutes after creation"
+    "expiresIn": "Booking will expire in 30 minutes after creation",
+    "rebookSuccess": "Ready to book again!",
+    "rebookMessage": "Tour details loaded. Just select your preferred date and confirm."
   },
   "auth": {
     "login": "Login",
@@ -236,6 +238,7 @@
     "writeReview": "Write a Review",
     "hideReviewForm": "Cancel Review",
     "reviewThanks": "Thank you for your review!",
+    "bookAgain": "Book Again",
     "bookingStatus": {
       "pending": "Pending",
       "paid": "Paid",
