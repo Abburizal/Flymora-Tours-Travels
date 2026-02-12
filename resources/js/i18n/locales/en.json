@@ -296,23 +296,37 @@
   },
   "compare": {
     "title": "Compare Tours",
-    "subtitle": "Compare up to 3 tours side by side",
-    "empty": "No tours to compare",
-    "emptyDesc": "Add tours to compare their features, prices, and details",
-    "browseTours": "Browse Tours",
+    "comparing": "Comparing {{count}} tour",
+    "addMore": "Add More Tours",
     "clearAll": "Clear All",
-    "price": "Price",
-    "duration": "Duration",
-    "maxParticipants": "Max Participants",
-    "departure": "Departure Location",
-    "highlights": "Highlights",
-    "included": "What's Included",
-    "excluded": "What's Not Included",
-    "rating": "Rating",
-    "reviews": "Reviews",
-    "bookNow": "Book Now",
-    "remove": "Remove",
-    "noInfo": "No information available"
+    "backToTours": "← Back to Tours",
+    "empty": {
+      "title": "No tours to compare",
+      "subtitle": "Add 2-3 tours to compare their features side-by-side",
+      "browseTours": "Browse Tours"
+    },
+    "table": {
+      "feature": "Feature",
+      "remove": "Remove",
+      "image": "Image",
+      "tourName": "Tour Name",
+      "category": "Category",
+      "price": "Price",
+      "perPerson": "per person",
+      "duration": "Duration",
+      "destination": "Destination",
+      "maxParticipants": "Max Participants",
+      "people": "people",
+      "availableSeats": "Available Seats",
+      "soldOut": "Sold Out",
+      "seats": "seats",
+      "highlights": "Highlights",
+      "included": "What's Included",
+      "excluded": "What's Excluded",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "bookNow": "Book Now"
+    }
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -364,40 +378,6 @@
     "shareExperience": "How was your experience?",
     "packYourBags": "Time to pack your bags!"
   },
-  "compare": {
-    "title": "Compare Tours",
-    "comparing": "Comparing {{count}} tour",
-    "addMore": "Add More Tours",
-    "clearAll": "Clear All",
-    "backToTours": "← Back to Tours",
-    "empty": {
-      "title": "No tours to compare",
-      "subtitle": "Add 2-3 tours to compare their features side-by-side",
-      "browseTours": "Browse Tours"
-    },
-    "table": {
-      "feature": "Feature",
-      "remove": "Remove",
-      "image": "Image",
-      "tourName": "Tour Name",
-      "category": "Category",
-      "price": "Price",
-      "perPerson": "per person",
-      "duration": "Duration",
-      "destination": "Destination",
-      "maxParticipants": "Max Participants",
-      "people": "people",
-      "availableSeats": "Available Seats",
-      "soldOut": "Sold Out",
-      "seats": "seats",
-      "highlights": "Highlights",
-      "included": "What's Included",
-      "excluded": "What's Excluded",
-      "actions": "Actions",
-      "viewDetails": "View Details",
-      "bookNow": "Book Now"
-    }
-  },
   "whatsapp": {
     "inquire": "Inquire via WhatsApp",
     "chat": "Chat with us on WhatsApp",
@@ -411,5 +391,22 @@
     "unauthorized": "You need to login to access this page",
     "forbidden": "You don't have permission to access this page",
     "validation": "Please check your input and try again"
+  },
+  "gallery": {
+    "title": "Photo Gallery",
+    "photos": "photos",
+    "download": "Download Image",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "close": "Close",
+    "previous": "Previous Image",
+    "next": "Next Image",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "fit": "Fit to Screen",
+    "toClose": "to close",
+    "toNavigate": "to navigate",
+    "toZoom": "to zoom",
+    "fullscreenKey": "fullscreen"
   }
 }

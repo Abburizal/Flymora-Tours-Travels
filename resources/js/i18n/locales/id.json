@@ -295,24 +295,38 @@
     "bookNow": "Pesan Sekarang"
   },
   "compare": {
-    "title": "Bandingkan Paket Wisata",
-    "subtitle": "Bandingkan hingga 3 paket wisata secara berdampingan",
-    "empty": "Tidak ada paket untuk dibandingkan",
-    "emptyDesc": "Tambahkan paket wisata untuk membandingkan fitur, harga, dan detailnya",
-    "browseTours": "Jelajahi Paket Wisata",
+    "title": "Bandingkan Paket Tour",
+    "comparing": "Membandingkan {{count}} paket tour",
+    "addMore": "Tambah Paket Tour",
     "clearAll": "Hapus Semua",
-    "price": "Harga",
-    "duration": "Durasi",
-    "maxParticipants": "Maks Peserta",
-    "departure": "Lokasi Keberangkatan",
-    "highlights": "Highlight",
-    "included": "Yang Termasuk",
-    "excluded": "Yang Tidak Termasuk",
-    "rating": "Rating",
-    "reviews": "Ulasan",
-    "bookNow": "Pesan Sekarang",
-    "remove": "Hapus",
-    "noInfo": "Informasi tidak tersedia"
+    "backToTours": "← Kembali ke Paket Tour",
+    "empty": {
+      "title": "Tidak ada paket tour untuk dibandingkan",
+      "subtitle": "Tambahkan 2-3 paket tour untuk membandingkan fitur-fiturnya",
+      "browseTours": "Jelajahi Paket Tour"
+    },
+    "table": {
+      "feature": "Fitur",
+      "remove": "Hapus",
+      "image": "Gambar",
+      "tourName": "Nama Paket Tour",
+      "category": "Kategori",
+      "price": "Harga",
+      "perPerson": "per orang",
+      "duration": "Durasi",
+      "destination": "Destinasi",
+      "maxParticipants": "Maksimal Peserta",
+      "people": "orang",
+      "availableSeats": "Kursi Tersedia",
+      "soldOut": "Habis Terjual",
+      "seats": "kursi",
+      "highlights": "Highlight",
+      "included": "Yang Termasuk",
+      "excluded": "Yang Tidak Termasuk",
+      "actions": "Aksi",
+      "viewDetails": "Lihat Detail",
+      "bookNow": "Pesan Sekarang"
+    }
   },
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",
@@ -364,40 +378,6 @@
     "shareExperience": "Bagaimana pengalamannya?",
     "packYourBags": "Waktunya siap-siap berangkat!"
   },
-  "compare": {
-    "title": "Bandingkan Paket Tour",
-    "comparing": "Membandingkan {{count}} paket tour",
-    "addMore": "Tambah Paket Tour",
-    "clearAll": "Hapus Semua",
-    "backToTours": "← Kembali ke Paket Tour",
-    "empty": {
-      "title": "Tidak ada paket tour untuk dibandingkan",
-      "subtitle": "Tambahkan 2-3 paket tour untuk membandingkan fitur-fiturnya",
-      "browseTours": "Jelajahi Paket Tour"
-    },
-    "table": {
-      "feature": "Fitur",
-      "remove": "Hapus",
-      "image": "Gambar",
-      "tourName": "Nama Paket Tour",
-      "category": "Kategori",
-      "price": "Harga",
-      "perPerson": "per orang",
-      "duration": "Durasi",
-      "destination": "Destinasi",
-      "maxParticipants": "Maksimal Peserta",
-      "people": "orang",
-      "availableSeats": "Kursi Tersedia",
-      "soldOut": "Habis Terjual",
-      "seats": "kursi",
-      "highlights": "Highlight",
-      "included": "Yang Termasuk",
-      "excluded": "Yang Tidak Termasuk",
-      "actions": "Aksi",
-      "viewDetails": "Lihat Detail",
-      "bookNow": "Pesan Sekarang"
-    }
-  },
   "whatsapp": {
     "inquire": "Tanya via WhatsApp",
     "chat": "Chat dengan kami via WhatsApp",
@@ -411,5 +391,22 @@
     "unauthorized": "Anda perlu login untuk mengakses halaman ini",
     "forbidden": "Anda tidak memiliki izin untuk mengakses halaman ini",
     "validation": "Periksa input Anda dan coba lagi"
+  },
+  "gallery": {
+    "title": "Galeri Foto",
+    "photos": "foto",
+    "download": "Unduh Gambar",
+    "fullscreen": "Layar Penuh",
+    "exitFullscreen": "Keluar Layar Penuh",
+    "close": "Tutup",
+    "previous": "Gambar Sebelumnya",
+    "next": "Gambar Berikutnya",
+    "zoomIn": "Perbesar",
+    "zoomOut": "Perkecil",
+    "fit": "Sesuaikan Layar",
+    "toClose": "untuk tutup",
+    "toNavigate": "untuk navigasi",
+    "toZoom": "untuk zoom",
+    "fullscreenKey": "layar penuh"
   }
 }
