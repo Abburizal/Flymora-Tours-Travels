@@ -18,8 +18,9 @@ class Tour extends Model implements HasMedia
         'duration',
         'destination',
         'image', // Main tour image (string path)
+        'itinerary_url', // Google Drive PDF link
         // 'images' - REMOVED: Using Media Library collection instead
-        // 'custom_itinerary' - REMOVED: Using Media Library collection instead
+        // 'custom_itinerary' - REMOVED: Now using itinerary_url
         'category_id',
         'max_participants',
         'booked_participants',
