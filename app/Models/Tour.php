@@ -19,6 +19,7 @@ class Tour extends Model implements HasMedia
         'destination',
         'image',
         'images', // Multiple images support
+        'custom_itinerary', // PDF itinerary upload
         'category_id',
         'max_participants',
         'booked_participants',
