@@ -298,6 +298,40 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "compare": {
+    "title": "Bandingkan Paket Tour",
+    "comparing": "Membandingkan {{count}} paket tour",
+    "addMore": "Tambah Paket Tour",
+    "clearAll": "Hapus Semua",
+    "backToTours": "← Kembali ke Paket Tour",
+    "empty": {
+      "title": "Tidak ada paket tour untuk dibandingkan",
+      "subtitle": "Tambahkan 2-3 paket tour untuk membandingkan fitur-fiturnya",
+      "browseTours": "Jelajahi Paket Tour"
+    },
+    "table": {
+      "feature": "Fitur",
+      "remove": "Hapus",
+      "image": "Gambar",
+      "tourName": "Nama Paket Tour",
+      "category": "Kategori",
+      "price": "Harga",
+      "perPerson": "per orang",
+      "duration": "Durasi",
+      "destination": "Destinasi",
+      "maxParticipants": "Maksimal Peserta",
+      "people": "orang",
+      "availableSeats": "Kursi Tersedia",
+      "soldOut": "Habis Terjual",
+      "seats": "kursi",
+      "highlights": "Highlight",
+      "included": "Yang Termasuk",
+      "excluded": "Yang Tidak Termasuk",
+      "actions": "Aksi",
+      "viewDetails": "Lihat Detail",
+      "bookNow": "Pesan Sekarang"
+    }
+  },
   "whatsapp": {
     "inquire": "Tanya via WhatsApp",
     "chat": "Chat dengan kami via WhatsApp",

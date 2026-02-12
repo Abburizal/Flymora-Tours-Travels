@@ -298,6 +298,40 @@
     "usd": "USD",
     "eur": "EUR"
   },
+  "compare": {
+    "title": "Compare Tours",
+    "comparing": "Comparing {{count}} tour",
+    "addMore": "Add More Tours",
+    "clearAll": "Clear All",
+    "backToTours": "← Back to Tours",
+    "empty": {
+      "title": "No tours to compare",
+      "subtitle": "Add 2-3 tours to compare their features side-by-side",
+      "browseTours": "Browse Tours"
+    },
+    "table": {
+      "feature": "Feature",
+      "remove": "Remove",
+      "image": "Image",
+      "tourName": "Tour Name",
+      "category": "Category",
+      "price": "Price",
+      "perPerson": "per person",
+      "duration": "Duration",
+      "destination": "Destination",
+      "maxParticipants": "Max Participants",
+      "people": "people",
+      "availableSeats": "Available Seats",
+      "soldOut": "Sold Out",
+      "seats": "seats",
+      "highlights": "Highlights",
+      "included": "What's Included",
+      "excluded": "What's Excluded",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "bookNow": "Book Now"
+    }
+  },
   "whatsapp": {
     "inquire": "Inquire via WhatsApp",
     "chat": "Chat with us on WhatsApp",

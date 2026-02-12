@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCompare } from '../context/CompareContext';
 
 const ComparePage = () => {
+    const { t } = useTranslation();
     const { compareTours, removeFromCompare, clearCompare } = useCompare();
     const navigate = useNavigate();
 
@@ -25,16 +27,16 @@ const ComparePage = () => {
                             />
                         </svg>
                         <h3 className="mt-4 text-xl font-medium text-gray-900">
-                            No tours to compare
+                            {t('compare.empty.title', 'No tours to compare')}
                         </h3>
                         <p className="mt-2 text-gray-500">
-                            Add 2-3 tours to compare their features side-by-side
+                            {t('compare.empty.subtitle', 'Add 2-3 tours to compare their features side-by-side')}
                         </p>
                         <Link
                             to="/tours"
                             className="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
                         >
-                            Browse Tours
+                            {t('compare.empty.browseTours', 'Browse Tours')}
                         </Link>
                     </div>
                 </div>
@@ -65,9 +67,10 @@ const ComparePage = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Compare Tours</h1>
+                        <h1 className="text-3xl font-bold text-gray-900">{t('compare.title', 'Compare Tours')}</h1>
                         <p className="mt-2 text-gray-600">
-                            Comparing {compareTours.length} tour{compareTours.length !== 1 ? 's' : ''}
+                            {t('compare.comparing', 'Comparing {{count}} tour', { count: compareTours.length, count: compareTours.length })}
+                            {compareTours.length !== 1 ? 's' : ''}
                         </p>
                     </div>
                     <div className="flex gap-3">
@@ -75,13 +78,13 @@ const ComparePage = () => {
                             onClick={() => navigate('/tours')}
                             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gray-700"
                         >
-                            Add More Tours
+                            {t('compare.addMore', 'Add More Tours')}
                         </button>
                         <button
                             onClick={clearCompare}
                             className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                         >
-                            Clear All
+                            {t('compare.clearAll', 'Clear All')}
                         </button>
                     </div>
                 </div>
@@ -93,7 +96,7 @@ const ComparePage = () => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 sticky left-0 bg-gray-50 z-10 min-w-[200px]">
-                                        Feature
+                                        {t('compare.table.feature', 'Feature')}
                                     </th>
                                     {compareTours.map((tour) => (
                                         <th key={tour.id} className="px-6 py-4 text-left min-w-[280px]">
@@ -102,7 +105,7 @@ const ComparePage = () => {
                                                     onClick={() => removeFromCompare(tour.id)}
                                                     className="self-end text-red-600 hover:text-red-700 text-sm"
                                                 >
-                                                    Remove
+                                                    {t('compare.table.remove', 'Remove')}
                                                 </button>
                                             </div>
                                         </th>
@@ -113,7 +116,7 @@ const ComparePage = () => {
                                 {/* Tour Images */}
                                 <tr className="bg-white">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                        Image
+                                        {t('compare.table.image', 'Image')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -129,7 +132,7 @@ const ComparePage = () => {
                                 {/* Tour Names */}
                                 <tr className="bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                        Tour Name
+                                        {t('compare.table.tourName', 'Tour Name')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -146,7 +149,7 @@ const ComparePage = () => {
                                 {/* Category */}
                                 <tr className="bg-white">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                        Category
+                                        {t('compare.table.category', 'Category')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -160,14 +163,14 @@ const ComparePage = () => {
                                 {/* Price */}
                                 <tr className="bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                        Price
+                                        {t('compare.table.price', 'Price')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
                                             <div className="text-2xl font-bold text-green-600">
                                                 {formatCurrency(tour.price)}
                                             </div>
-                                            <div className="text-sm text-gray-500">per person</div>
+                                            <div className="text-sm text-gray-500">{t('compare.table.perPerson', 'per person')}</div>
                                         </td>
                                     ))}
                                 </tr>
@@ -175,7 +178,7 @@ const ComparePage = () => {
                                 {/* Duration */}
                                 <tr className="bg-white">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                        Duration
+                                        {t('compare.table.duration', 'Duration')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -202,7 +205,7 @@ const ComparePage = () => {
                                 {/* Destination */}
                                 <tr className="bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                        Destination
+                                        {t('compare.table.destination', 'Destination')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -235,7 +238,7 @@ const ComparePage = () => {
                                 {/* Max Participants */}
                                 <tr className="bg-white">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                        Max Participants
+                                        {t('compare.table.maxParticipants', 'Max Participants')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -253,7 +256,7 @@ const ComparePage = () => {
                                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                                                     />
                                                 </svg>
-                                                <span>{tour.max_participants} people</span>
+                                                <span>{tour.max_participants} {t('compare.table.people', 'people')}</span>
                                             </div>
                                         </td>
                                     ))}
@@ -262,7 +265,7 @@ const ComparePage = () => {
                                 {/* Available Seats */}
                                 <tr className="bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                        Available Seats
+                                        {t('compare.table.availableSeats', 'Available Seats')}
                                     </td>
                                     {compareTours.map((tour) => {
                                         const available = tour.max_participants - (tour.booked_participants || 0);
@@ -277,7 +280,7 @@ const ComparePage = () => {
                                                       isLow ? 'bg-yellow-100 text-yellow-800' :
                                                       'bg-green-100 text-green-800'}
                                                 `}>
-                                                    {isSoldOut ? 'Sold Out' : `${available} seats`}
+                                                    {isSoldOut ? t('compare.table.soldOut', 'Sold Out') : `${available} ${t('compare.table.seats', 'seats')}`}
                                                 </span>
                                             </td>
                                         );
@@ -288,7 +291,7 @@ const ComparePage = () => {
                                 {compareTours.some(t => t.highlights && t.highlights.length > 0) && (
                                     <tr className="bg-white">
                                         <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                            Highlights
+                                            {t('compare.table.highlights', 'Highlights')}
                                         </td>
                                         {compareTours.map((tour) => (
                                             <td key={tour.id} className="px-6 py-4">
@@ -328,7 +331,7 @@ const ComparePage = () => {
                                 {compareTours.some(t => t.included && t.included.length > 0) && (
                                     <tr className="bg-gray-50">
                                         <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                            What's Included
+                                            {t('compare.table.included', "What's Included")}
                                         </td>
                                         {compareTours.map((tour) => (
                                             <td key={tour.id} className="px-6 py-4">
@@ -358,7 +361,7 @@ const ComparePage = () => {
                                 {compareTours.some(t => t.excluded && t.excluded.length > 0) && (
                                     <tr className="bg-white">
                                         <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">
-                                            What's Excluded
+                                            {t('compare.table.excluded', "What's Excluded")}
                                         </td>
                                         {compareTours.map((tour) => (
                                             <td key={tour.id} className="px-6 py-4">
@@ -387,7 +390,7 @@ const ComparePage = () => {
                                 {/* Actions */}
                                 <tr className="bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 sticky left-0 bg-gray-50 z-10">
-                                        Actions
+                                        {t('compare.table.actions', 'Actions')}
                                     </td>
                                     {compareTours.map((tour) => (
                                         <td key={tour.id} className="px-6 py-4">
@@ -396,13 +399,13 @@ const ComparePage = () => {
                                                     to={`/tours/${tour.id}`}
                                                     className="bg-blue-600 text-white text-center px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-medium"
                                                 >
-                                                    View Details
+                                                    {t('compare.table.viewDetails', 'View Details')}
                                                 </Link>
                                                 <Link
                                                     to={`/booking/${tour.id}`}
                                                     className="bg-green-600 text-white text-center px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium"
                                                 >
-                                                    Book Now
+                                                    {t('compare.table.bookNow', 'Book Now')}
                                                 </Link>
                                             </div>
                                         </td>
@@ -419,7 +422,7 @@ const ComparePage = () => {
                         to="/tours"
                         className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gray-700 font-medium"
                     >
-                        ← Back to Tours
+                        {t('compare.backToTours', '← Back to Tours')}
                     </Link>
                 </div>
             </div>
