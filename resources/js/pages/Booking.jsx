@@ -9,6 +9,8 @@ export default function Booking() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const isRebook = searchParams.get('rebook') === 'true';
+    const isFromEstimate = searchParams.get('estimate') === 'true';
+    const estimatedParticipants = parseInt(searchParams.get('participants')) || 1;
     
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ export default function Booking() {
     
     const [formData, setFormData] = useState({
         booking_date: '',
-        number_of_participants: 1,
+        number_of_participants: isFromEstimate ? estimatedParticipants : 1,
     });
 
     // Scroll to top on mount
@@ -130,6 +132,23 @@ export default function Booking() {
                         </p>
                         <p className="text-green-700 text-sm mt-1">
                             {t('booking.rebookMessage')}
+                        </p>
+                    </div>
+                </div>
+            )}
+            
+            {/* Price Estimate Success Message */}
+            {isFromEstimate && tour && (
+                <div className="mb-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-4 flex items-start gap-3">
+                    <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                        <p className="text-blue-800 font-semibold">
+                            🎯 {t('booking.estimateLoaded') || 'Price estimate loaded!'}
+                        </p>
+                        <p className="text-blue-700 text-sm mt-1">
+                            {t('booking.estimateMessage') || `Booking for ${estimatedParticipants} participant(s). You can adjust below.`}
                         </p>
                     </div>
                 </div>

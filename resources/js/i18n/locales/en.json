@@ -202,11 +202,36 @@
     "basePrice": "Base Price",
     "totalPrice": "Total Price",
     "confirmBooking": "Confirm Booking",
-    "termsAgree": "I agree to the Terms of Service and Privacy Policy",
+    "termsAgree": "I agree to the Terms & Ketentuan and Privacy Policy",
     "available": "Available",
     "expiresIn": "Booking will expire in 30 minutes after creation",
     "rebookSuccess": "Ready to book again!",
-    "rebookMessage": "Tour details loaded. Just select your preferred date and confirm."
+    "rebookMessage": "Tour details loaded. Just select your preferred date and confirm.",
+    "estimateLoaded": "Price estimate loaded!",
+    "estimateMessage": "Booking details pre-filled. You can adjust below."
+  },
+  "priceEstimator": {
+    "title": "Smart Price Calculator",
+    "subtitle": "Customize your package and see real-time pricing",
+    "participants": "Number of Participants",
+    "maxParticipants": "Max",
+    "available": "Available",
+    "addOns": "Optional Add-ons",
+    "perPerson": "person",
+    "showBreakdown": "Show Price Breakdown",
+    "basePrice": "Base Price",
+    "totalEstimate": "Total Estimate",
+    "estimatedTotal": "Estimated Total Price",
+    "disclaimer": "Final price may vary based on availability and season",
+    "bookNow": "Book Now with This Estimate",
+    "fullyBooked": "Fully Booked",
+    "fullyBookedMessage": "This tour is fully booked. Please check other dates.",
+    "addOn": {
+      "insurance": "Travel Insurance",
+      "extraMeal": "Extra Meal Package",
+      "privateGuide": "Private Tour Guide",
+      "airportTransfer": "Airport Transfer"
+    }
   },
   "auth": {
     "login": "Login",

@@ -10,6 +10,7 @@ import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
 import WhatsAppButton from '../components/WhatsAppButton';
 import SocialProofBadge from '../components/SocialProofBadge';
+import PriceEstimator from '../components/PriceEstimator';
 import SEO from '../components/SEO';
 import { TourProductSchema, BreadcrumbSchema } from '../components/Schema';
 import { useAnalytics } from '../hooks/useAnalytics';
@@ -23,6 +24,7 @@ export default function TourDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [reviewStats, setReviewStats] = useState(null);
+    const [priceEstimate, setPriceEstimate] = useState(null);
 
     // Scroll to top on mount and when ID changes
     useEffect(() => {
@@ -549,6 +551,14 @@ export default function TourDetail() {
                     title={tour.name}
                     description={tour.description}
                     imageUrl={tour.image_url}
+                />
+            </div>
+
+            {/* Smart Price Estimator Section */}
+            <div className="mt-8">
+                <PriceEstimator 
+                    tour={tour}
+                    onEstimateChange={setPriceEstimate}
                 />
             </div>
 

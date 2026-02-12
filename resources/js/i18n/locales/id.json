@@ -206,7 +206,32 @@
     "available": "Tersedia",
     "expiresIn": "Pemesanan akan kadaluarsa dalam 30 menit setelah dibuat",
     "rebookSuccess": "Siap pesan lagi!",
-    "rebookMessage": "Detail paket sudah dimuat. Tinggal pilih tanggal dan konfirmasi."
+    "rebookMessage": "Detail paket sudah dimuat. Tinggal pilih tanggal dan konfirmasi.",
+    "estimateLoaded": "Estimasi harga dimuat!",
+    "estimateMessage": "Detail pemesanan sudah terisi. Anda bisa menyesuaikan di bawah."
+  },
+  "priceEstimator": {
+    "title": "Kalkulator Harga Cerdas",
+    "subtitle": "Sesuaikan paket Anda dan lihat harga secara real-time",
+    "participants": "Jumlah Peserta",
+    "maxParticipants": "Maks",
+    "available": "Tersedia",
+    "addOns": "Tambahan Opsional",
+    "perPerson": "orang",
+    "showBreakdown": "Tampilkan Rincian Harga",
+    "basePrice": "Harga Dasar",
+    "totalEstimate": "Total Estimasi",
+    "estimatedTotal": "Estimasi Total Harga",
+    "disclaimer": "Harga final dapat bervariasi berdasarkan ketersediaan dan musim",
+    "bookNow": "Pesan Sekarang dengan Estimasi Ini",
+    "fullyBooked": "Penuh Terpesan",
+    "fullyBookedMessage": "Paket ini sudah penuh. Silakan cek tanggal lain.",
+    "addOn": {
+      "insurance": "Asuransi Perjalanan",
+      "extraMeal": "Paket Makan Tambahan",
+      "privateGuide": "Pemandu Wisata Pribadi",
+      "airportTransfer": "Transfer Bandara"
+    }
   },
   "auth": {
     "login": "Masuk",
