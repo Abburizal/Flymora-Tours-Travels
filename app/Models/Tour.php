@@ -17,9 +17,9 @@ class Tour extends Model implements HasMedia
         'price',
         'duration',
         'destination',
-        'image',
-        'images', // Multiple images support
-        'custom_itinerary', // PDF itinerary upload
+        'image', // Main tour image (string path)
+        // 'images' - REMOVED: Using Media Library collection instead
+        // 'custom_itinerary' - REMOVED: Using Media Library collection instead
         'category_id',
         'max_participants',
         'booked_participants',
@@ -44,7 +44,7 @@ class Tour extends Model implements HasMedia
         'end_date' => 'datetime',
         'available_from' => 'date',
         'available_until' => 'date',
-        'images' => 'array', // Cast JSON to array
+        // 'images' => 'array', - REMOVED: Using Media Library collection instead
         'highlights' => 'array',
         'included' => 'array',
         'excluded' => 'array',

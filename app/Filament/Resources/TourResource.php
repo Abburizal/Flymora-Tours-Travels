@@ -73,9 +73,10 @@ class TourResource extends Resource
                     ->required()
                     ->maxSize(1024) // 1MB max
                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
-                    ->imageResizeMode('cover')
-                    ->imageResizeTargetWidth('800')
-                    ->imageResizeTargetHeight('600')
+                    // Disable resize for debugging - can enable later if needed
+                    // ->imageResizeMode('cover')
+                    // ->imageResizeTargetWidth('800')
+                    // ->imageResizeTargetHeight('600')
                     ->helperText('JPG or PNG - Max 1MB')
                     ->loadingIndicatorPosition('center')
                     ->uploadingMessage('Uploading image...')
@@ -92,18 +93,19 @@ class TourResource extends Resource
                     ->maxSize(5120) // 5MB
                     ->disk('public')
                     ->visibility('public')
-                    ->imageResizeMode('cover')
-                    ->imageCropAspectRatio('16:9')
-                    ->imageResizeTargetWidth('1920')
-                    ->imageResizeTargetHeight('1080')
+                    // Disable resize for debugging - can enable later if needed
+                    // ->imageResizeMode('cover')
+                    // ->imageCropAspectRatio('16:9')
+                    // ->imageResizeTargetWidth('1920')
+                    // ->imageResizeTargetHeight('1080')
                     ->loadingIndicatorPosition('center')
                     ->uploadingMessage('Uploading gallery images...')
                     ->removeUploadedFileButtonPosition('right')
                     ->helperText('Upload up to 10 images for gallery. Drag to reorder. Max 5MB per image.')
                     ->columnSpanFull(),
-                FileUpload::make('custom_itinerary')
+                SpatieMediaLibraryFileUpload::make('custom_itinerary')
                     ->label('Custom Itinerary PDF (Optional)')
-                    ->directory('tours/itineraries')
+                    ->collection('itinerary')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(10240) // 10MB
                     ->disk('public')
