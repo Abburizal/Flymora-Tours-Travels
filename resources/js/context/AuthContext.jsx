@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
+import { setSentryUser, clearSentryUser } from '../sentry';
 
 const AuthContext = createContext(null);
 
@@ -16,10 +17,13 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 const response = await api.get('/auth/me');
-                setUser(response.data.data);
+                const userData = response.data.data;
+                setUser(userData);
+                setSentryUser(userData); // Track user in Sentry
             } catch (error) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('user');
+                clearSentryUser();
             }
         }
         setLoading(false);
@@ -31,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
+        setSentryUser(user); // Track user in Sentry
         return response.data;
     };
 
@@ -40,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
+        setSentryUser(user); // Track user in Sentry
         return response.data;
     };
 
@@ -52,6 +58,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user');
         setUser(null);
+        clearSentryUser(); // Clear user from Sentry
     };
 
     return (

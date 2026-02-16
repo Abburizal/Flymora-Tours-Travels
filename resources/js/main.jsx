@@ -7,6 +7,10 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { CompareProvider } from './context/CompareContext';
 import './i18n/config'; // Initialize i18next
+import { initSentry } from './sentry'; // Initialize Sentry
+
+// Initialize Sentry before rendering
+initSentry();
 
 ReactDOM.createRoot(document.getElementById('app')).render(
     <React.StrictMode>

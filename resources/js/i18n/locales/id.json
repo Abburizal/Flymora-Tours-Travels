@@ -437,5 +437,19 @@
     "noRecommendations": "Tidak ada rekomendasi tersedia",
     "reviews": "ulasan",
     "days": "Hari"
+  },
+  "error": {
+    "somethingWrong": "Ups! Terjadi kesalahan",
+    "unexpectedError": "Kami mohon maaf atas ketidaknyamanan ini. Terjadi kesalahan yang tidak terduga.",
+    "refreshPage": "Muat Ulang Halaman",
+    "tryAgain": "Coba Lagi",
+    "backToHome": "Kembali ke Beranda",
+    "goBack": "Kembali",
+    "contactSupport": "Hubungi Dukungan",
+    "persistsProblem": "Jika masalah berlanjut, silakan hubungi tim dukungan kami.",
+    "pageNotFound": "Halaman Tidak Ditemukan",
+    "pageNotFoundDesc": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+    "suggestions": "Berikut beberapa tautan yang mungkin membantu:",
+    "searchHelp": "Mencari sesuatu yang spesifik? Coba pencarian kami atau jelajahi paket tour."
   }
 }

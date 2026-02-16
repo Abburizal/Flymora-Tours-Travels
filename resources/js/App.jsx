@@ -23,6 +23,7 @@ const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 const ComparePage = lazy(() => import('./pages/ComparePage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Loading component
 const PageLoader = () => (
@@ -175,6 +176,16 @@ function App() {
                             <PaymentSimulator />
                         </Suspense>
                     }
+                />
+                
+                {/* 404 Not Found - Catch all routes */}
+                <Route 
+                    path="*" 
+                    element={
+                        <Suspense fallback={<PageLoader />}>
+                            <NotFound />
+                        </Suspense>
+                    } 
                 />
             </Route>
         </Routes>
