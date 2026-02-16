@@ -8,6 +8,7 @@ import CategoryCard from '../components/CategoryCard';
 import RecommendedBadge from '../components/RecommendedBadge';
 import PromoBadge from '../components/PromoBadge';
 import HeroSearchBar from '../components/HeroSearchBar';
+import ViralToursSection from '../components/ViralToursSection';
 import api from '../services/api';
 import { useCurrency } from '../hooks/useCurrency';
 
@@ -551,6 +552,9 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* Viral Tours Section - High FOMO Strategy */}
+            <ViralToursSection />
 
             {/* Popular Categories Section */}
             <section className="py-20 bg-gradient-to-b from-white to-gray-50">

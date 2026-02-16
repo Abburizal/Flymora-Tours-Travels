@@ -451,5 +451,24 @@
     "pageNotFoundDesc": "The page you are looking for does not exist or has been moved.",
     "suggestions": "Here are some helpful links instead:",
     "searchHelp": "Looking for something specific? Try our search or browse tours."
+  },
+  "viral": {
+    "trending": "TRENDING NOW",
+    "title": "VIRAL Tour Packages!",
+    "subtitle": "Don't Miss Out! ⚡",
+    "description": "Thousands of people are viewing these packages right now. Book fast before sold out!",
+    "loading": "Loading viral tours...",
+    "warning": "Prices can increase anytime!",
+    "cta": "Book now and lock in the best price!",
+    "viewing": "people are viewing",
+    "slotsLeft": "SLOTS LEFT!",
+    "booked": "Already booked",
+    "priceEnds": "Special Price Ends In",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "perPerson": "per person",
+    "bookNow": "BOOK NOW!",
+    "peopleBooked": "people already booked"
   }
 }

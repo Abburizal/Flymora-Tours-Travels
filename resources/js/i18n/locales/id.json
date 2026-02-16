@@ -451,5 +451,24 @@
     "pageNotFoundDesc": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
     "suggestions": "Berikut beberapa tautan yang mungkin membantu:",
     "searchHelp": "Mencari sesuatu yang spesifik? Coba pencarian kami atau jelajahi paket tour."
+  },
+  "viral": {
+    "trending": "TRENDING SEKARANG",
+    "title": "Paket Tour VIRAL!",
+    "subtitle": "Jangan Sampai Kehabisan! ⚡",
+    "description": "Ribuan orang sedang melihat paket ini sekarang. Booking cepat sebelum sold out!",
+    "loading": "Memuat paket viral...",
+    "warning": "Harga bisa naik sewaktu-waktu!",
+    "cta": "Booking sekarang dan kunci harga terbaik!",
+    "viewing": "orang sedang melihat",
+    "slotsLeft": "SLOT TERSISA!",
+    "booked": "Sudah dipesan",
+    "priceEnds": "Harga Spesial Berakhir Dalam",
+    "hours": "Jam",
+    "minutes": "Menit",
+    "seconds": "Detik",
+    "perPerson": "per orang",
+    "bookNow": "BOOK SEKARANG!",
+    "peopleBooked": "orang sudah booking"
   }
 }

@@ -158,4 +158,97 @@ class TourController extends Controller
         
         return response()->json($tour);
     }
+
+    /**
+     * Get viral/trending tours with FOMO indicators
+     * Using aggressive scoring based on recent activity
+     */
+    public function getViralTours()
+    {
+        $cacheKey = 'viral_tours';
+        
+        $viralTours = Cache::remember($cacheKey, 600, function () {
+            $tours = Tour::with(['category:id,name,description', 'media'])
+                ->select([
+                    'id', 'name', 'description', 'price', 'duration', 'destination',
+                    'image', 'category_id', 'max_participants', 'booked_participants',
+                    'start_date', 'end_date', 'discount_percentage', 'promo_end_date',
+                    'promo_label', 'created_at', 'updated_at'
+                ])
+                ->withCount('reviews')
+                ->withCount('bookings')
+                ->withAvg('reviews', 'rating')
+                ->get();
+            
+            // Calculate viral score for each tour
+            $scoredTours = $tours->map(function ($tour) {
+                $score = 0;
+                
+                // Recent bookings (last 30 days)
+                $recentBookings = $tour->bookings()->where('created_at', '>=', now()->subDays(30))->count();
+                $score += $recentBookings * 15; // High weight for recent bookings
+                
+                // Total bookings
+                $score += $tour->bookings_count * 8;
+                
+                // Reviews count and rating
+                $score += $tour->reviews_count * 5;
+                if ($tour->reviews_avg_rating) {
+                    $score += $tour->reviews_avg_rating * 3;
+                }
+                
+                // Limited availability (creates urgency)
+                if ($tour->max_participants) {
+                    $bookedPercentage = ($tour->booked_participants / $tour->max_participants) * 100;
+                    if ($bookedPercentage > 70) {
+                        $score += 25; // High FOMO if almost full
+                    } elseif ($bookedPercentage > 50) {
+                        $score += 15;
+                    }
+                }
+                
+                // Active promo (price incentive)
+                if ($tour->promo_end_date && $tour->promo_end_date > now()) {
+                    $score += 20;
+                }
+                
+                // Recency boost (newer tours get visibility)
+                $daysSinceCreated = $tour->created_at->diffInDays(now());
+                if ($daysSinceCreated < 30) {
+                    $score += (30 - $daysSinceCreated);
+                }
+                
+                $tour->viral_score = $score;
+                $tour->slots_left = $tour->max_participants ? ($tour->max_participants - $tour->booked_participants) : null;
+                $tour->booked_percentage = $tour->max_participants ? round(($tour->booked_participants / $tour->max_participants) * 100) : 0;
+                
+                // Simulate "people viewing" (random for demo, can be real with tracking)
+                $tour->people_viewing = rand(15, 85);
+                
+                return $tour;
+            });
+            
+            // Get top 5 viral tours
+            $topViral = $scoredTours->sortByDesc('viral_score')->take(5);
+            
+            // Add image URLs
+            $topViral->each(function ($tour) {
+                if ($tour->image) {
+                    $tour->image_url = asset('storage/' . $tour->image);
+                } elseif ($tour->media && $tour->media->count() > 0) {
+                    $tour->image_url = $tour->media->first()->getUrl();
+                } else {
+                    $tour->image_url = null;
+                }
+            });
+            
+            return $topViral->values();
+        });
+        
+        return response()->json([
+            'success' => true,
+            'data' => $viralTours,
+            'message' => 'Viral tours retrieved successfully'
+        ]);
+    }
 }
