@@ -400,10 +400,10 @@ export default function Tours() {
                                     {/* 2-Column Layout: Meta Info (Left) | Seats (Right) */}
                                     <div className="flex gap-4 mb-4 pb-4 border-b border-gray-100">
                                         {/* LEFT COLUMN: Meta Information */}
-                                        <div className="flex-1 space-y-2">
+                                        <div className="flex-1 space-y-1.5 min-w-0">
                                             {/* Duration */}
-                                            <div className="flex items-center gap-2 text-sm text-gray-700">
-                                                <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                                                <svg className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                                 <span className="font-medium">{formatDuration(tour.duration)}</span>
@@ -411,8 +411,8 @@ export default function Tours() {
                                             
                                             {/* Departure Location */}
                                             {tour.departure_location && (
-                                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                                                    <svg className="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                                                     </svg>
                                                     <span className="font-medium truncate">{tour.departure_location}</span>
@@ -420,8 +420,8 @@ export default function Tours() {
                                             )}
                                             
                                             {/* Destination */}
-                                            <div className="flex items-center gap-2 text-sm text-gray-700">
-                                                <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                                                <svg className="w-3.5 h-3.5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg>
@@ -432,15 +432,15 @@ export default function Tours() {
                                         {/* RIGHT COLUMN: Seats Available Highlight */}
                                         {!isSoldOut && (
                                             <div className="flex-shrink-0">
-                                                <div className={`rounded-lg px-3 py-2 text-center min-w-[90px] border-2 ${
+                                                <div className={`rounded-lg px-2 py-1.5 text-center min-w-[75px] border ${
                                                     isLowStock 
                                                         ? 'bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200' 
                                                         : 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200'
                                                 }`}>
-                                                    <div className={`text-2xl font-bold ${isLowStock ? 'text-orange-600' : 'text-green-600'}`}>
+                                                    <div className={`text-xl font-bold ${isLowStock ? 'text-orange-600' : 'text-green-600'}`}>
                                                         {availableSeats}
                                                     </div>
-                                                    <div className={`text-xs font-semibold uppercase tracking-wide ${isLowStock ? 'text-orange-700' : 'text-green-700'}`}>
+                                                    <div className={`text-[10px] font-semibold uppercase tracking-tight leading-tight ${isLowStock ? 'text-orange-700' : 'text-green-700'}`}>
                                                         {t('tours.seatsLeft')}
                                                     </div>
                                                 </div>
