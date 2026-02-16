@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCurrency } from '../hooks/useCurrency';
 import axios from 'axios';
 
 export default function PaymentSimulator() {
+    const { formatCurrency } = useCurrency();
     const { snapToken } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -201,7 +203,7 @@ export default function PaymentSimulator() {
                             <div className="flex justify-between items-center pt-3 border-t">
                                 <span className="text-lg font-semibold text-gray-800">Total Amount:</span>
                                 <span className="text-2xl font-bold text-purple-600">
-                                    Rp {parseInt(bookingData?.booking?.total_price || 0).toLocaleString('id-ID')}
+                                    {formatCurrency(parseInt(bookingData?.booking?.total_price || 0))}
                                 </span>
                             </div>
                         </div>

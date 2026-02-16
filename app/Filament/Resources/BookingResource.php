@@ -161,6 +161,54 @@ class BookingResource extends Resource
                         'cancelled' => 'Cancelled',
                         'completed' => 'Completed',
                     ]),
+                    
+                Tables\Filters\Filter::make('booking_date')
+                    ->form([
+                        Forms\Components\DatePicker::make('booked_from')
+                            ->label('Booked From'),
+                        Forms\Components\DatePicker::make('booked_until')
+                            ->label('Booked Until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['booked_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('booking_date', '>=', $date),
+                            )
+                            ->when(
+                                $data['booked_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('booking_date', '<=', $date),
+                            );
+                    }),
+                    
+                Tables\Filters\Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('Created From'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('Created Until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
+                    
+                Tables\Filters\TernaryFilter::make('expired')
+                    ->label('Expired Status')
+                    ->placeholder('All bookings')
+                    ->trueLabel('Expired only')
+                    ->falseLabel('Active only')
+                    ->queries(
+                        true: fn (Builder $query): Builder => $query->where('expired_at', '<', now()),
+                        false: fn (Builder $query): Builder => $query->where('expired_at', '>', now()),
+                    ),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -169,6 +217,91 @@ class BookingResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    
+                    // Bulk Export Bookings
+                    Tables\Actions\BulkAction::make('export')
+                        ->label('Export Selected')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success')
+                        ->action(function ($records) {
+                            $filename = 'bookings_export_' . now()->format('Y-m-d_His') . '.csv';
+                            $headers = [
+                                'Content-Type' => 'text/csv',
+                                'Content-Disposition' => "attachment; filename=\"$filename\"",
+                            ];
+                            
+                            $callback = function() use ($records) {
+                                $file = fopen('php://output', 'w');
+                                
+                                // CSV Headers
+                                fputcsv($file, [
+                                    'ID',
+                                    'Customer Name',
+                                    'Customer Email',
+                                    'Tour Name',
+                                    'Booking Date',
+                                    'Participants',
+                                    'Total Price (IDR)',
+                                    'Status',
+                                    'Payment Status',
+                                    'Created At',
+                                    'Expired At',
+                                ]);
+                                
+                                // Data rows
+                                foreach ($records as $record) {
+                                    fputcsv($file, [
+                                        $record->id,
+                                        $record->user->name ?? 'N/A',
+                                        $record->user->email ?? 'N/A',
+                                        $record->tour->name ?? 'N/A',
+                                        $record->booking_date?->format('Y-m-d H:i'),
+                                        $record->number_of_participants,
+                                        number_format($record->total_price, 0, ',', '.'),
+                                        ucfirst($record->status),
+                                        ucfirst($record->payment_status ?? 'pending'),
+                                        $record->created_at->format('Y-m-d H:i'),
+                                        $record->expired_at?->format('Y-m-d H:i') ?? 'N/A',
+                                    ]);
+                                }
+                                
+                                fclose($file);
+                            };
+                            
+                            return response()->stream($callback, 200, $headers);
+                        })
+                        ->deselectRecordsAfterCompletion()
+                        ->requiresConfirmation()
+                        ->modalHeading('Export Bookings')
+                        ->modalDescription('Export selected bookings to CSV file')
+                        ->modalSubmitActionLabel('Download CSV'),
+                        
+                    // Bulk Status Update
+                    Tables\Actions\BulkAction::make('updateStatus')
+                        ->label('Update Status')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('warning')
+                        ->form([
+                            Forms\Components\Select::make('status')
+                                ->label('New Status')
+                                ->options([
+                                    'pending' => 'Pending',
+                                    'confirmed' => 'Confirmed',
+                                    'paid' => 'Paid',
+                                    'cancelled' => 'Cancelled',
+                                    'completed' => 'Completed',
+                                ])
+                                ->required(),
+                        ])
+                        ->action(fn ($records, $data) => 
+                            $records->each->update(['status' => $data['status']])
+                        )
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotification(
+                            \Filament\Notifications\Notification::make()
+                                ->success()
+                                ->title('Status updated successfully')
+                        ),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

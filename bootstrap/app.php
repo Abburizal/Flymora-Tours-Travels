@@ -26,6 +26,16 @@ return Application::configure(basePath: dirname(__DIR__))
             
             return route('login');
         });
+        
+        // API Rate Limiting
+        $middleware->throttleApi('60,1'); // 60 requests per minute for API
+        
+        // Custom rate limits
+        $middleware->alias([
+            'throttle.auth' => \Illuminate\Routing\Middleware\ThrottleRequests::class.':5,1',
+            'throttle.bookings' => \Illuminate\Routing\Middleware\ThrottleRequests::class.':10,60',
+            'throttle.reviews' => \Illuminate\Routing\Middleware\ThrottleRequests::class.':5,60',
+        ]);
     })
     ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule): void {
         // Auto-expire pending bookings every minute

@@ -110,6 +110,90 @@ class ReviewResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    
+                    // Bulk Export Reviews
+                    Tables\Actions\BulkAction::make('export')
+                        ->label('Export Selected')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success')
+                        ->action(function ($records) {
+                            $filename = 'reviews_export_' . now()->format('Y-m-d_His') . '.csv';
+                            $headers = [
+                                'Content-Type' => 'text/csv',
+                                'Content-Disposition' => "attachment; filename=\"$filename\"",
+                            ];
+                            
+                            $callback = function() use ($records) {
+                                $file = fopen('php://output', 'w');
+                                
+                                // CSV Headers
+                                fputcsv($file, [
+                                    'ID',
+                                    'User Name',
+                                    'User Email',
+                                    'Tour Name',
+                                    'Rating',
+                                    'Comment',
+                                    'Status',
+                                    'Created At',
+                                ]);
+                                
+                                // Data rows
+                                foreach ($records as $record) {
+                                    fputcsv($file, [
+                                        $record->id,
+                                        $record->user->name ?? 'N/A',
+                                        $record->user->email ?? 'N/A',
+                                        $record->tour->name ?? 'N/A',
+                                        $record->rating . '/5',
+                                        $record->comment ?? 'No comment',
+                                        ucfirst($record->status),
+                                        $record->created_at->format('Y-m-d H:i'),
+                                    ]);
+                                }
+                                
+                                fclose($file);
+                            };
+                            
+                            return response()->stream($callback, 200, $headers);
+                        })
+                        ->deselectRecordsAfterCompletion()
+                        ->requiresConfirmation()
+                        ->modalHeading('Export Reviews')
+                        ->modalDescription('Export selected reviews to CSV file')
+                        ->modalSubmitActionLabel('Download CSV'),
+                        
+                    // Bulk Approve
+                    Tables\Actions\BulkAction::make('approve')
+                        ->label('Approve Selected')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->action(fn ($records) => 
+                            $records->each->update(['status' => 'approved'])
+                        )
+                        ->deselectRecordsAfterCompletion()
+                        ->requiresConfirmation()
+                        ->successNotification(
+                            \Filament\Notifications\Notification::make()
+                                ->success()
+                                ->title('Reviews approved successfully')
+                        ),
+                        
+                    // Bulk Reject
+                    Tables\Actions\BulkAction::make('reject')
+                        ->label('Reject Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->action(fn ($records) => 
+                            $records->each->update(['status' => 'rejected'])
+                        )
+                        ->deselectRecordsAfterCompletion()
+                        ->requiresConfirmation()
+                        ->successNotification(
+                            \Filament\Notifications\Notification::make()
+                                ->warning()
+                                ->title('Reviews rejected')
+                        ),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

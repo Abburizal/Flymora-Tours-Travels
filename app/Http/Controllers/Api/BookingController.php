@@ -13,7 +13,8 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         // Only return bookings for authenticated user
-        $bookings = Booking::with('tour')
+        $bookings = Booking::with(['tour:id,name,price,duration,destination,image'])
+            ->select('id', 'tour_id', 'user_id', 'booking_date', 'number_of_participants', 'total_price', 'status', 'snap_token', 'expired_at', 'created_at', 'updated_at')
             ->where('user_id', $request->user()->id)
             ->orderBy('created_at', 'desc')
             ->get();

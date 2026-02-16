@@ -58,21 +58,31 @@ class UserResource extends Resource
                             ->label('Administrator')
                             ->helperText('Grant full admin panel access')
                             ->default(false),
+                            
+                        Forms\Components\Select::make('roles')
+                            ->label('Spatie Roles')
+                            ->multiple()
+                            ->relationship('roles', 'name')
+                            ->preload()
+                            ->helperText('Assign Spatie permission roles'),
+                            
                         Forms\Components\Select::make('role')
-                            ->label('Role')
+                            ->label('Legacy Role')
                             ->options([
                                 'customer' => 'Customer',
                                 'admin' => 'Administrator',
                                 'moderator' => 'Moderator',
                             ])
                             ->default('customer')
-                            ->required(),
+                            ->required()
+                            ->helperText('Legacy role field (kept for compatibility)'),
+                            
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active Account')
                             ->default(true)
                             ->helperText('Inactive users cannot login'),
                     ])
-                    ->columns(3),
+                    ->columns(2),
                     
                 Forms\Components\Toggle::make('email_verified_at')
                     ->label('Email Verified')
@@ -103,8 +113,14 @@ class UserResource extends Resource
                     ->label('Admin')
                     ->boolean()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Spatie Roles')
+                    ->badge()
+                    ->color('success')
+                    ->separator(','),
+                    
                 Tables\Columns\BadgeColumn::make('role')
-                    ->label('Role')
+                    ->label('Legacy Role')
                     ->colors([
                         'danger' => 'admin',
                         'warning' => 'moderator',
@@ -157,6 +173,88 @@ class UserResource extends Resource
                         ->modalHeading('Delete Users')
                         ->modalDescription('Are you sure you want to delete selected users? This action cannot be undone.')
                         ->successNotificationTitle('Users deleted successfully'),
+                        
+                    // Bulk Export Users
+                    Tables\Actions\BulkAction::make('export')
+                        ->label('Export Selected')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success')
+                        ->action(function ($records) {
+                            $filename = 'users_export_' . now()->format('Y-m-d_His') . '.csv';
+                            $headers = [
+                                'Content-Type' => 'text/csv',
+                                'Content-Disposition' => "attachment; filename=\"$filename\"",
+                            ];
+                            
+                            $callback = function() use ($records) {
+                                $file = fopen('php://output', 'w');
+                                
+                                // CSV Headers
+                                fputcsv($file, [
+                                    'ID',
+                                    'Name',
+                                    'Email',
+                                    'Phone',
+                                    'Roles',
+                                    'Legacy Role',
+                                    'Is Admin',
+                                    'Is Active',
+                                    'Email Verified',
+                                    'Total Bookings',
+                                    'Joined Date',
+                                ]);
+                                
+                                // Data rows
+                                foreach ($records as $record) {
+                                    fputcsv($file, [
+                                        $record->id,
+                                        $record->name,
+                                        $record->email,
+                                        $record->phone ?? 'N/A',
+                                        $record->roles->pluck('name')->join(', ') ?: 'N/A',
+                                        ucfirst($record->role),
+                                        $record->is_admin ? 'Yes' : 'No',
+                                        $record->is_active ? 'Yes' : 'No',
+                                        $record->email_verified_at ? 'Yes' : 'No',
+                                        $record->bookings()->count(),
+                                        $record->created_at->format('Y-m-d H:i'),
+                                    ]);
+                                }
+                                
+                                fclose($file);
+                            };
+                            
+                            return response()->stream($callback, 200, $headers);
+                        })
+                        ->deselectRecordsAfterCompletion()
+                        ->requiresConfirmation()
+                        ->modalHeading('Export Users')
+                        ->modalDescription('Export selected users to CSV file')
+                        ->modalSubmitActionLabel('Download CSV'),
+                        
+                    // Bulk Activate/Deactivate
+                    Tables\Actions\BulkAction::make('toggleActive')
+                        ->label('Toggle Active Status')
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('warning')
+                        ->form([
+                            Forms\Components\Select::make('is_active')
+                                ->label('Status')
+                                ->options([
+                                    '1' => 'Active',
+                                    '0' => 'Inactive',
+                                ])
+                                ->required(),
+                        ])
+                        ->action(fn ($records, $data) => 
+                            $records->each->update(['is_active' => (bool)$data['is_active']])
+                        )
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotification(
+                            \Filament\Notifications\Notification::make()
+                                ->success()
+                                ->title('User status updated successfully')
+                        ),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

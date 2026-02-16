@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useCurrency } from '../hooks/useCurrency';
 
 export default function PromoBadge({ tour, position = 'top-left' }) {
+    const { formatCurrency } = useCurrency();
     const [timeLeft, setTimeLeft] = useState(null);
 
     useEffect(() => {
@@ -97,10 +99,10 @@ export default function PromoBadge({ tour, position = 'top-left' }) {
             {/* Price Display */}
             <div className="mt-1 bg-green-500 text-white px-2.5 py-1 rounded-md shadow-lg text-xs font-bold">
                 <div className="line-through text-green-200 text-[10px]">
-                    Rp {tour.price.toLocaleString('id-ID')}
+                    {formatCurrency(tour.price)}
                 </div>
                 <div className="text-sm">
-                    Rp {discountedPrice.toLocaleString('id-ID')}
+                    {formatCurrency(discountedPrice)}
                 </div>
             </div>
         </div>

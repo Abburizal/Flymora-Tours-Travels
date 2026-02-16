@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import SubmitReview from '../components/SubmitReview';
 import CountdownTimer from '../components/CountdownTimer';
+import RecommendationSection from '../components/RecommendationSection';
 
 export default function Dashboard() {
     const { t } = useTranslation();
@@ -316,6 +317,30 @@ export default function Dashboard() {
                             )}
                         </div>
                     ))}
+                </div>
+            )}
+
+            {/* Personalized Recommendations */}
+            {bookings.length > 0 && (
+                <div className="mt-12">
+                    <RecommendationSection 
+                        type="for-you"
+                        title={`🎯 ${t('recommendations.forYou')}`}
+                        description={t('recommendations.forYouDesc')}
+                        limit={6}
+                    />
+                </div>
+            )}
+
+            {/* Trending for empty state */}
+            {bookings.length === 0 && !loading && (
+                <div className="mt-12">
+                    <RecommendationSection 
+                        type="trending"
+                        title={`🔥 ${t('recommendations.trendingPopular')}`}
+                        description={t('recommendations.trendingPopularDesc')}
+                        limit={6}
+                    />
                 </div>
             )}
         </div>

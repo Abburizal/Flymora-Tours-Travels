@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
+import ScrollToTop from './components/ScrollToTop';
 import { initializeAnalytics, useAnalytics } from './hooks/useAnalytics';
 
 // Eager load critical pages (above the fold)
@@ -66,6 +67,7 @@ function App() {
 
     return (
         <ErrorBoundary>
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Layout />}>
                 {/* Eager loaded pages (no Suspense needed) */}

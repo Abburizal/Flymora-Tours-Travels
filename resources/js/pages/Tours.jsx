@@ -6,6 +6,7 @@ import WishlistButton from '../components/WishlistButton';
 import CompareButton from '../components/CompareButton';
 import RecommendedBadge from '../components/RecommendedBadge';
 import SocialProofBadge from '../components/SocialProofBadge';
+import RecommendationSection from '../components/RecommendationSection';
 import SEO from '../components/SEO';
 import { useAnalytics } from '../hooks/useAnalytics';
 import { useCurrency } from '../hooks/useCurrency';
@@ -516,6 +517,18 @@ export default function Tours() {
                     >
                         {t('tours.clearFilters')}
                     </button>
+                </div>
+            )}
+
+            {/* Trending Tours Section (shown when no filters active) */}
+            {tours.length > 0 && !searchQuery && !selectedCategory && !minPrice && !maxPrice && !duration && (
+                <div className="mt-12">
+                    <RecommendationSection 
+                        type="trending"
+                        title={`🔥 ${t('recommendations.trendingMonthly')}`}
+                        description={t('recommendations.trendingPopularDesc')}
+                        limit={6}
+                    />
                 </div>
             )}
         </div>

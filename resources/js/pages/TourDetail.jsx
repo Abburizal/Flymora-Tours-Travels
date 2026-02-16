@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import ReviewList from '../components/ReviewList';
@@ -11,11 +13,14 @@ import CompareButton from '../components/CompareButton';
 import WhatsAppButton from '../components/WhatsAppButton';
 import SocialProofBadge from '../components/SocialProofBadge';
 import PriceEstimator from '../components/PriceEstimator';
+import RecommendationSection from '../components/RecommendationSection';
 import SEO from '../components/SEO';
 import { TourProductSchema, BreadcrumbSchema } from '../components/Schema';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 export default function TourDetail() {
+    const { t } = useTranslation();
+    const { formatCurrency } = useCurrency();
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -96,8 +101,8 @@ export default function TourDetail() {
             setTour(response.data);
             console.log('✅ Tour data set in state');
             
-            // Track tour view
-            trackTourView(response.data.id, response.data.name);
+            // Track tour view (GA4 e-commerce format)
+            trackTourView(response.data);
         } catch (err) {
             console.error('❌ Error fetching tour:', err);
             console.error('❌ Error response:', err.response?.data);
@@ -120,13 +125,6 @@ export default function TourDetail() {
         }
     };
 
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(amount);
-    };
-
     const formatDuration = (duration) => {
         // If duration already contains "Days", "Nights", "Day", "Night", return as is
         if (/days?|nights?/i.test(duration)) {
@@ -138,28 +136,23 @@ export default function TourDetail() {
         
         // Calculate nights (days - 1)
         const nights = Math.max(0, days - 1);
-        return `${days} Days ${nights} Nights`;
+        return `${days} ${t('tourDetail.days')} ${nights} ${t('tourDetail.nights')}`;
     };
 
     const formatPrice = (price) => {
         const numPrice = parseFloat(price);
         if (isNaN(numPrice)) return price;
         
-        // Price is already in IDR from database
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }).format(numPrice);
+        // Use currency hook for locale-aware formatting
+        return formatCurrency(numPrice);
     };
 
     const handleBookNow = () => {
         if (!user) {
             navigate('/login');
         } else {
-            // Track booking initiation
-            trackBookingStart(tour.id, tour.name);
+            // Track booking initiation with tour data
+            trackBookingStart(tour, 1);
             navigate(`/booking/${id}`);
         }
     };
@@ -201,7 +194,7 @@ export default function TourDetail() {
                 <>
                     <SEO 
                         title={`${tour.name} - ${tour.destination}`}
-                        description={`${tour.description.substring(0, 155)}... Book this ${tour.duration}-day tour starting from IDR ${tour.price.toLocaleString('id-ID')}.`}
+                        description={`${tour.description.substring(0, 155)}... Book this ${tour.duration}-day tour starting from ${formatCurrency(tour.price)}.`}
                         keywords={`${tour.name}, ${tour.destination}, tour package, ${tour.category?.name || 'travel'}, vacation, holiday`}
                         image={tour.image_url || '/images/og-default.jpg'}
                         url={`/tours/${tour.id}`}
@@ -217,7 +210,7 @@ export default function TourDetail() {
             )}
             
             <Link to="/tours" className="text-blue-600 hover:underline mb-4 inline-block">
-                ← Back to Tours
+                ← {t('tourDetail.backToTours')}
             </Link>
             
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -354,7 +347,7 @@ export default function TourDetail() {
                                 <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                What's Included
+                                {t('tourDetail.included')}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {tour.included.map((item, index) => (
@@ -376,7 +369,7 @@ export default function TourDetail() {
                                 <svg className="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                What's Not Included
+                                {t('tourDetail.notIncluded')}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {tour.excluded.map((item, index) => (
@@ -403,7 +396,7 @@ export default function TourDetail() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Duration</h3>
+                                    <h3 className="font-semibold text-gray-900 mb-1">{t('tourDetail.duration')}</h3>
                                     <p className="text-gray-600">{formatDuration(tour.duration)}</p>
                                 </div>
                             </div>
@@ -430,7 +423,7 @@ export default function TourDetail() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Destination</h3>
+                                    <h3 className="font-semibold text-gray-900 mb-1">{t('tourDetail.destination')}</h3>
                                     <p className="text-gray-600">{tour.destination}</p>
                                 </div>
                             </div>
@@ -535,7 +528,7 @@ export default function TourDetail() {
                                         disabled={availableSeats === 0}
                                         className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 hover:shadow-xl shadow-lg"
                                     >
-                                        {availableSeats === 0 ? 'Sold Out' : 'Book This Tour Now'}
+                                        {availableSeats === 0 ? t('tourDetail.soldOut') : t('tourDetail.bookNow')}
                                     </button>
                                 </div>
                             </div>
@@ -559,6 +552,39 @@ export default function TourDetail() {
                 <PriceEstimator 
                     tour={tour}
                     onEstimateChange={setPriceEstimate}
+                />
+            </div>
+
+            {/* Recommendations: Similar Tours */}
+            <div className="mt-8">
+                <RecommendationSection 
+                    type="similar"
+                    tourId={id}
+                    title={`🔍 ${t('recommendations.similar')}`}
+                    description={t('recommendations.similarDesc')}
+                    limit={6}
+                />
+            </div>
+
+            {/* Recommendations: Customers Also Viewed */}
+            <div className="mt-8">
+                <RecommendationSection 
+                    type="also-viewed"
+                    tourId={id}
+                    title={`👥 ${t('recommendations.alsoViewed')}`}
+                    description={t('recommendations.alsoViewedDesc')}
+                    limit={6}
+                />
+            </div>
+
+            {/* Recommendations: Complete Your Trip */}
+            <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8">
+                <RecommendationSection 
+                    type="complete-trip"
+                    tourId={id}
+                    title={`✨ ${t('recommendations.completeTrip')}`}
+                    description={t('recommendations.completeTripDesc')}
+                    limit={4}
                 />
             </div>
 

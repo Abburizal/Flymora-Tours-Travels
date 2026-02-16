@@ -154,17 +154,21 @@ export default function ImageGallery({ images = [], tourName = '' }) {
                         <button
                             key={image.id || index}
                             onClick={() => openLightbox(index)}
-                            className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer hover:shadow-lg transition-all duration-300"
+                            className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer hover:shadow-lg transition-all duration-300 bg-gray-200"
                         >
                             <img
                                 src={image.url}
                                 alt={`${tourName} - Image ${index + 1}`}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                loading="lazy"
+                                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                onError={(e) => {
+                                    console.error('Image failed to load:', image.url);
+                                    e.target.src = '/images/default-tour.jpg';
+                                    e.target.onerror = null;
+                                }}
                             />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
                                 <svg 
-                                    className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    className="w-8 h-8 text-white"
                                     fill="none" 
                                     stroke="currentColor" 
                                     viewBox="0 0 24 24"
@@ -173,7 +177,7 @@ export default function ImageGallery({ images = [], tourName = '' }) {
                                 </svg>
                             </div>
                             {/* Image number badge */}
-                            <div className="absolute top-2 left-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
+                            <div className="absolute top-2 left-2 bg-white bg-opacity-90 text-gray-800 text-xs font-semibold px-2 py-1 rounded shadow-sm pointer-events-none">
                                 {index + 1}/{images.length}
                             </div>
                         </button>

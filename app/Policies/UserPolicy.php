@@ -12,8 +12,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        // Only admins can see user list
-        return $user->is_admin;
+        return $user->hasPermissionTo('view_users') || $user->is_admin;
     }
 
     /**
@@ -21,8 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        // Admin can view any user, regular users can view themselves
-        return $user->is_admin || $user->id === $model->id;
+        return $user->hasPermissionTo('view_users') || $user->is_admin || $user->id === $model->id;
     }
 
     /**
@@ -30,8 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        // Only admins can create users from admin panel
-        return $user->is_admin;
+        return $user->hasPermissionTo('create_users') || $user->is_admin;
     }
 
     /**
@@ -39,13 +36,11 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        // Admin can update any user except themselves (prevent lockout)
-        // Regular users can update themselves (profile)
-        if ($user->is_admin) {
-            return $user->id !== $model->id; // Prevent admin editing themselves
+        if ($user->hasPermissionTo('edit_users') || $user->is_admin) {
+            return $user->id !== $model->id; // Prevent editing themselves via admin
         }
         
-        return $user->id === $model->id;
+        return $user->id === $model->id; // Can edit own profile
     }
 
     /**
@@ -53,9 +48,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        // Only admin can delete users
-        // Cannot delete themselves (prevent lockout)
-        return $user->is_admin && $user->id !== $model->id;
+        return ($user->hasPermissionTo('delete_users') || $user->is_admin) && $user->id !== $model->id;
     }
 
     /**

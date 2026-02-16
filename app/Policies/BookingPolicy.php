@@ -13,8 +13,8 @@ class BookingPolicy
      */
     public function viewAny(User $user): bool
     {
-        // Admin can see all bookings, customers see their own
-        return $user->is_admin || true; // Allow view but filter in resource
+        // Check permission or admin
+        return $user->hasPermissionTo('view_bookings') || $user->is_admin;
     }
 
     /**
@@ -22,8 +22,8 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking): bool
     {
-        // Admin can view any, customer can view their own
-        return $user->is_admin || $booking->user_id === $user->id;
+        // Permission check or admin or own booking
+        return $user->hasPermissionTo('view_bookings') || $user->is_admin || $booking->user_id === $user->id;
     }
 
     /**
@@ -31,8 +31,7 @@ class BookingPolicy
      */
     public function create(User $user): bool
     {
-        // Any authenticated user can create bookings
-        return true;
+        return $user->hasPermissionTo('create_bookings') || true; // Any authenticated user can book
     }
 
     /**
@@ -40,9 +39,7 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking): bool
     {
-        // Only admin can update bookings (status, payment, etc)
-        // Customers cannot update after creation
-        return $user->is_admin;
+        return $user->hasPermissionTo('edit_bookings') || $user->is_admin;
     }
 
     /**
@@ -50,8 +47,7 @@ class BookingPolicy
      */
     public function delete(User $user, Booking $booking): bool
     {
-        // Only admin can delete bookings
-        return $user->is_admin;
+        return $user->hasPermissionTo('delete_bookings') || $user->is_admin;
     }
 
     /**

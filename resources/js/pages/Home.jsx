@@ -335,16 +335,16 @@ export default function Home() {
                                             <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
                                                 <div>
                                                     <div className="text-sm text-gray-500 line-through mb-1">
-                                                        Rp {tour.price.toLocaleString('id-ID')}
+                                                        {formatCurrency(tour.price)}
                                                     </div>
                                                     <div className="text-2xl font-bold text-green-600">
-                                                        Rp {discountedPrice.toLocaleString('id-ID')}
+                                                        {formatCurrency(discountedPrice)}
                                                     </div>
                                                     <div className="text-xs text-gray-500">{t('home.perPerson')}</div>
                                                 </div>
                                                 <div className="text-center">
                                                     <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
-                                                        {t('home.save')} Rp {(tour.price - discountedPrice).toLocaleString('id-ID')}
+                                                        {t('home.save')} {formatCurrency(tour.price - discountedPrice)}
                                                     </div>
                                                 </div>
                                             </div>
@@ -531,7 +531,7 @@ export default function Home() {
                                     {/* Quick Action on Hover */}
                                     <div className="px-3 pb-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button className="w-full bg-blue-600 text-white text-xs font-semibold py-2 rounded hover:bg-blue-700 transition-colors">
-                                            Lihat Detail
+                                            {t('tours.viewDetails')}
                                         </button>
                                     </div>
                                 </Link>
