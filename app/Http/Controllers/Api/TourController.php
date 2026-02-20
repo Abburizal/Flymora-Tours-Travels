@@ -12,7 +12,7 @@ class TourController extends Controller
         // Build cache key based on request parameters
         $cacheKey = 'tours_' . md5(json_encode(request()->all()));
         
-        return Cache::remember($cacheKey, 900, function () {
+        return Cache::remember($cacheKey, 300, function () { // Reduced from 900 to 300 seconds (5 minutes)
             $query = Tour::with(['category:id,name,description', 'media'])
                 ->select([
                     'id', 'name', 'description', 'price', 'duration', 'destination',
@@ -101,6 +101,18 @@ class TourController extends Controller
                     $tour->image_url = $tour->gallery_images->first()['url'];
                 }
                 
+                // Fallback to default images with variety if no image available
+                if (!$tour->image_url) {
+                    $defaultImages = [
+                        'images/default-tour.jpg',
+                        'images/nature-hd.jpg',
+                        'images/langit-malam.jpg',
+                        'images/hero-bg.jpg',
+                    ];
+                    // Use tour ID to deterministically select a default image
+                    $tour->image_url = asset($defaultImages[$tour->id % count($defaultImages)]);
+                }
+                
                 // Add rating data (already aggregated)
                 $tour->average_rating = round($tour->reviews_avg_rating ?? 0, 1);
                 $tour->review_count = $tour->reviews_count ?? 0;
@@ -121,7 +133,7 @@ class TourController extends Controller
     {
         $cacheKey = "tour_{$id}";
         
-        $tour = Cache::remember($cacheKey, 600, function () use ($id) {
+        $tour = Cache::remember($cacheKey, 300, function () use ($id) { // Reduced from 600 to 300 seconds (5 minutes)
             return Tour::with(['category:id,name,description', 'media'])
                 ->withCount('reviews')
                 ->withAvg('reviews', 'rating')
@@ -149,6 +161,18 @@ class TourController extends Controller
             $tour->image_url = $tour->gallery_images->first()['url'];
         }
         
+        // Fallback to default images with variety if no image available
+        if (!$tour->image_url) {
+            $defaultImages = [
+                'images/default-tour.jpg',
+                'images/nature-hd.jpg',
+                'images/langit-malam.jpg',
+                'images/hero-bg.jpg',
+            ];
+            // Use tour ID to deterministically select a default image
+            $tour->image_url = asset($defaultImages[$tour->id % count($defaultImages)]);
+        }
+        
         // Add rating data (already aggregated)
         $tour->average_rating = round($tour->reviews_avg_rating ?? 0, 1);
         $tour->review_count = $tour->reviews_count ?? 0;
@@ -167,7 +191,7 @@ class TourController extends Controller
     {
         $cacheKey = 'viral_tours';
         
-        $viralTours = Cache::remember($cacheKey, 600, function () {
+        $viralTours = Cache::remember($cacheKey, 300, function () { // Reduced from 600 to 300 seconds (5 minutes)
             $tours = Tour::with(['category:id,name,description', 'media'])
                 ->select([
                     'id', 'name', 'description', 'price', 'duration', 'destination',
@@ -231,14 +255,21 @@ class TourController extends Controller
             // Get top 5 viral tours
             $topViral = $scoredTours->sortByDesc('viral_score')->take(5);
             
-            // Add image URLs
+            // Add image URLs with variety
             $topViral->each(function ($tour) {
                 if ($tour->image) {
                     $tour->image_url = asset('storage/' . $tour->image);
                 } elseif ($tour->media && $tour->media->count() > 0) {
                     $tour->image_url = $tour->media->first()->getUrl();
                 } else {
-                    $tour->image_url = null;
+                    $defaultImages = [
+                        'images/default-tour.jpg',
+                        'images/nature-hd.jpg',
+                        'images/langit-malam.jpg',
+                        'images/hero-bg.jpg',
+                    ];
+                    // Use tour ID to deterministically select a default image
+                    $tour->image_url = asset($defaultImages[$tour->id % count($defaultImages)]);
                 }
             });
             
